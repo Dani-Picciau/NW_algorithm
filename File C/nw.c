@@ -93,7 +93,7 @@ void needwun(char SEQA[ALEN], char SEQB[BLEN],
         }
     }
 
-    // Pad the result, le restanti lettere  saranno impostate come valore "_" 
+    // Pad the result, le restanti lettere  saranno impostate come valore  "_" 
     pad_a: for( ; a_str_idx<ALEN+BLEN; a_str_idx++ ) {
       alignedA[a_str_idx] = '_';
     }
