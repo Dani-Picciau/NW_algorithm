@@ -1,0 +1,1 @@
+Come input del nostro sistema, troviamo due sequenze da 128 bit che andranno ad essere salvate in due blocchi RAMx128; 
