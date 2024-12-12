@@ -19,7 +19,7 @@ void needwun(char SEQA[ALEN], char SEQB[BLEN],
     int row, row_up, r;
     int a_idx, b_idx;
     int a_str_idx, b_str_idx;
-
+    //scrittura colonna e riga iniziale della tabella 
     init_row: for(a_idx=0; a_idx<(ALEN+1); a_idx++){
         M[a_idx] = a_idx * GAP_SCORE;
     }
