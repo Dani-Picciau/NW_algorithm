@@ -1,6 +1,14 @@
 12/12/2024:{
     Posizione: Hub studio, Piandanna.
-    Si è iniziato a pensare ad una rappresentazione per il sistema, sono quindi sorti i primi dubbi, subito estinti dal fantastico capogruppo Monica Manai che ci ha riportato sulla giusta strada facendoci capire che un singolo modulo andasse suddiviso in tanti, tantissimi sottomoduli.
+    Si è iniziato a pensare ad una rappresentazione per il sistema, sono quindi sorti i primi dubbi, subito estinti dal fantastico capogruppo Monica Manai
+    che ci ha riportato sulla giusta strada facendoci capire che un singolo modulo andasse suddiviso in tanti, tantissimi sottomoduli.
     Per oggi è tutto, continueremo a pensare come strutturare il sistema per tuuuuuutto il giorno.
+    Daniele e Monica hanno elaborato una prima idea di sistema, disegnando una bozza dello schematico. 
 }
+
+ 13/12/2024:{
+    Posizione: Hub studio/Aula 1, Piandanna.
+    Daniele e Monica hanno mostrato lo schematico al gruppo, il funzionamento è riportato nel file "Funzionamento Datapath". Abbiamo notato che le "matrici" del codice c, vedi "nw.c",
+    sono composte come degli array monodimensionali, pensiamo che questa struttura sia stata scelta dai creatori del codice per facilitare la traduzione del codice in verilog, dato che una RAM in verilog è definita come un array monodimensionale di N-locazioni(128*128 nel nostro caso) dove all'interno ci sono N-bits(2 nel nostro caso), ciò vuol dire che usciranno esattamente 16.384 celle di memoria (OMG!!).
+}   
 
