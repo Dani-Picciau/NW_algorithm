@@ -10,9 +10,9 @@ Blocco elaborazione (Calcolo del valore da sommare in diagonale):
 Blocco Max (Valore massimo tra quelli propposti dalla cella up,sx e diag più i valori di gap/match/mismatch):
 — ingressi: 
 	- valore punteggio di match/mismatch; (che arriva dell'elaborazione)
-	- up; (valore della cella sopra)
-	- sx; (valore della cella a sx)
-	- diag; (valore della cella in diagonale)
+	- up; (valore dato dalla somma tra il gap e la cella sopra)
+	- sx; (valore dato dalla somma tra il gap e la cella a sx)
+	- diag; (valore dato dalla somma tra il gap e la cella in diagonale)
 	    
 — uscite:
 	— Max;
