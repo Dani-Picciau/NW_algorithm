@@ -10,5 +10,6 @@
     Posizione: Hub studio/Aula 1, Piandanna.
     Daniele e Monica hanno mostrato lo schematico al gruppo, il funzionamento è riportato nel file "Funzionamento Datapath". Abbiamo notato che le "matrici" del codice c, vedi "nw.c",
     sono composte come degli array monodimensionali, pensiamo che questa struttura sia stata scelta dai creatori del codice per facilitare la traduzione del codice in verilog, dato che una RAM in verilog è definita come un array monodimensionale di N-locazioni(128*128 nel nostro caso) dove all'interno ci sono N-bits(2 nel nostro caso), ciò vuol dire che usciranno esattamente 16.384 celle di memoria (OMG!!).
+Abbiamo anche ragionato per la codifica del trattino, per il gap, nell'uscita finale arrivando quindi alla soluzione di usare direttamente 3 bit per la codifica dei parametri
 }   
 
