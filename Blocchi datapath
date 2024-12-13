@@ -3,7 +3,7 @@ RAM B: seconda sequenza ed enable_read
 
 
 Blocco elaborazione (Calcolo del valore diagonale):
-— ingressi: Caratteri delle sequenze A e B a 2 bit;
+— ingressi: Caratteri delle sequenze A e B a 3 bit;
 — uscita: valore;
 
 
