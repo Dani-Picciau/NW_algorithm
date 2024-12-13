@@ -2,13 +2,18 @@ RAM A: prima sequenza ed enable_read
 RAM B: seconda sequenza ed enable_read
 
 
-Blocco elaborazione (Calcolo del valore diagonale):
+Blocco elaborazione (Calcolo del valore da sommare in diagonale):
 — ingressi: Caratteri delle sequenze A e B a 3 bit;
-— uscita: valore;
+— uscita: valore ;
 
 
-Blocco Max (Valore massimo tra match, mismatch e gap):
-— ingressi: valore(match/mismatch);
+Blocco Max (Valore massimo tra quelli propposti dalla cella up,sx e diag più i valori di gap/match/mismatch):
+— ingressi: 
+	- valore punteggio di match/mismatch; (che arriva dell'elaborazione)
+	- up; (valore della cella sopra)
+	- sx; (valore della cella a sx)
+	- diag; (valore della cella in diagonale)
+	    
 — uscite:
 	— Max;
 	— Direzione cella;
