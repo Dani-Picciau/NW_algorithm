@@ -1,15 +1,25 @@
 12/12/2024:{
     Posizione: Hub studio, Piandanna.
-    Si è iniziato a pensare ad una rappresentazione per il sistema, sono quindi sorti i primi dubbi, subito estinti dal fantastico capogruppo Monica Manai
-    che ci ha riportato sulla giusta strada facendoci capire che un singolo modulo andasse suddiviso in tanti, tantissimi sottomoduli.
+    Si è iniziato a pensare ad una rappresentazione per il sistema, sono quindi sorti i primi dubbi, subito estinti dal fantastico capogruppo Monica Manai che ci ha riportato sulla giusta strada facendoci capire che un singolo modulo andasse suddiviso in tanti, tantissimi sottomoduli.
     Per oggi è tutto, continueremo a pensare come strutturare il sistema per tuuuuuutto il giorno.
     Daniele e Monica hanno elaborato una prima idea di sistema, disegnando una bozza dello schematico. 
 }
 
- 13/12/2024:{
+13/12/2024:{
     Posizione: Hub studio/Aula 1, Piandanna.
     Daniele e Monica hanno mostrato lo schematico al gruppo, il funzionamento è riportato nel file "Funzionamento Datapath". Abbiamo notato che le "matrici" del codice c, vedi "nw.c",
     sono composte come degli array monodimensionali, pensiamo che questa struttura sia stata scelta dai creatori del codice per facilitare la traduzione del codice in verilog, dato che una RAM in verilog è definita come un array monodimensionale di N-locazioni(128*128 nel nostro caso) dove all'interno ci sono N-bits(2 nel nostro caso), ciò vuol dire che usciranno esattamente 16.384 celle di memoria (OMG!!).
-Abbiamo anche ragionato per la codifica del trattino, per il gap, nell'uscita finale arrivando quindi alla soluzione di usare direttamente 3 bit per la codifica dei parametri. Esame 19 giugno 2024 RAM dual input, dual output.
+    Abbiamo anche ragionato per la codifica del trattino, per il gap, nell'uscita finale arrivando quindi alla soluzione di usare direttamente 3 bit per la codifica dei parametri. Esame 19 giugno 2024 RAM dual input, dual output.
+
+    Aggiornamento delle 21:56, quì parla Daniele: Stanza Ersu.
+    Dopo il super pisolino pomeridiano che ha intrappolato il nostro team-mate Matteo, io, Diego e la Team leader Monica (detta la Grandiosa) abbiamo continuato a pensare a come risolvere il problema riguardante l'inizializzazione della matrice, arrivando finalmente ad una conclusione!
+    I due blocchi coinvolti sono "Ram punteggi" e un nuovo blocco, un contatore, che prende il posto del vecchio blocco "inizializzazione".
+    "Ram punteggi" (matrice) è una ram dual-port: tramite "en_iniz" viene attivata la porta che si occupa di leggere i dati mandati in ingresso dal counter, il quale si occupa di inizializzare la prima riga e la prima colonna della nostra matrice.
+    Quando il counter si accorgerà di aver finito le sue operazioni, manderà un segnale di fine che attiverà un enable gestito dalla macchina a stati per poter attivare la seconda porta, disattivando la prima (en_iniz), della nostra "Ram punteggi".
+    Grazie all'attivazione della seconda porta viene quindi permesso l'ingresso degli indici x e y (anche chiamati i e j dal sottoscritto), inviati dal blocco "logica di inserimento" (ancora da gestire, adesso ci arrivo), in modo da permettere l'inserimento dei punteggi che popoleranno la matrice.
+
+    Per quanto riguarda il blocco "logica di inserimento", siamo convinti che si tratti anch'esso di un counter, il quale dovrà simulare il comportamento di due for annidati per poter mandare le giuste coordinate dei valori x e y, da incrementare secondo la tecnica descritta da Monica l'altro giorno (TA TA TA TA TA TA TA TA).
+
+    
 }   
 

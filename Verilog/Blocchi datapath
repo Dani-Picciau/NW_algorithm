@@ -1,0 +1,59 @@
+RAM A: prima sequenza ed enable_read
+RAM B: seconda sequenza ed enable_read
+
+
+Blocco elaborazione (Calcolo del valore da sommare in diagonale):
+— ingressi: Caratteri delle sequenze A e B a 3 bit;
+— uscita: valore ;
+
+
+Blocco Max (Valore massimo tra quelli propposti dalla cella up,sx e diag più i valori di gap/match/mismatch):
+— ingressi: 
+	- valore punteggio di match/mismatch; (che arriva dell'elaborazione)
+	- up; (valore dato dalla somma tra il gap e la cella sopra)
+	- sx; (valore dato dalla somma tra il gap e la cella a sx)
+	- diag; (valore dato dalla somma tra il gap e la cella in diagonale)
+	    
+— uscite:
+	— Max;
+	— Direzione cella;
+
+
+Blocco Gestione punteggi:
+	—Blocco Memoria1 (prende in ingresso il valore massimo e gli indirizzi della locazione del massimo):
+		—ingressi:
+			— Max;
+			— en_mp;
+			— indici i e j;
+			— init;
+		—uscite:
+			—fine_riemp;
+
+
+	—Blocco inizializzazione1 (Scrive prima riga completa e prima colonna completa della matrice con i punteggi dei gap):
+		—ingressi:
+			—en;
+		—uscite:
+			—init;
+			—fine_inizial;
+
+
+Blocco logica combinatoria:
+	— ingressi:
+		—en_fine;
+	— uscite:
+		— i(indice RAM A);
+		— j(indice RAM B);
+Blocco matrice direzione:
+	— Blocco Memoria2:
+		—ingressi:
+			—indici i e j;
+		—uscite:
+
+
+	— Blocco inizializzazione2:
+		—ingressi:
+		—uscite:
+
+
+
