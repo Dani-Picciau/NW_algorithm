@@ -18,19 +18,17 @@
     Quando il counter si accorgerà di aver finito le sue operazioni, manderà un segnale di fine che attiverà un enable gestito dalla macchina a stati per poter attivare la seconda porta, disattivando la prima (en_iniz), della nostra "Ram punteggi".
     Grazie all'attivazione della seconda porta viene quindi permesso l'ingresso degli indici x e y (anche chiamati i e j dal sottoscritto), inviati dal blocco "logica di inserimento" (ancora da gestire, adesso ci arrivo), in modo da permettere l'inserimento dei punteggi che popoleranno la matrice.
 
-    Per quanto riguarda il blocco "logica di inserimento", siamo convinti che si tratti anch'esso di un counter, il quale dovrà simulare il comportamento di due for annidati per poter mandare le giuste coordinate dei valori x e y, da incrementare secondo la tecnica descritta da Monica l'altro giorno (TA TA TA TA TA TA TA TA).
+    Per quanto riguarda il blocco "logica di inserimento", siamo convinti che si tratti anch'esso di un counter, il quale dovrà simulare il comportamento di due for annidati per poter mandare le giuste coordinate dei valori x e y, da incrementare secondo la tecnica descritta da Monica l'altro giorno (TA TA TA TA TA TA TA TA). 
+}  
 
-    
-}   
 16/12/2024:{
     Posizione Aula multimediale, palazzo ingegneristico, Agraria
     Logica di inserimento: L'indice del vettore dei punteggi è calcolato coem i+N*j dove i e j sono gli indici delle due RAM delle seqenze e N è il numero di elementi "per riga" nella visione matriciale, ovvero quante lettere compongono la sequenza i. In una matrice 5*5 N=5 
-
 }
 
 17/12/2024: {
     Posizione Aula multimediale, palazzo ingegneristico, Agraria
     I nostri 3 eroi (i sopravvissuti) hanno dovuto affrontare una grande sfida quest'oggi. Sono stati infatti riscontrati dei problemi con la ram dei punteggi. Quando stavamo per iniziare ad affrontare il backtraking si è presentato a noi un nuovo problema: come gestire le celle vuote.
     La RAM era infatti stata pensata con 129*129*9 bit (129-> 128 della sequenza + cella di gap e 9-> numero di bit che serve per rappresentare i numeri da -128 a 128 in complemento a 2). Dobbiamo contare quante lettere ci sono nelle sequenze per poter fare una matrice giusta? Se si, come si fa? Oppure, Dobbiamo gestire sempre una matrice 129*129*9? In questo caso, come si fa ad andare nell'ultima cella con un valore valido per fare il backtraking?  
-
+    Oppure ipotizziamo che le lettere arrivino giuste. è 32*32 arrivano 32 lettere per la prima sequenza e 32 per la seconda. E non abbiamo nessun problema, sappiamo a priori che il file sarà giusto, della lunghezza giusta.  
 }
