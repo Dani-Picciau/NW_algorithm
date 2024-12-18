@@ -32,3 +32,9 @@
     La RAM era infatti stata pensata con 129*129*9 bit (129-> 128 della sequenza + cella di gap e 9-> numero di bit che serve per rappresentare i numeri da -128 a 128 in complemento a 2). Dobbiamo contare quante lettere ci sono nelle sequenze per poter fare una matrice giusta? Se si, come si fa? Oppure, Dobbiamo gestire sempre una matrice 129*129*9? In questo caso, come si fa ad andare nell'ultima cella con un valore valido per fare il backtraking?  
     Oppure ipotizziamo che le lettere arrivino giuste. è 32*32 arrivano 32 lettere per la prima sequenza e 32 per la seconda. E non abbiamo nessun problema, sappiamo a priori che le sequenze saranno giuste, della lunghezza giusta.  
 }
+
+18/12/2024: {
+    Posizione: Hub studio, Piandanna.
+    Decisione suddivisione compiti e inizio ragionamento per traceback.
+    La suddivisione dei compiti: UART, TraceBack, Scrittura moduli.
+}
