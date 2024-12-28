@@ -38,3 +38,21 @@
     Decisione suddivisione compiti e inizio ragionamento per traceback.
     La suddivisione dei compiti: UART, TraceBack, Scrittura moduli.
 }
+
+28/12/2024: {
+    Posizione casa Manai-Fois, Soffitta
+    Oggi la sottoscritta aggiornerà il logbook fino agli ultimi aggiornamenti sul progetto, che risalgono al 20/12 -vagone dal treno diretto a Cagliari. Durante il viaggio allo studioso è venuto in mente di continuare a pensare al TraceBack, visto anche il ritardo che il treno stava accumulando, e così abbiamo fatto.
+    Siccome non so come spiegarvelo, per capirlo dovrete guardare lo schema che abbiamo disegnato bene successivamente, così posso solo dire come funzionano i componenti (almeno nella mia testa)
+    In pratica "Count lettura direzioni" conta gli indici del vettore a partire dall'ultima cella e li manda sia alla RAM che tiene in memoria le direzioni degli spostamenti (la freccia che indica da quale cella si è ottenuto il risultato migliore per il punteggio della cella in esame) che alle RAM che tengono in memoria le sequenze che ci arrivano in ingresso, e riceve in ingresso la direzione dell cella corrente per poter calcolare gli indici per la prossima cella ("simbolo"). 
+    "Elabora" prende in ingresso sia la direzione proveniente dalla RAM direzioni (quel "simbolo" che va anche in "Count lettura direzioni") e anche le lettere delle sequenze dalle RAM A e B delle celle corrispondenti al simbolo. Mi rendo conto di averlo spiegato un po' col culo, riproviamo: in pratica se abbiamo la visualizzazione a matrice ad ogni cella in cui abbiamo un punteggio e/o un simbolo, corrispondono due lettere, una della sequenza verticale e una della sequenza orizzontale, ecco, prendiamo queste due lettere dalle RAM. 
+    Cosa fa "Elabora" con questi segnali? Calcola il punteggio della sequenza fino a quel momento ("Score" che è un'uscita del sistema) e manda i simboli (A, T, G, C o - )da mettere nelle due sequenze allineate che verranno memorizzate nelle RAM A e B allinete.Quando finisce di elaborare manda un segnale alla macchina a stati in modo che questa abiliti la scrittura selle due RAM e il modulo "Counter RAM all.".
+    Invece il "Counter RAM all." calcola gli indici da madare alle due RAM per l'inserimento dei dati in arrivo da "Elabora", solo quando avrà un enable dalla macchina a stati.
+
+    Non so se funzioni o se serva altro, in ogni caso c'è da definire bene la macchina a stati, ma sarà un problema della me del futuro.
+
+    Con Questo pernso che sia tutto, se non ho spiegato bene qualcosa o non vi torna qualche passaggio chiedete pure. 
+
+    Buone vacanze ragazzi 
+    Passo e chiudo 
+    ~ La vostra collega che avete nominato capogruppo
+}
