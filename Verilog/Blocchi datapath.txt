@@ -1,0 +1,144 @@
+!!! Attenzione, i nomi dei moduli e delle variabili in questo  file sono in inglese mentre nel disegno sono in italiano !!!
+!!! Attention, the names of the modules and variables in this file are in English while in the drawing they are in Italian!!! 
+
+RAM A:{ (parametric)
+	— inputs: 
+		— SeqA;
+		— en_read;
+		— index i;
+		— en_traceB;
+		— index i_t; (from traceBack)
+	— outputs: 
+		— SeqA[i] (3 bits)
+		— SeqA[i_t] (3 bits)
+}
+
+RAM B: { (parametric)
+	— inputs: 
+		— SeqB;
+		— en_read;
+		— index j;
+		— en_traceB;
+		— index j_t; (from traceBack)
+	— outputs: 
+		— SeqB[j] (3 bits)
+		— SeqB[j_t] (3 bits)
+}
+
+
+Match_mismatch (Calcolo del valore da sommare in diagonale):{
+	— inputs: 
+		— SeqA[i] (3 bits);
+		— SeqB[j] (3 bits)
+	— output: 
+		—value;
+}
+
+Max (Calcola il valore massimo tra quelli proposti dalla cella up,sx e diag più i valori di gap/match/mismatch):{
+	— inputs: 
+		— value; (punteggio di match/mismatch)(che arriva dell'elaborazione)
+		— up; (valore della cella sopra)
+		— left; (valore della cella a sx)
+		— diag; (valore della cella in diagonale)
+			
+	— outputs:
+		— Max; (3 bits)
+		— Cell_Direction; (3 bits)
+		— Calculated
+}
+
+RAM Scores (tiene in memoria i punteggi):{
+	— inputs:
+		— Max; (3 bits)
+		— en_ins;
+		— en_read
+		— we;
+		— index i;(in arrivo dalla logica di gestione dell'inserimento)
+		— index j; ('')
+		— addr; (in arrivo dal counter che si occupa dell'inizializzazione)
+		— data; ('')
+	— outputs:
+		— data_out;
+}
+
+Initial_counter (Scrive prima riga completa e prima colonna completa della matrice con i punteggi dei gap):{
+	— inputs:
+		— en;
+	— outputs:
+		— data; 
+		— addr;
+		— end_initial;
+}
+
+Insertion_counter (Calcola gli indici da mandare alle RAM che identificheranno la cella in cui inserire il valore di Max){
+	— inputs:
+		— en_end;
+	— outputs:
+		—end_filling;
+		— i(index RAM A);
+		— j(index RAM B);
+}
+
+RAM Direction:{
+	— inputs:
+		— index i;
+		— index j;
+		— index i_t;
+		— index j_t;
+		— symbol_in; (3 bits)
+		— en_ins;
+		— we;
+		— en_traceB;
+
+	— outputs:
+		— symbol_out (3 bits)
+}
+
+Read_direction_counter{
+	— inputs:
+		— en_traceB;
+		— symbol; (3 bits)
+	— outputs: 
+		— i_t;
+		— j_t;
+		— end_out
+}
+
+Process{
+	— inputs:
+		— SeqA[i_t]; (3 bits)
+		— SeqB[j_t]; (3 bits)
+		— symbol; (3 bits)
+	— outputs: 
+		— dataA; (3 bits)
+		— dataB; (3 bits)
+		— score;
+}
+
+Alignment_Counter{
+	— input: 
+		— en_traceB;
+	— outputs: 
+		— i;
+		— j;
+
+( idk maybe i and j are the same number so the same output)
+}
+
+RAM A_aligned{
+	— inputs:
+		— en_traceB;
+		— index i;
+		— dataA_in; (3b)
+	— output: 
+		— dataA_out; (3b)
+}
+
+RAM B_aligned{
+	— inputs:
+		— en_traceB;
+		— index j;
+		— dataB_in; (3b)
+	— output: 
+		— dataB_out; (3b)
+}
