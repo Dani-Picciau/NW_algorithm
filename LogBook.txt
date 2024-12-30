@@ -56,3 +56,15 @@
     Passo e chiudo 
     ~ La vostra collega che avete nominato capogruppo
 }
+
+30/12/2024: {
+    Posizione Sala studio 1, Discord
+    Mattina: 
+        Revisione datapath e fsm. I disegni aggiornati sono stati caricati su github dal nostro esperto di estensioni VisualStudio. 
+        I nostri eroi hanno anche provato ad avventurarsi nel magico mondo di Vitis HLS con scarso successo.
+    Pomeriggio: 
+        Divisione dei compiti, Diego si è occupato della Uart, Daniele ha scritto (anche se ha usato più il riempimento automatico che altro) la FSM e la RAM A (la RAM B è identica), mentre la sottoscritta ha aggiornato il file "Blocchi datapath.txt" e adesso il LogBook. 
+        Il tutto contornato da alcune pause, come la discussione della differenza tra avvolgibile e tapparella (che sono la stessa cosa in pratica) e l'idea di un viaggio in Giappone in quanto il nostro collega Diego ha trovato dei voli convenienti a marzo.
+        
+        E questo è tutto, alla prossima!
+}
