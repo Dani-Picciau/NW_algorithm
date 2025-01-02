@@ -1,14 +1,14 @@
 module mtc_msmtc(
     input [2:0] a,     // Segnale di input A (3 bit)
     input [2:0] b,     // Segnale di input B (3 bit)
-    output reg signed [3:0] result // Risultato complemento a 2 (+1 o -1, 4 bit)
+    output reg  result // se 1 match se 0 mismatch
 );
 
 always @(a,b) begin
     if (a == b) 
-        result = 4'b0001;  // +1 in formato binario (4 bit)
+        result = 1'b1;  //match
     else 
-        result = 4'b1111;  // -1 in formato binario (4 bit)
+        result = 1'b0;  //mismatch
 end
     
 endmodule
