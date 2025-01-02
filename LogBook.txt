@@ -68,3 +68,5 @@
         
         E questo è tutto, alla prossima!
 }
+
+//per segnare un numero in complemento a due bisogna dare la seganale il tag signed in modo che capisca che si stia usando l complemento a due e non il binario semplice 
