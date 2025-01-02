@@ -112,7 +112,7 @@ Process{
 	— outputs: 
 		— dataA; (3 bits)
 		— dataB; (3 bits)
-		— score;
+		— score; (9 bit)
 }
 
 Alignment_Counter{
