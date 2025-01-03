@@ -1,4 +1,4 @@
-module iniz#(
+module iniz #(
     parameter gap = -1
 ) (
     input wire clk,rst,

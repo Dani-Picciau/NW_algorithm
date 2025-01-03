@@ -11,6 +11,7 @@ module max #(
     reg [8:0] diag_calc, up_calc, lx_calc;
 
     always @(posedge clk, value, diag, up, lx) begin
+        
         calculated = 1'b0;
 
         if(value) diag_calc = diag +1;
