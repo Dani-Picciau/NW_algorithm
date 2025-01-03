@@ -1,5 +1,6 @@
 module Direction_RAM #(
-    parameter N=128
+    parameter N=128,
+    parameter BitAddr = $clog2(N)  
 ) (
     input wire clk,rst,
     input wire en_ins,we,en_traceB, en_init,
@@ -7,8 +8,8 @@ module Direction_RAM #(
     input wire [2:0] symbol_in,
     output reg [2:0] symbol_out
 );
-    parameter BitAddr = $clog2(N);
-    reg [2:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings  then each cell needs to be of 3 bits because we need them for the arrow < > \*/
+
+    reg [2:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings then each cell needs to be of 3 bits because we need them for the arrow < > \*/
     
     parameter [2:0] UP=3'b010, LEFT=3'b100;
 
@@ -22,17 +23,20 @@ module Direction_RAM #(
             symbol_out<=0;
         end
         else if (en_init) begin
-            if(we)begin
-                /*initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
-                ram[addr] <= LEFT;
-                ram[N*addr] <= UP; 
-            end
+                if(we) begin/*initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
+                    ram[addr] <= LEFT;
+                    ram[N*addr] <= UP; 
+                end
         end
         else if(en_ins) begin
-            if(we) ram[i+N*j] <= symbol_in;
+            if(we)
+            begin
+                ram[i+N*j] <= symbol_in;
+            end
         end
         else if(en_traceB) begin
-            symbol_out=ram[i_t + N * j_t];
+            symbol_out <= ram[i_t + N * j_t];
         end
     end
-endmodule
+
+ endmodule
