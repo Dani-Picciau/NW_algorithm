@@ -20,7 +20,8 @@ module Scores_RAM #(
             if(en_init) begin
                 if(we)
                     begin
-                    ram[addr] <= data;
+                    ram[addr] <= data; //addr+N*0 = first row
+                    ram[N*addr] <= data; // 0+N*addr = first column
                     end
             end
             else if(en_ins_read) begin
