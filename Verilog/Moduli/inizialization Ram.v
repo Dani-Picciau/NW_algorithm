@@ -9,18 +9,20 @@ output reg end_init
     reg signed [3:0]gap=-1;
     reg [7:0]addres=9'b000000000;
     reg [8:0]dato=9'b000000001;
-    
-        always @(posedge clk, posedge rst) begin
+
+    //inizializzazione registro dati
+    always @(posedge clk, posedge rst) begin
         if(rst) data <= 0;
         else data <= dato;
-        end
-    
+    end
+
+    //inizializatione registro inidirizzi
     always @(posedge clk, posedge rst) begin
         if(rst) addr <= 0;
         else addr <= addres;
     end
 
-    
+    //scrittra prima riga della matrice con i punteggi di gap, per la colonna verrà gestita direttamente dentro la ram
     always@(clk,en_init,dato,addres)begin
     if(en_init==1)begin 
     dato=data+gap;
@@ -29,8 +31,5 @@ output reg end_init
     end
     else end_init=1;; 
     end
-    
-    
-
     
 endmodule
