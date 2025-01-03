@@ -4,7 +4,7 @@
 RAM A:{ (parametric)
 	— inputs: 
 		— SeqA;
-		— en_read;
+		— en_ins_read;
 		— index i;
 		— en_traceB;
 		— index i_t; (from traceBack)
@@ -16,7 +16,7 @@ RAM A:{ (parametric)
 RAM B: { (parametric)
 	— inputs: 
 		— SeqB;
-		— en_read;
+		— en_ins_read;
 		— index j;
 		— en_traceB;
 		— index j_t; (from traceBack)
@@ -42,7 +42,7 @@ Max (Calcola il valore massimo tra quelli proposti dalla cella up,sx e diag più
 		— diag; (valore della cella in diagonale)
 			
 	— outputs:
-		— Max; (3 bits)
+		— Max; (9 bits)
 		— Cell_Direction; (3 bits)
 		— Calculated
 }
@@ -50,8 +50,7 @@ Max (Calcola il valore massimo tra quelli proposti dalla cella up,sx e diag più
 RAM Scores (tiene in memoria i punteggi):{
 	— inputs:
 		— Max; (3 bits)
-		— en_ins;
-		— en_read
+		— en_ins_read;
 		— we;
 		— index i;(in arrivo dalla logica di gestione dell'inserimento)
 		— index j; ('')
@@ -72,7 +71,7 @@ Initial_counter (Scrive prima riga completa e prima colonna completa della matri
 
 Insertion_counter (Calcola gli indici da mandare alle RAM che identificheranno la cella in cui inserire il valore di Max){
 	— inputs:
-		— en_read;
+		— en_ins_read;
 	— outputs:
 		—end_filling;
 		— i(index RAM A);
@@ -85,8 +84,10 @@ RAM Direction:{
 		— index j;
 		— index i_t;
 		— index j_t;
+		— index addr;
 		— symbol_in; (3 bits)
-		— en_ins;
+		— en_ins_read;
+		— en_init;
 		— we;
 		— en_traceB;
 
