@@ -9,7 +9,7 @@ module Direction_RAM #(
     output reg [2:0] symbol_out, simbolo
 );
 
-    reg [2:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings then each cell needs to be of 3 bits because we need them for the arrow < > \*/
+    reg [2:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings then each cell needs to be of 3 bits because we need them for the arrow: <-, ⭡, ↖ */
     
     parameter UP=3'b010, LEFT=3'b100;
     wire [BitAddr:0] i,j; 
@@ -18,21 +18,12 @@ module Direction_RAM #(
         if(rst) begin
             symbol_out<=0;
         end
-        else if (en_init) begin
-                if(we) begin/*initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
-                    ram[addr] <= LEFT;
-                    ram[N*addr] <= UP; 
-                end
+        else if (en_init && we) begin
+            /*initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
+            ram[addr] <= LEFT;
+            ram[N*addr] <= UP; 
         end
-        else if(en_ins) begin
-            if(we)
-            begin
-                ram[i+N*j] <= symbol_in;
-            end
-        end
-        else if(en_traceB) begin
-            symbol_out <= ram[i_t + N * j_t];
-        end
+        else if(en_ins && we) ram[(i+1)+(N*(j+1))] <= symbol_in;
+        else if(en_traceB) symbol_out <= ram[i_t + N * j_t];
     end
-
- endmodule
+endmodule
