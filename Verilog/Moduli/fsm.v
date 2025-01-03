@@ -69,6 +69,13 @@ module fsm (
                 en_read = 1'b0;
                 en_traceB = 1'b0;
             end
+            default:begin
+                en_init = 1'b0;
+                en_ins = 1'b0;
+                we = 1'b0;
+                en_read = 1'b0;
+                en_traceB = 1'b0;
+            end
         endcase
     end
 endmodule
