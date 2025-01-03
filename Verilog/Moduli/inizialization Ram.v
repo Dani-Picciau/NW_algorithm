@@ -10,7 +10,6 @@ output reg end_init
     reg [7:0]addres=9'b000000000;
     reg [8:0]dato=9'b000000001;
     
-    //aggiungere che in posizione 0 ci sia valore 0 
         always @(posedge clk, posedge rst) begin
         if(rst) data <= 0;
         else data <= dato;
