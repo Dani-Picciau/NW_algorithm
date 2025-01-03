@@ -7,4 +7,5 @@ module match_mismatch(
         if (a == b) value = 1'b1; 
         else value = 1'b0;  
     end
+    
 endmodule
