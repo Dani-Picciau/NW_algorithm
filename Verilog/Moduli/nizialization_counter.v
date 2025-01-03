@@ -8,8 +8,8 @@ module iniz #(
     output reg end_init
 ); //valore di gap -1 
     
-    reg [7:0]addres=9'b000000000;
-    reg [8:0]dato=9'b000000001;
+    reg [7:0] addres = 9'b000000000;
+    reg [8:0] dato = 9'b000000001;
 
     //inizializzazione registro dati
     always @(posedge clk, posedge rst) begin
