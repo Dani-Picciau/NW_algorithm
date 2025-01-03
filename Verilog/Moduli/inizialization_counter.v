@@ -1,12 +1,13 @@
-module iniz(
-input wire clk,rst,
-input wire en_init,
-output reg [7:0]addr,
-output reg signed [8:0]data,
-output reg end_init
-    ); //valore di gap -1 
+module iniz#(
+    parameter gap = -1
+) (
+    input wire clk,rst,
+    input wire en_init,
+    output reg [7:0] addr,
+    output reg signed [8:0] data,
+    output reg end_init
+); //valore di gap -1 
     
-    reg signed [3:0]gap=-1;
     reg [7:0]addres=9'b000000000;
     reg [8:0]dato=9'b000000001;
 
@@ -23,13 +24,12 @@ output reg end_init
     end
 
     //scrittra prima riga della matrice con i punteggi di gap, per la colonna verrà gestita direttamente dentro la ram
-    always@(clk,en_init,dato,addres)begin
-    if(en_init==1)begin 
-    dato=data+gap;
-    addres=addr+1;
-    end_init=0;
+    always@(clk, en_init, dato, addres)begin
+        if(en_init==1)begin 
+            dato = data + gap;
+            addres = addr + 1;
+            end_init = 0;
+        end
+        else end_init=1; 
     end
-    else end_init=1;; 
-    end
-    
 endmodule
