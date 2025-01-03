@@ -9,8 +9,7 @@ module Direction_RAM #(
     output reg [2:0] symbol_out
 );
 
-    reg [2:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings
-                            then each cell needs to be of 3 bits because we need them for the arrow < > \*/
+    reg [2:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings then each cell needs to be of 3 bits because we need them for the arrow < > \*/
     
     parameter [2:0] UP=3'b010, LEFT=3'b100;
 
