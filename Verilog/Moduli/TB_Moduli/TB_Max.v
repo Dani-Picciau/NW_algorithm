@@ -1,4 +1,4 @@
-`include "/c:/Users/dany2/OneDrive/Desktop/Documenti/GitHub/NW_algorithm/Verilog/Moduli/max.v"
+`include "/c:/Users/dany2/OneDrive/Desktop/Documenti/GitHub/NW_algorithm/Verilog/Moduli/Max.v"
 
 module TB_Max;
     reg clk, value;
@@ -8,8 +8,11 @@ module TB_Max;
     wire calculated;
     
     Max test(
-        .clk(clk), .value(value),
-        .diag(diag), .up(up), .lx(lx),
+        .clk(clk), 
+        .value(value),
+        .diag(diag), 
+        .up(up), 
+        .lx(lx),
         .max(max),
         .symbol(symbol),
         .calculated(calculated)
