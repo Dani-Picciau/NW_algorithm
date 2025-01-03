@@ -4,8 +4,7 @@ module fsm (
     output reg en_init, en_ins, we, en_read, en_traceB, 
     output reg [1:0] state
 );
-    parameter init = 3'b000, read = 3'b001, fill = 3'b010, 
-    traceB = 3'b011, Ending = 3'b100;
+    parameter init = 3'b000, read = 3'b001, fill = 3'b010, traceB = 3'b011, Ending = 3'b100;
     reg [1:0] next_state;
 
     always @(posedge clk, posedge rst) begin
@@ -68,6 +67,14 @@ module fsm (
                 en_read = 1'b0;
                 en_traceB = 1'b0;
             end
+            default: begin
+                en_init = 1'b0;
+                en_ins = 1'b0;
+                we = 1'b0;
+                en_read = 1'b0;
+                en_traceB = 1'b0;
+            end
         endcase
     end
 endmodule
+
