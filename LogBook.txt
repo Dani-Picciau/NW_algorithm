@@ -70,3 +70,5 @@
 }
 
 //per segnare un numero in complemento a due bisogna dare la seganale il tag signed in modo che capisca che si stia usando l complemento a due e non il binario semplice 
+
+// ieri abbiamo unito en_read e en_ins perchè ca,biavano insieme nella macchina a statai invece vanno rimessi distinti perché sennò si crea un conflitto nella ram per lettura e scrittura
