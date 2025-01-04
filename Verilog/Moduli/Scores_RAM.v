@@ -25,12 +25,11 @@ module Scores_RAM #(
                 end
             end
             else if(en_ins_read) begin
-                if(we) ram[(i+1)+(N*(j+1))] <= max;  
-                else begin
-                    diag<=ram[i+N*j];
-                    left<=ram[(i+1)+N*j];
-                    up<=ram[i+N*(j+1)];
-                end
+                if(we)  begin ram[(i+1)+(N*(j+1))] <= max; end
+                
+                diag<=ram[i+N*j];
+                left<=ram[(i+1)+N*j];
+                up<=ram[i+N*(j+1)];
             end
         end
     end
