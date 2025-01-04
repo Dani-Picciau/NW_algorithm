@@ -6,14 +6,14 @@ module Direction_RAM #(
     input wire en_ins, we, en_traceB, en_init,
     input wire [BitAddr:0] i, j, i_t, j_t, addr,
     input wire [2:0] symbol_in,
-    output reg [2:0] symbol_out, simbolo
+    output reg [2:0] symbol_out
 );
 
     reg [2:0] ram [((N+1)*(N+1))-1:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings then each cell needs to be of 3 bits because we need them for the arrow: <-, ⭡, ↖ */
     
     parameter UP=3'b010, LEFT=3'b100;
     
-    always @(posedge clk, posedge rst, en_init, en_ins, we) begin
+    always @(posedge clk, posedge rst) begin
         if(rst) begin
             symbol_out<=0;
         end
