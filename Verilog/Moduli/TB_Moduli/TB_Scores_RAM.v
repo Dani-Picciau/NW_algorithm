@@ -1,14 +1,12 @@
-`timescale 1ns / 1ps
 `include "C:\Users\Monica\Documents\GitHub\NW_algorithm\Verilog\Moduli\Scores_RAM.v"
 
+module TB_Scores_RAM;
 
-module tb_Scores_RAM;
-
-    // Parametri
+    // Parameters
     parameter N = 4;
     parameter BitAddr = $clog2(N+1);
 
-    // Segnali di input
+    // Input signals
     reg clk;
     reg rst;
     reg en_init;
@@ -21,13 +19,13 @@ module tb_Scores_RAM;
     reg [8:0] max;
     reg [8:0] data;
 
-    // Segnali di output
+    // Output signals
     wire [8:0] diag;
     wire [8:0] up;
     wire [8:0] left;
 
-    // Istanza del modulo Scores_RAM
-    Scores_RAM #(.N(N)) SRAM (
+    // Instantiation of the Scores_RAM module
+    Scores_RAM #(.N(N)) test (
         .clk(clk),
         .rst(rst),
         .en_init(en_init),
@@ -44,11 +42,11 @@ module tb_Scores_RAM;
         .left(left)
     );
 
-    // Generazione del clock
+    // Clock generation
     always #1 clk = ~clk;
 
     initial begin
-        // Inizializzazione dei segnali
+        // Initialization of signals
         clk = 0;
         rst = 1;
         en_init = 0;
@@ -65,7 +63,7 @@ module tb_Scores_RAM;
         #10;
         rst = 0;
 
-        // Test di inizializzazione
+        // Initialization test
         en_init = 1;
         we = 1;
         addr = 0;
@@ -83,66 +81,66 @@ module tb_Scores_RAM;
         en_init = 0;
         we = 0;
 
-        // Test di inserimento e lettura
+        // Insertion and read test
         #8
         en_ins = 1;
         we = 1;
         
-        //cella 1:1
+        // cell 1:1
         i_in = 0;
         j_in = 0;
         max = 9'b000000001;
         
-        //cella 1:2
+        // cell 1:2
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 0;
         j_in = 1;
         max = 9'd12;
         
-        //cella 1:3
+        // cell 1:3
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 0;
         j_in = 2;
         max = 9'd13;
         
-        //cella 2:1
+        // cell 2:1
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 1;
         j_in = 0;
         max = 9'd21;
         
-        //cella 2:2
+        // cell 2:2
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 1;
         j_in = 1;
         max = 9'd2;
         
-        //cella 2:3
+        // cell 2:3
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 1;
         j_in = 2;
         max = 9'd23;
         
-        //cella 3:1
+        // cell 3:1
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 2;
         j_in = 0;
         max = 9'd31;
         
-        //cella 3:2
+        // cell 3:2
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 2;
         j_in = 1;
         max = 9'd32;
         
-        //cella 3:3
+        // cell 3:3
         #4 we=0; #2 en_read=1;
         #4 we=1; #2 en_read=0;
         i_in = 2;
@@ -155,9 +153,8 @@ module tb_Scores_RAM;
         #4;
         en_ins = 0;
 
-        // Fine del test
+        // End of the test
         #10;
         $stop;
     end
-
 endmodule

@@ -18,7 +18,7 @@ module Direction_RAM #(
             symbol_out<=0;
         end
         else if (en_init && we) begin
-            /*initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
+            /*Initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
             ram[addr] <= LEFT;
             ram[(N+1)*addr] <= UP; 
         end
