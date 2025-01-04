@@ -1,17 +1,20 @@
+`timescale 1ns / 1ps
+
 module Scores_RAM #(
-    parameter N=128
+    parameter N=128, 
+    parameter BitAddr = $clog2(N+1)
 ) (
     input wire clk,rst,
-    input wire en_init,en_ins_read,we,
+    input wire en_init,en_ins,we,en_read,
     input wire [BitAddr:0] addr, i, j,
     input wire [8:0] max, data,
     output reg [8:0] diag, up, left
 );
-    parameter BitAddr = $clog2(N);
-    reg [8:0] ram [N*N:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings
+    
+    reg [8:0] ram [((N+1)*(N+1))-1:0]; /*the ram needs to be 129*129 because we need 128 characters +1 of gap for both the strings
     then each cell needs to be of 9 bits because that's how many bits are needed to store the numbers -128 to +128 in c2*/
 
-    always @(posedge clk, posedge rst/*,en_init,en_read,en_ins,we*/) begin
+    always @(posedge clk, posedge rst) begin
         if(rst) begin
             diag<=0;
             up<=0;
@@ -21,15 +24,16 @@ module Scores_RAM #(
             if(en_init) begin
                 if(we) begin
                     ram[addr] <= data; //addr+N*0 = first row
-                    ram[N*addr] <= data; // 0+N*addr = first column
+                    ram[(N+1)*addr] <= data; // 0+N*addr = first column
                 end
             end
-            else if(en_ins_read) begin
-                if(we)  begin ram[(i+1)+(N*(j+1))] <= max; end
-                
-                diag<=ram[i+N*j];
-                left<=ram[(i+1)+N*j];
-                up<=ram[i+N*(j+1)];
+            else if(en_ins && we) begin
+                ram[(i+1)+((N+1)*(j+1))] <= max; 
+            end
+            else if(en_read) begin // ho dovuro riaggiungere questo perché sennò si creavano dei conflitti tra scrittura e lettura
+                    diag <= ram[i+(N+1)*j];
+                    left <= ram[(i+1)+(N+1)*j];
+                    up <= ram[i+(N+1)*(j+1)];
             end
         end
     end
