@@ -23,11 +23,11 @@ module Scores_RAM #(
                 ram[addr] <= data; //addr+N*0 = first row
                 ram[(N+1)*addr] <= data; // 0+N*addr = first column
             end
-            else if(en_ins && we) ram[(i+1)+((N+1)*(j+1))] <= max; 
+            else if(en_ins && we) ram[(j+1)+((N+1)*(i+1))] <= max; 
             else if(en_read) begin //This helps to avoid creating problems between reading and writing
-                diag <= ram[i+(N+1)*j];
-                left <= ram[(i+1)+(N+1)*j];
-                up <= ram[i+(N+1)*(j+1)];
+                diag <= ram[j+(N+1)*i];
+                left <= ram[(j+1)+(N+1)*i];
+                up <= ram[j+(N+1)*(i+1)];
             end
         end
     end
