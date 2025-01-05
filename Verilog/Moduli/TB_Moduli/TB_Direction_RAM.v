@@ -75,6 +75,8 @@ module TB_Direction_RAM;
       #2 i_t=1; j_t=2;
       #2 i_t=2; j_t=1;    
       #2 i_t=2; j_t=2;
+      #2 i_t=2; j_t=1;
+      #2 i_t=1; j_t=2;
       
       #5
       $stop;

@@ -16,13 +16,14 @@ module Direction_RAM #(
     always @(posedge clk, posedge rst) begin
         if(rst) begin
             symbol_out<=0;
+            ram[0] <= 3'b000;
         end
-        else if (en_init && we) begin
+        else if (en_init && we && addr!=0) begin
             /*Initializzation for all the arrows, in the first column and in the first row, that points to the 0*/
             ram[addr] <= LEFT;
             ram[(N+1)*addr] <= UP; 
         end
-        else if(en_ins && we) ram[(i+1)+((N+1)*(j+1))] <= symbol_in;
-        else if(en_traceB) symbol_out <= ram[i_t + (N+1) * j_t];
+        else if(en_ins && we) ram[(j+1)+((N+1)*(i+1))] <= symbol_in;
+        else if(en_traceB) symbol_out <= ram[j_t + (N+1) * i_t];
     end
 endmodule
