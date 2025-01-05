@@ -1,12 +1,20 @@
 `include "/c:/Users/dany2/OneDrive/Desktop/Documenti/GitHub/NW_algorithm/Verilog/Moduli/Max.v"
 
 module TB_Max;
-    reg clk, value;
-    reg [8:0] diag, up, lx;
+
+   // Input signals
+    reg clk;
+    reg value;
+    reg [8:0] diag;
+    reg [8:0] up;
+    reg [8:0] lx;
+
+    // Output signals
     wire [8:0] max;
     wire [2:0]symbol;
     wire calculated;
     
+    // Instantiation of the Max module
     Max test(
         .clk(clk), 
         .value(value),
@@ -18,7 +26,9 @@ module TB_Max;
         .calculated(calculated)
     );
     
-    always #0.5 clk=~clk;
+    // Clock generation
+    always #0.5 clk = ~clk;
+
     initial begin
         clk=0;
         value= 1;

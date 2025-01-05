@@ -56,19 +56,24 @@ module TB_Direction_RAM;
       
       // Writing symbols starting from position (1,1) in the matrix
       #10 en_init = 0; en_ins = 1; we = 1; en_traceB = 0;
-         i_in = 0; j_in = 0; symbol_in = 3'b010;
-      #2  i_in = 0; j_in = 1; symbol_in = 3'b001;
-      #2  i_in = 1; j_in = 0; symbol_in = 3'b001;
-      #2  i_in = 1; j_in = 1; symbol_in = 3'b100;
+         i_in = 0; j_in = 0; symbol_in = 3'b010; // Cell (1,1) because of the +1 in the formula
+      #2 i_in = 0; j_in = 1; symbol_in = 3'b001; // Cell (1,2) because of the +1 in the formula
+      #2 i_in = 1; j_in = 0; symbol_in = 3'b010; // Cell (2,1) because of the +1 in the formula
+      #2 i_in = 1; j_in = 1; symbol_in = 3'b100; // Cell (2,2) because of the +1 in the formula
       
       // Reading the inserted values
       #5 en_traceB=1; we=0; en_ins=0;
-         i_t=0; j_t=0;
+        i_t=0; j_t=0; // Initial gap cell
+      // -> Gap row
       #2 i_t=0; j_t=1;       
-      #2 i_t=1; j_t=0;
-      #2 i_t=1; j_t=1;
       #2 i_t=0; j_t=2;
+      // -> Gap column
+      #2 i_t=1; j_t=0;
       #2 i_t=2; j_t=0;
+      // -> Value from symbol_in
+      #2 i_t=1; j_t=1;
+      #2 i_t=1; j_t=2;
+      #2 i_t=2; j_t=1;    
       #2 i_t=2; j_t=2;
       
       #5
