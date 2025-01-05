@@ -1,4 +1,4 @@
-`include "/c:/Users/dany2/OneDrive/Desktop/Documenti/GitHub/NW_algorithm/Verilog/Moduli/Max.v"
+`include "/c:.../Max.v"
 
 module TB_Max;
 

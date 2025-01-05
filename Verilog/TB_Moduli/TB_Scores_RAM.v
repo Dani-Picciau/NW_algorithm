@@ -1,4 +1,4 @@
-`include "C:\Users\Monica\Documents\GitHub\NW_algorithm\Verilog\Moduli\Scores_RAM.v"
+`include "/c:.../Scores_RAM.v"
 
 module TB_Scores_RAM;
 

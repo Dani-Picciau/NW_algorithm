@@ -1,4 +1,4 @@
-`include "/c:/Users/dany2/OneDrive/Desktop/Documenti/GitHub/NW_algorithm/Verilog/Moduli/Direction_RAM.v"
+`include "/c:.../Direction_RAM.v"
 
 module TB_Direction_RAM;
 
