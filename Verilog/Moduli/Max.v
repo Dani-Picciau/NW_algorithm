@@ -1,5 +1,7 @@
 module max #(
-    parameter gap = -1
+    parameter gap_score = -2,
+    parameter match_score = 1,
+    parameter mismatch_score = -1
 ) (
     input wire value, clk,
     input wire [8:0] diag, up, lx, //9 bits to include values ​​from +128 to -128
@@ -14,10 +16,10 @@ module max #(
         
         calculated = 1'b0;
 
-        if(value) diag_calc = diag +1;
-        else diag_calc = diag-1;
-        up_calc = up + gap;
-        lx_calc = lx + gap;
+        if(value) diag_calc = diag + match_score;
+        else diag_calc = diag + mismatch_score;
+        up_calc = up + gap_score;
+        lx_calc = lx + gap_score;
 
 
         if (diag_calc > up_calc && diag_calc > lx_calc) begin //if the diagonal is the greatest

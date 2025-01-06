@@ -1,12 +1,12 @@
 module iniz #(
-    parameter gap = -1
+    parameter gap_score = -2
 ) (
     input wire clk,rst,
     input wire en_init,
     output reg [7:0] addr,
     output reg signed [8:0] data,
     output reg end_init
-); //valore di gap -1 
+); 
     
     reg [7:0] addres = 9'b000000000;
     reg [8:0] dato = 9'b000000001;
@@ -23,10 +23,10 @@ module iniz #(
         else addr <= addres;
     end
 
-    //scrittra prima riga della matrice con i punteggi di gap, per la colonna verrà gestita direttamente dentro la ram
+    //scrittra prima riga della matrice con i punteggi di gap_score, per la colonna verrà gestita direttamente dentro la ram
     always@(clk, en_init, dato, addres)begin
         if(en_init==1)begin 
-            dato = data + gap;
+            dato = data + gap_score;
             addres = addr + 1;
             end_init = 0;
         end
