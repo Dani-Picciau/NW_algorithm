@@ -1,7 +1,5 @@
-`timescale 1ns / 1ps
-
 module RD_Counter#(
- parameter N=128, 
+    parameter N=128, 
     parameter BitAddr = $clog2(N+1)
 ) (
     input wire clk,rst,
@@ -63,5 +61,4 @@ module RD_Counter#(
            end
         end
     end
-    
 endmodule

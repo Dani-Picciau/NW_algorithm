@@ -1,4 +1,6 @@
-module TB ();   // Parametri
+`include "/c:.../Reading_direction_Counter.v"
+
+module TB_RD_Counter ();   // Parametri
     parameter N = 4;
     parameter BitAddr = $clog2(N+1);
 
@@ -13,9 +15,7 @@ module TB ();   // Parametri
     wire [BitAddr:0] j;
 
     // Istanza del modulo Reading_direction_counter
-    RD_Counter #(
-        .N(N)
-    ) RDC (
+    Reading_direction_counter #(.N(N)) RDC (
         .clk(clk),
         .rst(rst),
         .symbol(symbol),
