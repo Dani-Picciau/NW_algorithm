@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-`timescale 1ns / 1ps
+`include "C:\Users\crist\Desktop\GitHUb\Progetto ESD\NW_algorithm\Verilog\Moduli\Insertion_Counter.v"
 
 module Insertion_Counter_tb;
 
