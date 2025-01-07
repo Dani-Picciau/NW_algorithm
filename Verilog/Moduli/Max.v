@@ -1,4 +1,4 @@
-module max #(
+module Max #(
     parameter gap_score = -2,
     parameter match_score = 1,
     parameter mismatch_score = -1
