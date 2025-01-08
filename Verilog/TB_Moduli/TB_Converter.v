@@ -2,14 +2,16 @@
 
 module TB_Converter;
 
-    // Dichiarazione dei segnali di input e output
+    // Input signals
     reg clk;
     reg rst;
     reg start;
+
+    // Output signals
     wire [2:0] rom_data;
     wire done;
 
-    // Istanziazione del modulo Converter
+   // Instantiation of the Converter module
     Converter test (
         .clk(clk),
         .rst(rst),
@@ -18,17 +20,16 @@ module TB_Converter;
         .done(done)
     );
 
-    // Generatore di clock
-    always #5 clk = ~clk;  // Clock con periodo di 10 unità di tempo
+    // Clock generation
+    always #5 clk = ~clk; 
    
-    // Inizializzazione dei segnali
     initial begin
-        // Inizializzazione dei segnali
+        // Initialization of signals
         clk = 0; rst = 1; start = 0;
         #10
         //Start reading
         rst=0; start=1;
-        #50
+        #150 // Insert the number of cycles needed to read the file
         $stop;
     end
 endmodule
