@@ -2,6 +2,9 @@
 
 module TB_Converter;
 
+    // Parameters
+    parameter N = 5;
+    
     // Input signals
     reg clk;
     reg rst;
@@ -12,7 +15,7 @@ module TB_Converter;
     wire done;
 
    // Instantiation of the Converter module
-    Converter test (
+    Converter test #(.N(N)) (
         .clk(clk),
         .rst(rst),
         .start(start),

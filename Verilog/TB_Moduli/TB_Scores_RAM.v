@@ -25,7 +25,7 @@ module TB_Scores_RAM;
     wire [8:0] left;
 
     // Instantiation of the Scores_RAM module
-    Scores_RAM #(.N(N)) test (
+    Scores_RAM #(.N(N), .BitAddr(BitAddr)) test (
         .clk(clk),
         .rst(rst),
         .en_init(en_init),

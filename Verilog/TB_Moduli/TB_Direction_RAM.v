@@ -25,7 +25,7 @@ module TB_Direction_RAM;
    wire [2:0] symbol_out;
    
    // Instantiation of the Direction_RAM module
-   Direction_RAM #(.N(N)) test (
+   Direction_RAM #(.N(N), .BitAddr(BitAddr)) test (
       .clk(clk), 
       .rst(rst),
       .en_ins(en_ins), 

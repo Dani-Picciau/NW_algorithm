@@ -15,7 +15,7 @@ module TB_RD_Counter ();   // Parametri
     wire [BitAddr:0] j;
 
     // Istanza del modulo Reading_direction_counter
-    RD_Counter #(.N(N)) RDC (
+    RD_Counter #(.N(N), .BitAddr(BitAddr)) RDC (
         .clk(clk),
         .rst(rst),
         .symbol(symbol),

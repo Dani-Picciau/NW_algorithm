@@ -13,10 +13,8 @@ module test_Counter_Aligned;
     // Outputs
     wire [$clog2(MAX):0] address;
 
-    // Instantiate the Unit Under Test (UUT)
-    Counter_Alligned #(
-        .MAX(MAX)
-    ) uut (
+    // Instantiate the Unit Under Test (test)
+    Counter_Alligned #(.MAX(MAX)) test (
         .clk(clk),
         .rst(rst),
         .en_traceB(en_traceB),
@@ -48,5 +46,4 @@ module test_Counter_Aligned;
 
         $finish;
     end
-
 endmodule

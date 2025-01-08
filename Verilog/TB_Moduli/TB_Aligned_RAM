@@ -15,11 +15,8 @@ module test_Alligned_RAM_A;
     // Outputs
     wire [2:0] data_out;
 
-    // Instantiate the Unit Under Test (UUT)
-    All_RAM_A #(
-        .N(N),
-        .BitAddr(BitAddr)
-    ) uut (
+    // Instantiate the Unit Under Test (test)
+    All_RAM_A #(.N(N), .BitAddr(BitAddr)) test (
         .clk(clk),
         .en_traceB(en_traceB),
         .i(i),
