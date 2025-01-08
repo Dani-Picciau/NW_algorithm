@@ -101,7 +101,7 @@
     Aggiornamento delle 13.40
     Posizione: student-hub, Piandanna
 
-    Tutto il nostro entusiasmo oè stato troncato dal professore stamattina a lezione.
+    Tutto il nostro entusiasmo è stato troncato dal professore stamattina a lezione.
     Qualcuno potrebbe anche dire che la situazione è degenerata velocemente. 
     I nostri blocchi RAM non vanno bene perché non hanno un corrispettivo fisico esistente nella realtà, per questo andranno suddivise in vari moduli per avere pieno controllo delle funzionalità e per fare in modo che le RAM facciamo solo le RAM.
     Questo "piccolo" cambiamento ci costerà un po' di lavoro in più del previsto.
