@@ -1,3 +1,4 @@
+`include "C:\Users\crist\Desktop\GitHUb\Progetto ESD\NW_algorithm\Verilog\UART"
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: University of Sassari
@@ -24,7 +25,7 @@ module top_tx
     
 	//gestione dei registri di input
 	/*segnale di abilitazione campionamento dato da trasmettere: 
-	ALTO se il produttore richiede una trasmissione (transmit=1) e la UART non è attualmente già impegnata in una trasmissione (busy=0)*/
+	ALTO se il produttore richiede una trasmissione (transmit=1) e la UART non ï¿½ attualmente giï¿½ impegnata in una trasmissione (busy=0)*/
 	wire en_in;
 	/*dato campionato*/
 	wire [DATA_BW-1:0] data_stored;
@@ -64,7 +65,7 @@ module top_tx
 	counter #(.MAX(DATA_BW), .N_BIT(DATA_BW_BIT)) CNT_DATA(.clk(baud_clk), .rst(rst), .en(en), .count(count));
 	assign hit = (count==DATA_BW-1) ? 1'b1: 1'b0; 
 	 
-	//macchina a stati di controllo della funzionalità del sistema
+	//macchina a stati di controllo della funzionalitï¿½ del sistema
 	fsm_t #(.DATA_BW(DATA_BW), .DATA_BW_BIT(DATA_BW_BIT)) FSM_TX(.clk(baud_clk), .rst(rst), .transmit(transmit_int),
 			.data_hit(hit), .data_in(data_stored), .count(count), .en(en), .TX(TX), .busy(busy_int));
 		
