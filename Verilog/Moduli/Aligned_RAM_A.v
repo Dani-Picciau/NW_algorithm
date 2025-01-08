@@ -7,19 +7,14 @@ module Al_RAM_A #(
     input wire [BitAddr:0] i,
     input wire [2:0] data_in,
     output wire [2:0] data_out
-
 );
-
     reg [BitAddr:0] addr_r;
     reg [8:0] ram [N-1:0];
 
     always @(posedge clk) begin
-        if (en_traceB == 1'b1) begin
-            ram[i] <= data_in;
-        end
+        if (en_traceB == 1'b1) ram[i] <= data_in;
         addr_r <= i; 
-     end
+    end
 
-     assign data_out = ram[addr_r];
-
+    assign data_out = ram[addr_r];
 endmodule   

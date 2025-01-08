@@ -1,4 +1,4 @@
-`include "C:\Users\crist\Desktop\GitHUb\Progetto ESD\NW_algorithm\Verilog\Moduli\Alligned_RAM_A.v"
+`include "/c:.../Al_RAM.v"
 
 module test_Alligned_RAM_A;
 

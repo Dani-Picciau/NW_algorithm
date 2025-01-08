@@ -1,4 +1,4 @@
-`include "C:\Users\crist\Desktop\GitHUb\Progetto ESD\NW_algorithm\Verilog\Moduli\Counter_Aligned_RAM.v"
+`include "/c:.../Counter_Aligned.v"
 
 module test_Counter_Aligned;
 
