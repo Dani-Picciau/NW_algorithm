@@ -76,3 +76,25 @@
     Potremmo sembrare un po indietro, ma adesso con la fine delle vacanze riprenderemo bene il ritmo anche perche effettivamente ce la stiamo chillando un pò troppo.
     Per ora è tutto, buon sabato sera a tutti <3.
 }
+
+08/01/2025: {
+    Posizione: Hub di medicina ad Agraria
+    Sono le 10:00 e i moduli del nostro datapath sono quasi tutti terminati. Mancano solo la ROM A e la ROM B che memorizzano le sequenze iniziali.
+    Ora tutti e 5 i membri del gruppo sono presenti. 
+    Siccome mancano un po' di pezzi in questo logbook faremo un mega riassunto: 
+        - Dopo un colloquio con il professore la RAm A e la RAM B iniziali (quelle che hanno le sequenze iniziali) sono diventate delle ROM e per poterle riempire è stato creato un altro modulo, il converter, per poter leggere le sequenze da file.
+        - Ci saranno due moduli converter, uno per ls ROM A e uno per la ROM B
+        - Bisogna aggiustare la macchina a stati per aggiungere un primo stto inziale, IDLE, in cui si riempiono le ROM.
+        - Bisogna in ogni caso rivedere la macchina a stati e valutare tutti gli aggiornamenti del sistema 
+        - Il counter delle RAM allineate ha adesso una sola uscita (l'indice) che va ad entrambe le RAM allineate.
+
+    Siccome per il report bisigna scrivere chi ha fatto quale modulo e chi ha aiutato chi, suggerirei di aggiungere dei commenti in tutti i codici con il nome dell'autore e del/degli aiutante/i.
+
+    Dato che abbiamo finito, o quasi, con tutti i moduli, ora Matteo aiuterà Diego (che ha acconsentito a ricevere un aiuto) con la UART.
+
+    Al momento attuale mancano i moduli per le ROM che stanno facendo Andrea e Daniele, e poi i moduli comprensivi di più moduli per poter testare i vari moduli in collaborazione. Lo farò più tardi a lezione. 
+
+    A parte questo per il momento non ci sono altre cose da fare. 
+
+    Spero di aver detto tutto, non mi viene in mente altro, al prossimo aggiornamento e buon lavoro a tutti. 
+}
