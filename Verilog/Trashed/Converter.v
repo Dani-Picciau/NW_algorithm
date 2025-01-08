@@ -13,7 +13,7 @@ module Converter #(
 
     // Initialize and open the file when the simulation starts
     initial begin
-        file = $fopen("C:/Esercizi verilog laboratorio/TestBlocks/TestBlocks/file.txt", "r"); 
+        file = $fopen("C:/your_path/file.txt", "r"); 
         if (file == 0) begin
             $display("Error: unable to open the file."); 
             $finish;                                  
@@ -33,6 +33,7 @@ module Converter #(
                 "T": memory[index] = 3'b010; // Map 'T' to binary 010
                 "A": memory[index] = 3'b011; // Map 'A' to binary 011
                 "C": memory[index] = 3'b100; // Map 'C' to binary 100
+                8'hff: memory[index] = 3'b000; // Mapping for the end of file
                 default: memory[index] = 3'bxxx; // Assign invalid value for unexpected characters
             endcase
             index_next <= index + 1; 
@@ -42,7 +43,7 @@ module Converter #(
                 $fclose(file);         
                 done <= 1; // Set the completion flag
             end
-        end
+        end 
     end
 
     // Logic to send data to the ROM-like output during reading
