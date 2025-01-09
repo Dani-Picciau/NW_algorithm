@@ -1,6 +1,7 @@
 module Counter_3 (
     input wire clk, rst,
     input wire en,
+    input wire stop_count,
     output reg signal,
     output reg [1:0] count
 );
@@ -19,6 +20,7 @@ module Counter_3 (
             signal = 1'b1;
             count_next <= 0;
         end 
-        else count_next <= count + 1;
+        else if(!stop_count) count_next <= count + 1;
+        else count_next <= count;
     end
 endmodule
