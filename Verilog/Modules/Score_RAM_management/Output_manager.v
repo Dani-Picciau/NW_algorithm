@@ -1,39 +1,48 @@
 module Output_manager (
-    input wire clk, rst,
-    input wire en_read,
-    input wire [1:0] count,
-    input wire [8:0] ram_data,
-    output reg [8:0] diag, left, up
+    input wire clk, rst,               // Clock and reset signals
+    input wire en_read,                // Enable signal for reading data
+    input wire [1:0] count,            // Counter to address the buffer
+    input wire [8:0] ram_data,         // Input data from RAM
+    output reg [8:0] diag, left, up    // Outputs for diagonal, left, and up data
 );
-    reg [8:0] buffer [2:0];
-    reg ready; // Segnale per indicare che i dati sono pronti
+    reg [8:0] buffer [2:0];            // Buffer to store data temporarily
+    reg ready;                         // Signal to indicate when data is ready for output
 
+    // Process to update the buffer and the "ready" signal
     always @(posedge clk or posedge rst) begin
         if (rst) begin
+            // Reset outputs and ready signal to 0
             diag <= 0;
             left <= 0;
             up <= 0;
             ready <= 0;
         end 
         else if (en_read) begin
+            // Store the incoming data into the buffer at the address specified by "count"
             buffer[count] <= ram_data;
-            if (count == 2'b10) ready <= 1; // I dati saranno pronti nel prossimo ciclo
+
+            // Set the "ready" signal high when all the buffer data is written (count == 2'b10)
+            if (count == 2'b10) ready <= 1;
             else ready <= 0;
         end
     end
 
+    // Process to update the outputs based on the "ready" signal
     always @(posedge clk or posedge rst) begin
         if (rst) begin
+            // Reset outputs to 0
             diag <= 0;
             left <= 0;
             up <= 0;
         end
         else if (ready) begin
-            diag <= buffer[0];
-            left <= buffer[1];
-            up <= buffer[2];
+            // Assign the buffered data to the outputs
+            diag <= buffer[0];        // Output the first buffer value to "diag"
+            left <= buffer[1];        // Output the second buffer value to "left"
+            up <= buffer[2];          // Output the third buffer value to "up"
         end
         else begin
+            // If not ready, reset the outputs to 0
             diag <= 0;
             left <= 0;
             up <= 0;
