@@ -1,4 +1,6 @@
-module TB_wr_indx();
+`include "/c:.../Writing_index_score.v"
+
+module TB_wr_indx_S();
 
     parameter N = 5;
     parameter BitAddr = $clog2(N);
@@ -11,7 +13,20 @@ module TB_wr_indx();
      wire [addr_lenght:0] addr_out;
      wire [8:0] data_out;
 
-wr_indx indx(.clk(clk),.rst(rst),.en_ins(en_ins),.en_init(en_init),.hit(hit),.i(i),.j(j),.addr_init(addr_init),.max(max),.data_init(data_init),.addr_out(addr_out),.data_out(data_out));
+wr_indx indx(
+    .clk(clk),
+    .rst(rst),
+    .en_ins(en_ins),
+    .en_init(en_init),
+    .hit(hit),
+    .i(i),
+    .j(j),
+    .addr_init(addr_init),
+    .max(max),
+    .data_init(data_init),
+    .addr_out(addr_out),
+    .data_out(data_out)
+);
 
 always #2 clk=!clk;
 initial begin 
