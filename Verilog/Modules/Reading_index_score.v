@@ -1,4 +1,4 @@
-module Reading_index #(
+module Reading_index_score #(
     parameter N = 128,
     parameter BitAddr = $clog2(N+1),
     parameter addr_lenght = $clog2(((N+1)*(N+1))-1)

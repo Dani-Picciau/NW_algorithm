@@ -1,10 +1,10 @@
-module Writing_index #(
+module Writing_index_score #(
     parameter N = 128,
     parameter BitAddr = $clog2(N),
     parameter addr_lenght = (((N+1)*(N+1))-1)
 ) (
     input wire clk, rst,
-    input wire en_ins, en_init,
+    input wire en_ins, en_init,hit,
     input wire [BitAddr:0] i, j, addr_init,
     input wire [8:0] max, data_init,
     output reg [addr_lenght:0] addr_out,
@@ -16,7 +16,8 @@ module Writing_index #(
             data_out <= 0;
         end
         else if(en_init) begin
-            addr_out <= addr_init;
+                if(!hit) addr_out <= addr_init ;
+                else addr_out<=addr_init*(N+1);
             data_out <= data_init;
         end
         else if(en_ins) begin
