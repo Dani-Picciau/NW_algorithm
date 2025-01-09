@@ -14,7 +14,9 @@ module test_Counter_Aligned;
     wire [$clog2(MAX):0] address;
 
     // Instantiate the Unit Under Test (test)
-    Counter_Alligned #(.MAX(MAX)) test (
+    Counter_Alligned #(
+        .MAX(MAX)
+    ) test (
         .clk(clk),
         .rst(rst),
         .en_traceB(en_traceB),
@@ -43,7 +45,6 @@ module test_Counter_Aligned;
         // Disable tracing
         en_traceB = 0;
         #10;
-
-        $finish;
+        $stop;
     end
 endmodule

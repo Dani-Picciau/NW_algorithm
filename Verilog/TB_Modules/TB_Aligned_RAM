@@ -16,7 +16,10 @@ module test_Alligned_RAM_A;
     wire [2:0] data_out;
 
     // Instantiate the Unit Under Test (test)
-    All_RAM_A #(.N(N), .BitAddr(BitAddr)) test (
+    All_RAM_A #(
+        .N(N), 
+        .BitAddr(BitAddr)
+    ) test (
         .clk(clk),
         .en_traceB(en_traceB),
         .i(i),
@@ -80,7 +83,6 @@ module test_Alligned_RAM_A;
         if (data_out !== 3'b011) $display("Test 6 failed");
 
         $display("All tests completed");
-        $finish;
+        $stop;
     end
-
 endmodule

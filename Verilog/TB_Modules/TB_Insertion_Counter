@@ -19,8 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-`include "C:\Users\crist\Desktop\GitHUb\Progetto ESD\NW_algorithm\Verilog\Moduli\Insertion_Counter.v"
+`include "/c:.../Insertion_Counter.v"
 
 module Insertion_Counter_tb;
 
@@ -38,7 +37,9 @@ module Insertion_Counter_tb;
     wire [($clog2(N)):0] j;
 
     // Instanzia il modulo Insertion_Counter
-    Insertion_Counter #(.N(N)) test (
+    Insertion_Counter #(
+        .N(N)
+    ) test (
         .clk(clk),
         .rst(rst),
         .en_read(en_read),
@@ -71,6 +72,6 @@ module Insertion_Counter_tb;
 
         // Termina la simulazione
         #10;
-        $finish;
+        $stop;
     end
 endmodule

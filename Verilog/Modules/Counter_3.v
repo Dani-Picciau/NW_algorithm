@@ -7,7 +7,10 @@ module Counter_3 (
     reg [1:0] count_next;
 
     always @(posedge clk, posedge rst) begin
-        if(rst) count <= 0;
+        if(rst) begin
+            count <= 0;
+            signal <= 0;
+        end
         else count <= count_next;
     end
 
