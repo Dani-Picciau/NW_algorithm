@@ -29,6 +29,6 @@ module Score_manager #(
     Counter_3 C_3 (.clk(clk), .rst(rst), .en(en_counter_3), .signal(signal), .count(count_3));
     Counter_1 C_1 (.clk(clk), .rst(rst), .en_init(en_init), .hit(hit));
     Writing_index_score #(.N(N)) W_i_s (.clk(clk), .rst(rst), .en_ins(en_ins), .en_init(en_init), .hit(hit), .i(i), .j(j), .addr_init(addr), .max(max), .data_init(data_in), .addr_out(addr_w), .data_out(data));
-    Reading_index_score #(.N(N)) R_i_s (.clk(clk), .rst(rst), .en_read(en_read), .signal(count_3), .i(i), .j(j), .addr(addr_r));
+    Reading_index_score #(.N(N)) R_i_s (.clk(clk), .rst(rst), .en_read(en_read), .count(count_3), .i(i), .j(j), .addr(addr_r));
     Output_manager #(.N(N)) O_m (.clk(clk), .rst(rst), .en_read(en_read), .count(count_3), .ram_data(score), .diag(diag), .left(left), .up(up));
 endmodule

@@ -4,7 +4,7 @@ module Writing_index_score #(
     parameter addr_lenght = (((N+1)*(N+1))-1)
 ) (
     input wire clk, rst,
-    input wire en_ins, en_init,hit,
+    input wire en_ins, en_init, hit,
     input wire [BitAddr:0] i, j, addr_init,
     input wire [8:0] max, data_init,
     output reg [addr_lenght:0] addr_out,
