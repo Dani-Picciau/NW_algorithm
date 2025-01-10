@@ -1,7 +1,7 @@
 module Counter_3 (
     input wire clk, rst,
     input wire en,
-    input wire stop_count,
+    input wire start_count,
     output reg signal,
     output reg [1:0] count
 );
@@ -16,11 +16,13 @@ module Counter_3 (
     end
 
     always @(posedge clk) begin
-        if(count == 2'b10) begin
-            signal = 1'b1;
-            count_next <= 0;
-        end 
-        else if(!stop_count) count_next <= count + 1;
-        else count_next <= count;
+        if(en) begin
+            if(count == 2'b10) begin
+                signal = 1'b1;
+                count_next <= 0;
+            end 
+            else if(start_count) count_next <= count + 1;
+            else count_next <= count;
+        end
     end
 endmodule
