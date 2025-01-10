@@ -28,14 +28,8 @@ module Output_manager (
     end
 
     // Process to update the outputs based on the "ready" signal
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            // Reset outputs to 0
-            diag <= 0;
-            left <= 0;
-            up <= 0;
-        end
-        else if (ready) begin
+    always @(posedge clk) begin
+        if (ready) begin
             // Assign the buffered data to the outputs
             diag <= buffer[0];        // Output the first buffer value to "diag"
             left <= buffer[1];        // Output the second buffer value to "left"

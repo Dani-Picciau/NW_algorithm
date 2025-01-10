@@ -17,6 +17,4 @@ module Counter_1 (
         end
         else hit_n<=0;
     end
-
-
 endmodule
