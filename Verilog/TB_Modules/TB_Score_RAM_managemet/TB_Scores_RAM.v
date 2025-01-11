@@ -46,5 +46,7 @@ module TB_Score_RAM;
         addr_dout = 0;
         #5
         addr_dout = 1;
+        #10
+        $stop;
     end
 endmodule
