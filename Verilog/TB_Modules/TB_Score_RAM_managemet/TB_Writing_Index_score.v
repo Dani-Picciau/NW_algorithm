@@ -15,7 +15,7 @@ module TB_Writing_index_score();
 
     Writing_index_score #(
         .N(N)
-    ) test (
+    ) WIS_test (
         .clk(clk),
         .rst(rst),
         .en_ins(en_ins),
@@ -37,27 +37,29 @@ module TB_Writing_index_score();
         clk = 0; rst=1; en_ins = 0; en_init = 0; hit=0; i=0; j=0; addr_init=0; max=0; data_init=0;
 
         #4  rst=0;
+            //initialization addres and data
             en_init=1;
-            i=000;
-            j=000;
-            addr_init=011;
-            max=000000000;
-            data_init=001010110;
-            hit=0;
+            addr_init=0;
+            data_init=0;
+            hit=0; //first row
+        #8  hit=1; //first column
+        // put it back to 0
+        #8  hit=0; 
+            addr_init=1;
+            data_init=1;
+        #8  hit=1; //first column
+        #8  hit=0;// put it back to 0
 
-        #8  hit=1;
-        #8  hit=0;
+            //Insertion address and data
             en_init=0;
             en_ins=1;
-            i=010;
-            j=101;
-            addr_init=000;
-            max=010101100;
-            data_init=00000000;
-
+            i=0;
+            j=0;
+            max=3;
+        #4  i=1;
+            j=0;
+            max=6;
         #20
         $stop;
     end
-
-    //Commento
 endmodule
