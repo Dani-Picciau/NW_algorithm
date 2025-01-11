@@ -23,8 +23,8 @@ module TB_Score_RAM;
         we,
         addr_din,
         addr_dout,
-        dout,
-    )
+        dout
+    );
 
     always #1 clk = ~clk;
 
@@ -47,6 +47,4 @@ module TB_Score_RAM;
         #5
         addr_dout = 1;
     end
-
-    //commento
 endmodule
