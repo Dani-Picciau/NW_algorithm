@@ -19,7 +19,7 @@ module Score_manager #(
     output reg signal,
     output reg [8:0] diag, left, up
 );
-    wire [2:0] count_3;
+    wire [1:0] count_3;
     wire [addr_lenght:0] addr_r, addr_w;
     wire [8:0] data, score;
     wire hit, en_din;

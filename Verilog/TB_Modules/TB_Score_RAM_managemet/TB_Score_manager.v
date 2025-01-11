@@ -1,7 +1,7 @@
 `include "/c:..."
 
 module TB_Score_manager;
-    parameter N = 128;
+    parameter N = 5;
     parameter BitAddr = $clog2(N+1);
     parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
 
@@ -14,10 +14,8 @@ module TB_Score_manager;
     reg [8:0] data_in;
     reg [8:0] max;
     reg [BitAddr:0] i, j;
-    reg start_count_3;
     reg en_counter_3;
 
-    wire stop_count_3;
     wire signal;
     wire [8:0] diag, left, up;
 
@@ -29,34 +27,48 @@ module TB_Score_manager;
         en_ins,
         en_init,
         en_read,
-        [BitAddr:0] addr, 
-        [8:0] data_in,
-        [8:0] max,  
-        [BitAddr:0] i, j,
-        start_count_3,
+        addr, 
+        data_in,
+        max,  
+        i, j,
         en_counter_3,
-
-        stop_count_3,
         signal,
-        [8:0] diag, left, up
+        diag, 
+        left, 
+        up
     );
 
-    always #2 clk = ~clk;
+    always #1 clk = ~clk;
 
     initial begin
-        //Initializzation of signals
-        clk = 0; rst = 1; we = 0; en_ins = 0; en_init = 0; en_read = 0; addr = 0; data_in = 0; max = 0; i = 0; j = 0; start_count_3 = 0; en_counter_3 = 0;
+        // Initializzation of signals
+        clk = 0; rst = 1; we = 0; en_ins = 0; en_init = 0; en_read = 0; addr = 0; data_in = 0; max = 0; i = 0; j = 0;  en_counter_3 = 0;
 
-        //Writing into the ram
-        #5 rst = 0; 
-        en_init = 1; we = 1; //
-        addr = 0; data = 0;
+        // Initializzation of the ram
+        #5  rst = 0; 
+            en_init = 1; we = 1; 
+            addr = 0; data_in = 0;
+        #5  addr = 1; data_in = -1;
 
-        #5  addr = 1; data = -1;
+        // Reading into the ram
         #5  we = 0; en_init = 0;
-        #5  en_read = 1; i = 0; j = 0;
-            en_counter_3 = 1; en
-        #10
-        $stop
+        #5  en_read = 1; 
+            i = 1; j = 1; //Because i have to read the diagonal, up and left cell next to the (1,1) cell
+            en_counter_3 = 1;
+        
+        //Writing into the ram
+        #30 en_ins = 1; en_read = 0; we = 1;
+            i = 0; j = 0; max = 3;
+        #5  i = 1; j = 0; max = 1;
+        #5  i = 0; j = 1; max = 2;
+
+        // Reading into the ram
+        #5  we = 0; en_init = 0;
+        #5  en_read = 1; 
+            i = 2; j = 2; //Because i have to read the diagonal, up and left cell next to the (2,2) cell
+            en_counter_3 = 1;
+
+        #50
+        $stop;
     end
 endmodule
