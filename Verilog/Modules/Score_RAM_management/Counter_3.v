@@ -22,23 +22,23 @@ module Counter_3 (
         else count <= count_next;
     end
 
-    always @(posedge clk) begin
+    always @(en, count, cnt_clk, signal) begin
         if(en) begin
-            if(count == 2'b10) begin
-                signal = 1'b1;
-                count_next <= 0;
-                cnt_clk_nxt <= 0;
-            end 
-            else begin
-                signal = 1'b0;
-                if(cnt_clk == 2'b10) begin
+            if(cnt_clk == 2'b10) 
+                if(count == 2'b10) begin
+                    signal = 1'b1;
+                    count_next <= 0;
+                    cnt_clk_nxt <= 0;
+                end 
+                else begin 
+                    signal = 1'b0;
                     count_next <= count + 1;
                     cnt_clk_nxt <= 0;
                 end
-                else begin
-                    cnt_clk_nxt <= cnt_clk + 1;
-                    count_next <= count;
-                end
+            else begin
+                cnt_clk_nxt <= cnt_clk + 1;
+                count_next <= count;
+                signal = 1'b0;
             end
         end
     end
