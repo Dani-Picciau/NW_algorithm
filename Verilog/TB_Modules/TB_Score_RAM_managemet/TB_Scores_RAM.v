@@ -10,9 +10,21 @@ module TB_Score_RAM;
     reg [8:0] din;
     reg en_din, en_dout, we; //en_din is an OR between en_ins and en_init
     reg [BitAddr:0] addr_din; 
-    reg [BitAddr:0] addr_dout,
+    reg [BitAddr:0] addr_dout;
     //output
     wire [8:0] dout;
+
+    Scores_RAM #(.N(N)) S_RAM (
+        clk, 
+        rst,
+        din,
+        en_din, 
+        en_dout, 
+        we,
+        addr_din,
+        addr_dout,
+        dout,
+    )
 
     always #1 clk = ~clk;
 
