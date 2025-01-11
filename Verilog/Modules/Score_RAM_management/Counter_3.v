@@ -27,8 +27,10 @@ module Counter_3 (
             if(count == 2'b10) begin
                 signal = 1'b1;
                 count_next <= 0;
+                cnt_clk_nxt <= 0;
             end 
             else begin
+                signal = 1'b0;
                 if(cnt_clk == 2'b10) begin
                     count_next <= count + 1;
                     cnt_clk_nxt <= 0;
