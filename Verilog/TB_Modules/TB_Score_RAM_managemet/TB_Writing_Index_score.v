@@ -30,7 +30,7 @@ module TB_Writing_index_score();
         .data_out(data_out)
     );
 
-    always #2 clk = ~clk;;
+    always #2 clk = ~clk;
 
     initial begin 
         // Initialization of signals

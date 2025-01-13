@@ -3,6 +3,7 @@ module Output_manager (
     input wire en_read,                // Enable signal for reading data
     input wire [1:0] count,            // Counter to address the buffer
     input wire [8:0] ram_data,         // Input data from RAM
+    input wire valid,
     output reg [8:0] diag, left, up    // Outputs for diagonal, left, and up data
 );
     reg [8:0] buffer [2:0];            // Buffer to store data temporarily
@@ -18,12 +19,14 @@ module Output_manager (
             ready <= 0;
         end 
         else if (en_read) begin
-            // Store the incoming data into the buffer at the address specified by "count"
-            buffer[count] <= ram_data;
+            if(valid) begin
+                // Store the incoming data into the buffer at the address specified by "count"
+                buffer[count] <= ram_data;
 
-            // Set the "ready" signal high when all the buffer data is written (count == 2'b10)
-            if (count == 2'b10) ready <= 1;
-            else ready <= 0;
+                // Set the "ready" signal high when all the buffer data is written (count == 2'b10)
+                if (count == 2'b10) ready <= 1;
+                else ready <= 0;
+            end
         end
     end
 
