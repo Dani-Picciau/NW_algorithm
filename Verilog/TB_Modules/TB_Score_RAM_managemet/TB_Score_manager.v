@@ -78,7 +78,7 @@ endmodule
 module TB;
     parameter N = 5;
     parameter BitAddr = $clog2(N);
-    parameter addr_lenght = (((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
     
     reg clk, rst;
     reg en_ins, en_init, en_read, we;
@@ -87,6 +87,7 @@ module TB;
     reg [1:0] count_3;
     wire [8:0] score;
     wire valid;
+    wire [addr_lenght:0] addr_r;
      
     TopModule # (
         .N(N)
@@ -104,7 +105,8 @@ module TB;
         .data_init(data_init), 
         .count_3(count_3),
         .score(score),
-        .valid(valid)
+        .valid(valid),
+        .addr_r(addr_r)
     );
     
     
@@ -154,7 +156,7 @@ module TB;
             max=14;
             
         // Reading of the addres
-        #4.5 en_read=1;
+        #4.5 en_read=1; en_init=0; we = 0; en_ins=0;
             i=0; j=0;   // I'm reading the cell diag, left and up next to (1,1) because of the +1 for i and j in the code
             count_3=00; // diag (0,0) -> 0
         #4  count_3=01; // left (1,0) -> 16
@@ -179,6 +181,5 @@ module TB;
         #40
         $stop;
     end
-
-
+endmodule
 */
