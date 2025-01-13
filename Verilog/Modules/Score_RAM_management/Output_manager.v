@@ -35,8 +35,8 @@ module Output_manager (
         if (ready) begin
             // Assign the buffered data to the outputs
             diag <= buffer[0];        // Output the first buffer value to "diag"
-            left <= buffer[1];        // Output the second buffer value to "left"
-            up <= buffer[2];          // Output the third buffer value to "up"
+            up <= buffer[1];        // Output the second buffer value to "up"
+            left <= buffer[2];          // Output the third buffer value to "left"
         end
         else begin
             // If not ready, reset the outputs to 0

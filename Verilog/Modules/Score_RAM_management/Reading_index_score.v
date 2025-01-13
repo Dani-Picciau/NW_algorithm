@@ -17,11 +17,11 @@ module Reading_index_score #(
                 valid <= 1;
             end 
             3'b101: begin
-                addr <= ((j+1)+(N+1)*i); // Index for the  left
+                addr <= ((j+1)+(N+1)*i); // Index for the up
                 valid <= 1;
             end
             3'b110: begin
-                addr <= (j+(N+1)*(i+1)); // Index for the up
+                addr <= (j+(N+1)*(i+1)); // Index for the left
                 valid <= 1;
             end 
             default: begin
