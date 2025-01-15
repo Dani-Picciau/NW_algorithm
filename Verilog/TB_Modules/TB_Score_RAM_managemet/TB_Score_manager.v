@@ -1,5 +1,3 @@
-`include "/c:..."
-
 module TB;
     parameter N = 5;
     parameter BitAddr = $clog2(N);
@@ -9,10 +7,11 @@ module TB;
     reg en_ins, en_init, en_read, we;
     reg [BitAddr:0] i, j, addr_init;
     reg [8:0] max, data_init;
-    reg [1:0] count_3;
+    wire [1:0] count_3;
     wire [addr_lenght:0] addr_r;
     wire [8:0] diag, left, up, score;
-    wire ready;
+    wire ready,signal;
+    
      
     TopModule # (
         .N(N)
@@ -34,7 +33,8 @@ module TB;
         .left(left),
         .up(up),
         .score(score),
-        .ready(ready)
+        .ready(ready),
+        .signal(signal)
     );
     
     
@@ -53,7 +53,7 @@ module TB;
         addr_init = 0; 
         max = 0; 
         data_init = 0;
-        count_3=00;
+//        count_3=00;
 
         #8  rst=0;
         // Initialization of addres and data
@@ -86,26 +86,30 @@ module TB;
         // Reading of the addres
         #4.5 en_read=1; en_init=0; we = 0; en_ins=0;
             i=0; j=0;   // I'm reading the cell diag, left and up next to (1,1) because of the +1 for i and j in the code
-            count_3=00; // diag (0,0) -> 0
-        #4  count_3=01; // left (1,0) -> 16
-        #4  count_3=10; // up (0,1) -> 16
+//            count_3=00; // diag (0,0) -> 0
+//        #4  count_3=01; // left (1,0) -> 16
+//        #4  count_3=10; // up (0,1) -> 16
+//        #4  count_3=11;  
+              
+        #16  i=0; j=1;   // I'm reading the cell diag, left and up next to (1,2) because of the +1 for i and j in the code
+//            count_3=00; // diag (0,1) -> 16
+//        #4  count_3=01; // left (1,1) -> 7
+//        #4  count_3=10; // up (0,2) -> 12
+//        #4  count_3=11;
         
-        #4  i=0; j=1;   // I'm reading the cell diag, left and up next to (1,2) because of the +1 for i and j in the code
-            count_3=00; // diag (0,1) -> 16
-        #4  count_3=01; // left (1,1) -> 7
-        #4  count_3=10; // up (0,2) -> 12
+        #16  i=1; j=0;   // I'm reading the cell diag, left and up next to (2,1) because of the +1 for i and j in the code
+//            count_3=00; // diag (1,0) -> 16
+//        #4  count_3=01; // left (2,0) -> 12
+//        #4  count_3=10; // up (1,1) -> 7
+//        #4  count_3=11;
         
-        #4  i=1; j=0;   // I'm reading the cell diag, left and up next to (2,1) because of the +1 for i and j in the code
-            count_3=00; // diag (1,0) -> 16
-        #4  count_3=01; // left (2,0) -> 12
-        #4  count_3=10; // up (1,1) -> 7
-        
-        #4  i=1; j=1;   // I'm reading the cell diag, left and up next to (2,2) because of the +1 for i and j in the code
-            count_3=00; // diag (1,1) -> 7
-        #4  count_3=01; // left (2,1) -> 13
-        #4  count_3=10; // up (1,2) -> 8
+        #16  i=1; j=1;   // I'm reading the cell diag, left and up next to (2,2) because of the +1 for i and j in the code
+//            count_3=00; // diag (1,1) -> 7
+//        #4  count_3=01; // left (2,1) -> 13
+//        #4  count_3=10; // up (1,2) -> 8
+//        #4  count_3=11;
          
-        #4 en_read=0;
+        #16 en_read=0;
         #40
         $stop;
     end
