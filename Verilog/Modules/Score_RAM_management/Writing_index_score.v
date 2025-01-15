@@ -1,7 +1,7 @@
 module Writing_index_score #(
     parameter N = 128,
     parameter BitAddr = $clog2(N),
-    parameter addr_lenght = (((N+1)*(N+1))-1)
+    parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
 ) (
     input wire clk, rst,
     input wire en_ins, en_init, hit,

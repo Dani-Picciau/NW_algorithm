@@ -25,15 +25,14 @@ module Counter_3 (
     always @(en, count, cnt_clk, signal) begin
         if(en) begin
             if(cnt_clk == 2'b11) begin
-            cnt_clk_nxt <= 0;
-                if(count == 2'b11) begin
+                cnt_clk_nxt <= 0;
+                if(count == 2'b10) begin
                     signal = 1'b1;
                     count_next <= 0;    
                 end 
                 else begin 
                     signal = 1'b0;
                     count_next <= count + 1;
-                    //cnt_clk_nxt <= 0;
                 end
             end
             else begin
@@ -48,3 +47,4 @@ module Counter_3 (
        end
     end
 endmodule
+
