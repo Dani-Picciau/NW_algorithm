@@ -1,5 +1,3 @@
-`include "/c:..."
-
 module TopModule #(
     parameter N = 128,
     parameter BitAddr = $clog2(N),
@@ -9,10 +7,11 @@ module TopModule #(
     input wire en_ins, en_init, en_read, we,
     input wire [BitAddr:0] i, j, addr_init,
     input wire [8:0] max, data_init,
-    input wire [1:0] count_3,
+    output wire [1:0] count_3,
     output wire [addr_lenght:0] addr_r,
     output wire [8:0] diag, left, up, score,
-    output wire ready
+    output wire ready,
+    output wire signal
 );
 
     wire hit;
@@ -20,11 +19,11 @@ module TopModule #(
     wire [8:0] data;
     wire en_din = en_ins | en_init;
     //wire [8:0] score;
-    wire valid;
+  
     
-    //Counter_3 C_3 (.clk(clk), .rst(rst), .en(en_read), .signal(signal), .count(count_3));
+    Counter_3 C_3 (.clk(clk), .rst(rst), .en(en_read), .signal(signal), .count(count_3));
     Reading_index_score #(.N(N)) R_i_s (.clk(clk), .rst(rst), .en_read(en_read), .count(count_3), .i(i), 
-    .j(j), .addr(addr_r), .valid(valid));
+    .j(j), .addr(addr_r));
     Counter_1 C_1 (.clk(clk), .rst(rst), .en_init(en_init), .hit(hit));
     Writing_index_score #(.N(N)) W_i_s (.clk(clk), .rst(rst), .en_ins(en_ins), .en_init(en_init), .hit(hit), 
     .i(i), .j(j), .addr_init(addr_init), .max(max), .data_init(data_init), .addr_out(addr_w), .data_out(data));
