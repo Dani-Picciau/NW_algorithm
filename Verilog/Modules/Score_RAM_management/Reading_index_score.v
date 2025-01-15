@@ -10,6 +10,7 @@ module Reading_index_score #(
     output reg [addr_lenght:0] addr,
     output reg valid
 );
+    
     always @(posedge clk, posedge rst) begin
         case ({en_read, count})
             3'b100: begin
@@ -25,7 +26,7 @@ module Reading_index_score #(
                 valid <= 1;
             end 
             default: begin
-                addr <= 0;
+                addr <= {addr_lenght{1'bx}};
                 valid <= 0;
             end
         endcase
