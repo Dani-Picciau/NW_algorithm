@@ -5,10 +5,12 @@ module Output_manager (
     input wire [8:0] ram_data,         // Input data from RAM
     input wire valid,
     output reg [8:0] diag, left, up,    // Outputs for diagonal, left, and up data
-    output reg ready
+    output reg ready    // Signal to indicate when data is ready for output
 );
     reg [8:0] buffer [2:0];            // Buffer to store data temporarily
-                       // Signal to indicate when data is ready for output
+
+
+
 
     // Process to update the buffer and the "ready" signal
     always @(posedge clk or posedge rst) begin
@@ -20,16 +22,16 @@ module Output_manager (
             ready <= 0;
         end 
         else if (en_read) begin
-            if(valid) begin
+           
                 // Store the incoming data into the buffer at the address specified by "count"
                 buffer[count] <= ram_data;
 
                 // Set the "ready" signal high when all the buffer data is written (count == 2'b10)
-                if (count == 2'b10) ready <= 1;
+                if (count == 2'b11) ready <= 1;
                 else ready <= 0;
             end
         end
-    end
+    
 
     // Process to update the outputs based on the "ready" signal
     always @(posedge clk) begin
@@ -41,9 +43,9 @@ module Output_manager (
         end
         else begin
             // If not ready, reset the outputs to 0
-            diag <= 1;
-            left <= 1;
-            up <= 1;
+            diag <= 255;
+            left <= 255;
+            up <= 255;
         end
     end
 endmodule
