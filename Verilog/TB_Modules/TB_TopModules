@@ -1,0 +1,110 @@
+`include "/c:..."
+
+module TB;
+    parameter N = 5;
+    parameter BitAddr = $clog2(N);
+    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
+    
+    reg clk, rst;
+    reg en_ins, en_init, en_read, we;
+    wire [BitAddr:0] i, j;
+    reg [BitAddr:0] addr_init;
+    reg [8:0] max, data_init;
+    wire [1:0] count_3;
+    wire [addr_lenght:0] addr_r;
+    wire [8:0] diag, left, up, score;
+    wire signal;
+    wire end_filling;
+     
+    Score_manager # (
+        .N(N)
+    ) block1 (
+        .clk(clk),
+        .rst(rst),
+        .en_ins(en_ins),
+        .en_init(en_init), 
+        .en_read(en_read),
+        .we(we),
+        .i(i), 
+        .j(j), 
+        .addr_init(addr_init), 
+        .max(max), 
+        .data_init(data_init), 
+        .count_3(count_3),
+        .addr_r(addr_r),
+        .diag(diag),
+        .up(up),
+        .left(left),
+        .score(score),
+        .signal(signal)
+    );
+
+    Signal_manager #(
+        .N(N)
+    ) block2 (
+        .clk(clk),
+        .rst(rst),
+        .en_read(en_read),
+        .change_index(signal),
+        .end_filling(end_filling),
+        .i(i),
+        .j(j)
+    );
+    
+    always #0.5 clk = ~clk;
+
+    initial begin
+        clk = 0; 
+        rst = 1; 
+        en_ins = 0;
+        en_init = 0; 
+        en_read = 0;
+        we = 0;
+        addr_init = 0; 
+        max = 0; 
+        data_init = 0;
+
+        #8 rst = 0;
+        
+        // Initialization phase
+        en_init = 1; 
+        we = 1;
+        addr_init = 0;
+        data_init = 0;
+
+        #8 addr_init = 1;
+        data_init = 16;
+
+        #8 addr_init = 2;
+        data_init = 12;
+        
+        // Insertion phase
+        #10 en_init = 0;
+        en_ins = 1;
+        max = 7;
+        
+        #4 max = 13;
+        
+        #4 max = 8;
+        
+        #4 max = 14;
+            
+        // Reading phase
+        #4.5 en_read = 1; 
+        en_init = 0; 
+        we = 0; 
+        en_ins = 0;
+
+        // Aspettiamo che end_filling diventi 1 o che passi il tempo massimo
+        begin : repeat_loop  // Dichiarazione di un blocco con nome
+            repeat(200) @(posedge clk) begin
+                if (end_filling) begin
+                    #12 en_read = 0;
+                    disable repeat_loop;  // Esce dal blocco named "repeat_loop"
+                end
+            end
+        end
+        
+        #40 $stop;
+    end
+endmodule
