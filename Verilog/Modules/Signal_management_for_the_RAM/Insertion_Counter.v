@@ -11,7 +11,7 @@ module Insertion_Counter #(
     reg [($clog2(N)):0] count_nxtI;
     
     // Sequential logic for registers
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk, posedge rst) begin
         if (rst) begin 
             i <= 0;
             j <= 0;
