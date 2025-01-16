@@ -1,77 +1,54 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: Uniss
-// Engineer: Matteo Pedoni
-// 
-// Create Date: 03.01.2025 19:17:52
-// Design Name: 
-// Module Name: Insertion
-// Project Name: Progetto finale ESD
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
 module Insertion_Counter #(
-    parameter N = 8
+    parameter N = 128
 )(
     input wire clk, rst,
     input wire en_read,
+    input wire change_index,
     output wire end_filling,
-    output wire [{$clog2(N)}:0] i, j
+    output reg [($clog2(N)):0] i, j
 );
-    reg [{$clog2(N)}:0 ] countJ, count_nxtJ; 
-    reg [{$clog2(N)}:0 ] countI, count_nxtI;
-    reg en_APP; 
+    reg [($clog2(N)):0] count_nxtJ; 
+    reg [($clog2(N)):0] count_nxtI;
     
-    // aggiornamento registro di stato
-    always @ (posedge clk, posedge rst)
-        if(rst == 1'b1) begin 
-             countI <= 1'b0;
-             countJ <= 1'b0;
+    // Sequential logic for registers
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin 
+            i <= 0;
+            j <= 0;
         end
         else begin
-            countI <= count_nxtI;
-            countJ <= count_nxtJ;
+            i <= count_nxtI;
+            j <= count_nxtJ;
         end 
+    end
 
-    // Logica di "somma" per l'indice J
-      always @ ( posedge clk) begin
-        if (en_read == 1'b1 && countJ <= N) begin
-             count_nxtJ = countJ + 1;
-
-             if (countJ == N) begin
-                count_nxtJ = 1'b0; 
-                en_APP = 1'b1; 
+    // Combinational logic for next state
+    always @(i, j, en_read, change_index) begin
+        // Default: keep current values
+        count_nxtI = i;
+        count_nxtJ = j;
+        
+        if (en_read) begin
+            if (change_index) begin
+                if (j == N-1) begin
+                    // When j reaches N-1, reset j and increment i
+                    count_nxtJ = 0;
+                    if (i < N-1) begin
+                        count_nxtI = i + 1;
+                    end
+                    else begin
+                        // Reset i quando raggiungiamo N-1
+                        count_nxtI = 0;
+                    end
+                end
+                else begin
+                    // Normal j increment
+                    count_nxtJ = j + 1;
+                end
             end
-            else en_APP = 1'b0;
-        end     
-        else count_nxtJ = countJ; 
+        end
     end
 
-    //Logica di "somma" per l'indice I
-    always@(posedge clk) begin
-        if(en_APP == 1'b1 && countI <= N) begin
-            if( countI == N) count_nxtI = 1'b0;
-            else count_nxtI = countI + 1; 
-        end 
-        else count_nxtI = countI ; 
-    end
-
-   
-    // assegnazione degli indici
-    assign i = countI; 
-    assign j = countJ; 
-
-    // assegnazione segnale en_filling, se siamo arrivati al numero massimo di locazione, invio il segnale
-    assign end_filling = (en_read == 1'b1 && i == N && j == N) ? 1'b1 : 1'b0; 
-
+    // End filling signal
+    assign end_filling = (en_read && i == N-1 && j == N-1) ? 1'b1 : 1'b0;
 endmodule

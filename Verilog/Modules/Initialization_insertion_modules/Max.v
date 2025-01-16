@@ -21,68 +21,70 @@ module Max #(
         up_calc = up + gap_score;
         lx_calc = lx + gap_score;
 
-
-        if (diag_calc > up_calc && diag_calc > lx_calc) begin //if the diagonal is the greatest
-            symbol = arrow_diag; 
-            max = diag_calc;
-            calculated = 1'b1;
-        end 
-        else if (up_calc > diag_calc && up_calc > lx_calc) begin //if the up is the greatest
-            symbol = arrow_up; 
-            max = up_calc;
-            calculated = 1'b1;
-        end 
-        else if (lx_calc > diag_calc && lx_calc > up_calc) begin //if the left is the greatest
-            symbol = arrow_lx; 
-            max = lx_calc;
-            calculated = 1'b1;
-        end 
-        else if (diag_calc == up_calc && diag_calc == lx_calc) begin //if all are equal
-            if (diag >= up && diag >= lx) begin //if, compared to the basic values, the diagonal is the greatest
+        if(diag_calc == 255 || up_calc == 255 || lx_calc == 255)  calculated = 1'b0;
+        else begin
+            if (diag_calc > up_calc && diag_calc > lx_calc) begin //if the diagonal is the greatest
                 symbol = arrow_diag; 
                 max = diag_calc;
                 calculated = 1'b1;
-            end else if (up >= diag && up >= lx) begin //if, compared to the basic values, the up is the greatest
+            end 
+            else if (up_calc > diag_calc && up_calc > lx_calc) begin //if the up is the greatest
                 symbol = arrow_up; 
                 max = up_calc;
                 calculated = 1'b1;
-            end else begin //if, compared to the basic values, the left is the greatest
+            end 
+            else if (lx_calc > diag_calc && lx_calc > up_calc) begin //if the left is the greatest
                 symbol = arrow_lx; 
                 max = lx_calc;
                 calculated = 1'b1;
-            end
-        end 
-        else if (diag_calc == up_calc) begin //if the diagonal and the up are equal
-            if (diag >= up) begin //if, compared to the basic values, the diagonal is the greatest
-                symbol = arrow_diag; 
-                max = diag_calc;
-                calculated = 1'b1;
-            end else begin //if, compared to the basic values, the up is the greatest
-                symbol = arrow_up; 
-                max = up_calc;
-                calculated = 1'b1;
-            end
-        end 
-        else if (diag_calc == lx_calc) begin //if the diagonal and the left are equal
-            if (diag >= lx) begin //if, compared to the basic values, the diagonal is the greatest
-                symbol = arrow_diag; 
-                max = diag_calc;
-                calculated = 1'b1;
-            end else begin //if, compared to the basic values, the left is the greatest
-                symbol = arrow_lx; 
-                max = lx_calc;
-                calculated = 1'b1;
-            end
-        end 
-        else if (up_calc == lx_calc) begin //if, the up and the left are equal
-            if (up >= lx) begin //if, compared to the basic values, the up is the greatest
-                symbol = arrow_up; 
-                max = up_calc;
-                calculated = 1'b1;
-            end else begin //if, compared to the basic values, the left is the greatest
-                symbol = arrow_lx; 
-                max = lx_calc;
-                calculated = 1'b1;
+            end 
+            else if (diag_calc == up_calc && diag_calc == lx_calc) begin //if all are equal
+                if (diag >= up && diag >= lx) begin //if, compared to the basic values, the diagonal is the greatest
+                    symbol = arrow_diag; 
+                    max = diag_calc;
+                    calculated = 1'b1;
+                end else if (up >= diag && up >= lx) begin //if, compared to the basic values, the up is the greatest
+                    symbol = arrow_up; 
+                    max = up_calc;
+                    calculated = 1'b1;
+                end else begin //if, compared to the basic values, the left is the greatest
+                    symbol = arrow_lx; 
+                    max = lx_calc;
+                    calculated = 1'b1;
+                end
+            end 
+            else if (diag_calc == up_calc) begin //if the diagonal and the up are equal
+                if (diag >= up) begin //if, compared to the basic values, the diagonal is the greatest
+                    symbol = arrow_diag; 
+                    max = diag_calc;
+                    calculated = 1'b1;
+                end else begin //if, compared to the basic values, the up is the greatest
+                    symbol = arrow_up; 
+                    max = up_calc;
+                    calculated = 1'b1;
+                end
+            end 
+            else if (diag_calc == lx_calc) begin //if the diagonal and the left are equal
+                if (diag >= lx) begin //if, compared to the basic values, the diagonal is the greatest
+                    symbol = arrow_diag; 
+                    max = diag_calc;
+                    calculated = 1'b1;
+                end else begin //if, compared to the basic values, the left is the greatest
+                    symbol = arrow_lx; 
+                    max = lx_calc;
+                    calculated = 1'b1;
+                end
+            end 
+            else if (up_calc == lx_calc) begin //if, the up and the left are equal
+                if (up >= lx) begin //if, compared to the basic values, the up is the greatest
+                    symbol = arrow_up; 
+                    max = up_calc;
+                    calculated = 1'b1;
+                end else begin //if, compared to the basic values, the left is the greatest
+                    symbol = arrow_lx; 
+                    max = lx_calc;
+                    calculated = 1'b1;
+                end
             end
         end
     end
