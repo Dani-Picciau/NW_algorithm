@@ -1,8 +1,13 @@
-`include "/c:..."
+`include "Counter_1.v"
+`include "Counter_3.v"
+`include "Reading_index_score.v"
+`include "Writing_index_score.v"
+`include "Scores_RAM.v"
+`include "Output_manager.v"
 
-module TopModule #(
+module Score_manager #(
     parameter N = 128,
-    parameter BitAddr = $clog2(N),
+    parameter BitAddr = $clog2(N+1),
     parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
 ) (
     input wire clk, rst,
@@ -30,7 +35,7 @@ module TopModule #(
     .i(i), .j(j), .addr_init(addr_init), .max(max), .data_init(data_init), .addr_out(addr_w), .data_out(data));
     Scores_RAM #(.N(N)) S_RAM(.clk(clk), .rst(rst), .din(data), .en_din(en_din), .en_dout(en_read), .we(we), 
     .addr_din(addr_w), .addr_dout(addr_r), .dout(score));
-    Output_manager #(.N(N)) O_m (.clk(clk), .rst(rst), .en_read(en_read), .count(count_3), .ram_data(score),
+    Output_manager O_m (.clk(clk), .rst(rst), .en_read(en_read), .count(count_3), .ram_data(score),
     .diag(diag), .left(left), .up(up), .signal(signal), .ready(ready));
 
     //end

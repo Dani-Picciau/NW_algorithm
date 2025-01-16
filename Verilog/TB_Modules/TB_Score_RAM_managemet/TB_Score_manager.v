@@ -15,7 +15,7 @@ module TB;
     wire ready,signal;
     
      
-    TopModule # (
+    Score_manager # (
         .N(N)
     ) test (
         .clk(clk),
