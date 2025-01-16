@@ -1,4 +1,4 @@
-module Insertion_Counter #(
+module Insertion_counter #(
     parameter N = 128
 )(
     input wire clk, rst,

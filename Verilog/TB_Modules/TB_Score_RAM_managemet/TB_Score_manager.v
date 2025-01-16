@@ -12,7 +12,7 @@ module TB;
     wire [1:0] count_3;
     wire [addr_lenght:0] addr_r;
     wire [8:0] diag, up, left, score;
-    wire ready,signal;
+    wire signal;
     
      
     Score_manager # (
@@ -35,7 +35,6 @@ module TB;
         .up(up),
         .left(left),
         .score(score),
-        .ready(ready),
         .signal(signal)
     );
     

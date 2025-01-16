@@ -4,8 +4,7 @@ module Output_manager (
     input wire [1:0] count,            // Counter to address the buffer
     input wire [8:0] ram_data,         // Input data from RAM
     input wire signal,                 //
-    output reg [8:0] diag, left, up,   // Outputs for diagonal, left, and up data
-    output reg ready                   // Signal to indicate when data is ready for output
+    output reg [8:0] diag, left, up    // Outputs for diagonal, left, and up data
 );
     reg [8:0] buffer [2:0]; // Buffer to store data temporarily
 
@@ -16,7 +15,6 @@ module Output_manager (
             diag <= 0;
             left <= 0;
             up <= 0;
-            ready <= 0;
         end 
         else if (en_read) buffer[count] <= ram_data;
     end

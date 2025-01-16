@@ -1,77 +1,80 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: Uniss
-// Engineer: Matteo Pedoni
-// 
-// Create Date: 03.01.2025 19:18:07
-// Design Name: 
-// Module Name: tb
-// Project Name: Progetto Finale ESD
-// Target Devices: 
-// Tool Versions: 
-// Description: Testbench Insertion_Counter 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+`include "/c:.../Insertion_counter.v"
 
-`include "/c:.../Insertion_Counter.v"
+module TB_Insertion_counter;
 
-module Insertion_Counter_tb;
-
-    // Parametri
-    parameter N = 8;
-
-    // Segnali di input
-    reg clk;
-    reg rst;
-    reg en_read;
-
-    // Segnali di output
-    wire end_filling;
-    wire [($clog2(N)):0] i;
-    wire [($clog2(N)):0] j;
-
-    // Instanzia il modulo Insertion_Counter
+    // Parameters
+    parameter N = 5; // Size parameter for the Insertion_Counter module
+    
+    // Input signals
+    reg clk;           // Clock signal
+    reg rst;           // Reset signal
+    reg en_read;       // Enable read signal
+    reg change_index;  // Signal to trigger index change
+    
+    // Output signals
+    wire end_filling;  // Signal indicating end of filling operation
+    wire [($clog2(N)):0] i; // Current index i (logarithmic width based on N)
+    wire [($clog2(N)):0] j; // Current index j (logarithmic width based on N)
+    
+    // Instantiate the Insertion_Counter module
     Insertion_Counter #(
-        .N(N)
+        .N(N) // Pass parameter N to the instantiated module
     ) test (
         .clk(clk),
         .rst(rst),
         .en_read(en_read),
         .end_filling(end_filling),
         .i(i),
-        .j(j)
+        .j(j),
+        .change_index(change_index)
     );
-
-    // Genera il clock
-    always  #1 clk = ~clk;
-
-    // Testbench
+    
+    // Generate the clock signal
+    always #0.5 clk = ~clk; // Toggle the clock every 0.5ns
+    
     initial begin
-        // Inizializza i segnali
-        clk = 0;
-        rst = 1;
-        en_read = 0;
+        // Initialize signals
+        clk = 0; rst = 1; en_read = 0; change_index = 0;
+        
+        // Release reset
+        #10 rst = 0; // De-assert reset after 10ns
+        
+        // Enable read operation
+        #12 en_read = 1; // Assert en_read after 12ns
+        change_index = 1; // Trigger index change
 
-        // Rilascia il reset
-        #10 rst = 0;
+        #1 change_index = 0; // De-assert change_index after 1ns
+        #12 change_index = 1; // Re-assert change_index after 12ns
 
-        // Abilita la lettura
-        #10 en_read = 1;
+        #1 change_index = 0;
+        #12 change_index = 1;
 
-        // Attendi che il conteggio raggiunga il massimo
-        #10000;
+        #1 change_index = 0;
+        #12 change_index = 1;
 
-        // Disabilita la lettura
-        #50 en_read = 0;
+        #1 change_index = 0;
+        #12 change_index = 1;
 
-        // Termina la simulazione
+        #1 change_index = 0;
+        #12 change_index = 1;
+
+        #1 change_index = 0;
+        #12 change_index = 1;
+
+        #1 change_index = 0;
+        #12 change_index = 1;
+
+        #1 change_index = 0;
+        #12 change_index = 1;
+
+        #1 change_index = 0;
+        #12 change_index = 1;
+
+        // Disable read operation
+        #50 en_read = 0; // De-assert en_read after 50ns
+        
+        // End the simulation
         #10;
-        $stop;
+        $stop; // Stop the simulation
     end
 endmodule
