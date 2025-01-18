@@ -14,6 +14,7 @@ module Score_manager #(
     input wire en_ins, en_init, en_read, we,
     input wire [BitAddr:0] i, j, addr_init,
     input wire [8:0] max, data_init,
+    input wire change_index,
     output wire [1:0] count_3,
     output wire [addr_lenght:0] addr_r,
     output wire [8:0] diag, up, left, score,
@@ -44,7 +45,7 @@ module Score_manager #(
         .i(i), 
         .j(j), 
         .addr(addr_r), 
-        .signal(signal)
+        .change_index(change_index)
     );
     
     Counter_1 C_1 (
@@ -98,5 +99,3 @@ module Score_manager #(
     );
     //end
 endmodule
-
-

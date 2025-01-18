@@ -47,4 +47,3 @@ module Counter_3 (
        end
     end
 endmodule
-

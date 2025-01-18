@@ -13,8 +13,8 @@ module Output_manager (
         if (rst) begin
             // Reset outputs and ready signal to 0
             diag <= 0;
-            left <= 0;
             up <= 0;
+            left <= 0;
         end 
         else if (en_read) buffer[count] <= ram_data;
     end
@@ -29,8 +29,8 @@ module Output_manager (
         else begin
             // If not ready, reset the outputs to 255
             diag <= 255;
-            left <= 255;
             up <= 255;
+            left <= 255;
         end
     end
 endmodule

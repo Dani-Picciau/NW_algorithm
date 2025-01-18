@@ -1,14 +1,15 @@
 module Insertion_counter #(
-    parameter N = 128
+    parameter N = 2,
+    parameter BitAddr = $clog2(N+1)
 )(
     input wire clk, rst,
     input wire en_read,
     input wire change_index,
     output wire end_filling,
-    output reg [($clog2(N)):0] i, j
+    output reg [BitAddr:0] i, j
 );
-    reg [($clog2(N)):0] count_nxtJ; 
-    reg [($clog2(N)):0] count_nxtI;
+    reg [BitAddr:0] count_nxtJ; 
+    reg [BitAddr:0] count_nxtI;
     
     // Sequential logic for registers
     always @(posedge clk, posedge rst) begin
@@ -50,5 +51,5 @@ module Insertion_counter #(
     end
 
     // End filling signal
-    assign end_filling = (en_read && i == N-1 && j == N-1) ? 1'b1 : 1'b0;
+    assign end_filling = (en_read==0 && i == N-1 && j == N-1) ? 1'b1 : 1'b0;
 endmodule
