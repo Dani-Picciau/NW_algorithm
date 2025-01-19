@@ -1,35 +1,52 @@
-module iniz #(
-    parameter gap_score = -2
+module Initialization_counter # (
+    parameter gap_score = -2,
+    parameter N = 128,
+    parameter BitAddr = $clog2(N+1)
 ) (
     input wire clk,rst,
     input wire en_init,
+    input wire hit,
     output reg [7:0] addr,
     output reg signed [8:0] data,
-    output reg end_init
+    output reg end_init 
 ); 
-    
-    reg [7:0] addres = 9'b000000000;
-    reg [8:0] dato = 9'b000000001;
+    reg [BitAddr:0] addr_next; //0
+    reg [8:0] data_next; //1
 
-    //inizializzazione registro dati
     always @(posedge clk, posedge rst) begin
-        if(rst) data <= 0;
-        else data <= dato;
-    end
-
-    //inizializatione registro inidirizzi
-    always @(posedge clk, posedge rst) begin
-        if(rst) addr <= 0;
-        else addr <= addres;
-    end
-
-    //scrittra prima riga della matrice con i punteggi di gap_score, per la colonna verrà gestita direttamente dentro la ram
-    always@(clk, en_init, dato, addres)begin
-        if(en_init==1)begin 
-            dato = data + gap_score;
-            addres = addr + 1;
-            end_init = 0;
+        if(rst) begin
+            addr <= 0;
+            data <= 0;
         end
-        else end_init=1; 
+        else begin
+            data <= data_next;
+            addr <= addr_next;
+        end
     end
+
+    always@(posedge clk, posedge hit)begin
+        if(addr == N) begin
+            end_init <= 1;
+            addr_next <= addr;
+        end
+        else begin
+            end_init <= 0;
+            if(en_init) begin
+                if(!hit) begin
+                    data_next = data + gap_score;
+                    addr_next = addr + 1;
+                end 
+                else begin
+                    data_next <= data;
+                    addr_next <= addr;
+                end
+            end
+            else begin
+                data_next <= data;
+                addr_next <= addr;
+            end
+        end
+    end
+
+    //end
 endmodule

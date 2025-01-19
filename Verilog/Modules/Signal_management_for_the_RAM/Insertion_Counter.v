@@ -25,10 +25,6 @@ module Insertion_counter #(
 
     // Combinational logic for next state
     always @(i, j, en_read, change_index) begin
-        // Default: keep current values
-        count_nxtI = i;
-        count_nxtJ = j;
-        
         if (en_read) begin
             if (change_index) begin
                 if (j == N-1) begin
@@ -47,6 +43,16 @@ module Insertion_counter #(
                     count_nxtJ = j + 1;
                 end
             end
+            else begin
+                // Default: keep current values
+                count_nxtI = i;
+                count_nxtJ = j;
+            end
+        end
+        else begin
+            // Default: keep current values
+            count_nxtI = i;
+            count_nxtJ = j;
         end
     end
 

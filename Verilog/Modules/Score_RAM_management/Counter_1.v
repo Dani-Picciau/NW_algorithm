@@ -10,7 +10,7 @@ module Counter_1 (
         else hit <= hit_n;
     end
 
-    always @(posedge clk ) begin
+    always @(posedge clk) begin
         if(en_init) begin
             if(!hit) hit_n <= hit +1;
             else hit_n <=0;
