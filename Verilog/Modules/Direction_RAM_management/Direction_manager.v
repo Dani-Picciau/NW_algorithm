@@ -11,7 +11,7 @@ module Direction_manager # (
     input wire [2:0] symbol_in, 
     output wire [2:0] symbol_out,
     
-    //wire interni
+    //Internal wire
     output wire [addr_lenght:0] addr_r,
     output wire [addr_lenght:0] addr_w,
     output wire hit,

@@ -7,7 +7,7 @@ module Reading_index_score #(
     input wire en_read,
     input wire [1:0] count,
     input wire [BitAddr:0] i, j,
-    input wire change_index,
+    input wire signal,
     output reg [addr_lenght:0] addr
 );
     
@@ -19,8 +19,8 @@ module Reading_index_score #(
         else addr <= addr_next;
     end
     
-    always @(en_read, change_index, count, i, j) begin
-        if (en_read && !change_index) begin
+    always @(en_read, signal, count, i, j, addr, N) begin
+        if (en_read && !signal) begin
             case (count)
                 2'b00: addr_next = (j+(N+1)*i);
                 2'b01: addr_next = ((j+1)+(N+1)*i);

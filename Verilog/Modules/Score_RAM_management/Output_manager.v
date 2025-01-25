@@ -1,10 +1,10 @@
 module Output_manager (
-    input wire clk, rst,               // Clock and reset signals
-    input wire en_read,                // Enable signal for reading data
-    input wire [1:0] count,            // Counter to address the buffer
-    input wire signed [8:0] ram_data,         // Input data from RAM
-    input wire signal,                 //
-    output reg signed [8:0] diag, left, up    // Outputs for diagonal, left, and up data
+    input wire clk, rst,                        // Clock and reset signals
+    input wire en_read,                         // Enable signal for reading data
+    input wire [1:0] count,                     // Counter to address the buffer
+    input wire signed [8:0] ram_data,           // Input data from RAM
+    input wire signal,                          // Signal to indicate if the data is ready
+    output reg signed [8:0] diag, left, up      // Outputs for diagonal, left, and up data
 );
     reg [8:0] buffer [2:0]; // Buffer to store data temporarily
 
@@ -13,8 +13,8 @@ module Output_manager (
         if (rst) begin
             // Reset outputs and ready signal to 0
             diag <= 0;
-            up <= 0;
             left <= 0;
+            up <= 0;
         end 
         else if (en_read) buffer[count] <= ram_data;
     end
@@ -29,8 +29,8 @@ module Output_manager (
         else begin
             // If not ready, reset the outputs to 255
             diag <= 255;
-            up <= 255;
             left <= 255;
+            up <= 255;
         end
     end
 endmodule

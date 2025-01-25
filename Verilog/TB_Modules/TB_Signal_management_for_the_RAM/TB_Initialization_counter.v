@@ -1,4 +1,6 @@
-module Tbiniz();
+`include "/c:.../Initialization_counter.v"
+
+module TB_Initialization_counter();
     reg clk, rst;
     reg en_init;
     wire [7:0] addr;
@@ -6,7 +8,7 @@ module Tbiniz();
     wire end_init;
 
     // Istanza del modulo iniz
-    iniz init(
+    Initialization_counter init(
         .clk(clk),
         .rst(rst),
         .en_init(en_init),

@@ -41,9 +41,9 @@ module Counter_3 (
                 signal = 1'b0;
             end
         end else begin
-         count_next <= 0;
-         signal <= 0;
-         cnt_clk_nxt<=0;
-       end
+            count_next <= 0;
+            signal <= 0;
+            cnt_clk_nxt<=0;
+        end
     end
 endmodule

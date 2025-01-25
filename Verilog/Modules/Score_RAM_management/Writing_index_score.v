@@ -6,9 +6,9 @@ module Writing_index_score #(
     input wire clk, rst,
     input wire en_ins, en_init, hit,
     input wire [BitAddr:0] i, j, addr_init,
-    input wire signed [8:0] max, data_init,
+    input wire [8:0] max, data_init,
     output reg [addr_lenght:0] addr_out,
-    output reg signed [8:0] data_out
+    output reg [8:0] data_out
 );
     always @(posedge clk, posedge rst) begin
         if(rst) begin
@@ -16,7 +16,7 @@ module Writing_index_score #(
             data_out <= 0;
         end
         else if(en_init) begin
-            if(!hit) addr_out <= addr_init;
+                if(!hit) addr_out <= addr_init ;
                 else addr_out<=addr_init*(N+1);
             data_out <= data_init;
         end
