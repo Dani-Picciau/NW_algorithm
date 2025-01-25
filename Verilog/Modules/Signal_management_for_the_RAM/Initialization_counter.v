@@ -6,7 +6,7 @@ module Initialization_counter # (
     input wire clk,rst,
     input wire en_init,
     input wire hit,
-    output reg [7:0] addr,
+    output reg [BitAddr:0] addr,
     output reg signed [8:0] data,
     output reg end_init 
 ); 
@@ -17,6 +17,7 @@ module Initialization_counter # (
         if(rst) begin
             addr <= 0;
             data <= 0;
+            //end_init <= 0;
         end
         else begin
             data <= data_next;

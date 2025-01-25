@@ -1,4 +1,7 @@
-`include "/c:..."
+`include "Counter_1.v"
+`include "Writing_index_direction.v"
+`include "Reading_index_direction.v"
+`include "Direction_RAM.v"
 
 module Direction_manager # (
     parameter N=128,

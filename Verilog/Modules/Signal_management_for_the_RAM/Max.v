@@ -4,24 +4,29 @@ module Max #(
     parameter mismatch_score = -1
 ) (
     input wire value, clk, rst,
-    input wire [8:0] diag, up, lx, //9 bits to include values ​​from +128 to -128
-    output reg [8:0] max, //9 bits to include values ​​from +128 to -128
-    output reg [2:0] symbol, // <-, ⭡, ↖
-    output reg calculated
+    input wire [8:0] diag, up, lx, //9 bits to include values ??from +128 to -128
+    output reg [8:0] max, //9 bits to include values ??from +128 to -128
+    output reg [2:0] symbol, // <-, ?, ?
+    output reg calculated,
+    output reg signed [8:0] diag_calc, up_calc, lx_calc
 );
     parameter arrow_lx = 3'b100, arrow_up = 3'b010, arrow_diag = 3'b001;
-    reg [8:0] diag_calc, up_calc, lx_calc;
+    //reg signed [8:0] diag_calc, up_calc, lx_calc;
 
     always @(posedge clk, posedge rst, value, diag, up, lx) begin
         
         if(rst) begin
-            max = 0;
+            max = 255;
             symbol = 0;
             calculated = 1'b0;
+            diag_calc = 255;
+            up_calc = 255;
+            lx_calc = 255;
         end
         else begin
             if(value) diag_calc = diag + match_score;
             else diag_calc = diag + mismatch_score;
+
             up_calc = up + gap_score;
             lx_calc = lx + gap_score;
 
