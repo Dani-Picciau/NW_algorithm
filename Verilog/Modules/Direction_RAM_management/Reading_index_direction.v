@@ -1,5 +1,5 @@
 module Reading_index_direction #(
-    parameter N=128,
+    parameter N = 128,
     parameter BitAddr = $clog2(N+1),
     parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
 ) (
