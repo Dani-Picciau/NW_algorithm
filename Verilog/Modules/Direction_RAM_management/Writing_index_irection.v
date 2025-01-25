@@ -1,4 +1,4 @@
-module moduleName #(
+module Writing_index_direction #(
     parameter N = 128,
     parameter BitAddr = $clog2(N),
     parameter addr_lenght = (((N+1)*(N+1))-1)
@@ -30,7 +30,7 @@ module moduleName #(
 
         end
         else if(en_ins) begin
-            addr_out <= ((j+1)+((N+1)*(i+1)));
+            addr_out <= ( (j+1) + ((N+1)*(i+1)) );
             symbol_out <= symbol;
         end
         else begin
@@ -38,5 +38,4 @@ module moduleName #(
             symbol_out <= 0;
         end
     end
-
 endmodule

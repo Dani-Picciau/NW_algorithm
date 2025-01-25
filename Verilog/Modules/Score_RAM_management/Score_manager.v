@@ -1,9 +1,9 @@
-`include "C:\...\Counter_1.v"
-`include "C:\...\Counter_3.v"
-`include "C:\...\Reading_index_score.v"
-`include "C:\...\Writing_index_score.v"
-`include "C:\...\Scores_RAM.v"
-`include "C:\...\Output_manager.v"
+`include "Counter_1.v"
+`include "Counter_3.v"
+`include "Reading_index_score.v"
+`include "Writing_index_score.v"
+`include "Scores_RAM.v"
+`include "Output_manager.v"
 
 module Score_manager #(
     parameter N = 128,

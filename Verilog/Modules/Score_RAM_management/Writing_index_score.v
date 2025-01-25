@@ -16,7 +16,7 @@ module Writing_index_score #(
             data_out <= 0;
         end
         else if(en_init) begin
-                if(!hit) addr_out <= addr_init ;
+            if(!hit) addr_out <= addr_init;
                 else addr_out<=addr_init*(N+1);
             data_out <= data_init;
         end
