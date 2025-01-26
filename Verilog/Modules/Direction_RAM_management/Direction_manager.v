@@ -63,7 +63,7 @@ module Direction_manager # (
         .symbol_out(symbol_w)
     );
     
-    Counter_1 c1(
+    Counter_1_dir c1(
         .clk(clk),
         .rst(rst),
         .en_init(en_init),

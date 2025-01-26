@@ -1,4 +1,4 @@
-module Counter_1 (
+module Counter_1_sc (
     input wire clk, rst,
     input wire en_init,
     output reg hit

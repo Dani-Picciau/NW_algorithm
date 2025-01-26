@@ -46,7 +46,7 @@ module Score_manager #(
         .signal(signal)
     );
     
-    Counter_1 C_1 (
+    Counter_1_sc C_1 (
         .clk(clk), 
         .rst(rst), 
         .en_init(en_init), 
