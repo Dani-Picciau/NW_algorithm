@@ -1,4 +1,4 @@
-`include "Counter_1.v"
+`include "Counter_1_dir.v"
 `include "Writing_index_direction.v"
 `include "Reading_index_direction.v"
 `include "Direction_RAM.v"

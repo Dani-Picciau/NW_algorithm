@@ -1,4 +1,4 @@
-`include "Counter_1.v"
+`include "Counter_1_sc.v"
 `include "Counter_3.v"
 `include "Reading_index_score.v"
 `include "Writing_index_score.v"
