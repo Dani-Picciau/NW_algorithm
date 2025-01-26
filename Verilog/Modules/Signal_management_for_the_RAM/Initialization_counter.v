@@ -12,16 +12,18 @@ module Initialization_counter # (
 ); 
     reg [BitAddr:0] addr_next; //0
     reg [8:0] data_next; //1
-
+    reg end_init_next;
+    
     always @(posedge clk, posedge rst) begin
         if(rst) begin
             addr <= 0;
             data <= 0;
-            //end_init <= 0;
+            end_init <= 0;
         end
         else begin
             data <= data_next;
             addr <= addr_next;
+            end_init <= end_init_next;
         end
     end
 
@@ -31,7 +33,7 @@ module Initialization_counter # (
             addr_next <= addr;
         end
         else begin
-            end_init <= 0;
+            end_init_next <= 0;
             if(en_init) begin
                 if(!hit) begin
                     data_next = data + gap_score;

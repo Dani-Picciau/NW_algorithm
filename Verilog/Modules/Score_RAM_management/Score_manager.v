@@ -17,7 +17,7 @@ module Score_manager #(
     output wire [8:0] diag, up, left,
     output wire signal,
     
-    //Segnali interni
+    //Internal wires
     output wire [1:0] count_3,
     output wire [8:0] score, data, 
     output wire hit,
