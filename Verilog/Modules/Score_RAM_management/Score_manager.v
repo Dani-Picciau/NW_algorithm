@@ -12,19 +12,21 @@ module Score_manager #(
 ) (
     input wire clk, rst,
     input wire en_ins, en_init, en_read, we,
+    input wire  change_index,
+    input wire signed [8:0] max, 
+    input wire signed [8:0]data_init,
     input wire [BitAddr:0] i, j, addr_init,
-    input wire [8:0] max, data_init,
-    output wire [8:0] diag, up, left,
+    output wire signed[8:0] diag, up, left,
     output wire signal,
+    output wire hit, //It's also an internal wire
     
     //Internal wires
     output wire [1:0] count_3,
-    output wire [8:0] score, data, 
-    output wire hit,
-    output wire [addr_lenght:0] addr_w, addr_r
+    output wire [addr_lenght:0] addr_r, addr_w,
+    output wire signed [8:0] score, data
 );
-    wire en_din = (en_ins | en_init);
-    
+    wire en_din = en_ins | en_init;
+  
     Counter_3 C_3 (
         .clk(clk), 
         .rst(rst), 
@@ -43,7 +45,7 @@ module Score_manager #(
         .i(i), 
         .j(j), 
         .addr(addr_r), 
-        .signal(signal)
+        .change_index(change_index)
     );
     
     Counter_1_sc C_1 (

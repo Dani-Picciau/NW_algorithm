@@ -9,15 +9,16 @@ module TB;
     reg en_ins, en_init, en_read, we;
     reg [BitAddr:0] addr_init;
     reg [8:0] data_init, max;
-    wire hit; //Segnali interni
-    wire [addr_lenght:0] addr_w; //Segnali interni
-    wire [8:0] data; //Segnali interni
+    wire hit; //Internal wire
+    wire [addr_lenght:0] addr_w; //Internal wire
+    wire [8:0] data; //Internal wire
     reg [BitAddr:0] i, j;
-    wire [1:0] count_3; //Segnali interni
-    wire [addr_lenght:0] addr_r; //Segnali interni
+    wire [1:0] count_3; //Internal wire
+    wire [addr_lenght:0] addr_r; //Internal wire
+    reg change_index;
     wire signal;
     wire [8:0] diag, up, left;
-    wire [8:0] score;     //Segnali interni
+    wire [8:0] score; //Internal wire
     
     Score_manager # (
         .N(N)
@@ -39,6 +40,7 @@ module TB;
         .count_3(count_3),
         .addr_r(addr_r),
         .signal(signal),
+        .change_index(change_index),
         .diag(diag),
         .up(up),
         .left(left),
@@ -46,6 +48,14 @@ module TB;
     );
     
     always #0.5 clk = ~clk;
+    
+    //Simulation of the state machine signal "Change_index"
+    always@(signal) begin
+        #1
+        change_index = 1;
+        #1
+        change_index = 0;
+    end
 
     initial begin
         clk = 0; 
@@ -59,6 +69,7 @@ module TB;
         addr_init = 0; 
         max = 0; 
         data_init = 0;
+        change_index = 0;
 
         #8  rst=0;
         // Initialization of addres and data
