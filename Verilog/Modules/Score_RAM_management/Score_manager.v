@@ -1,3 +1,5 @@
+`include "C:\..." // a caso solo per non darae errore 
+
 `include "Counter_1_sc.v"
 `include "Counter_3.v"
 `include "Reading_index_score.v"
