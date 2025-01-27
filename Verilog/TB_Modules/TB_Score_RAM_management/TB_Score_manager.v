@@ -2,23 +2,30 @@
 
 module TB;
     parameter N = 5;
-    parameter BitAddr = $clog2(N);
+    parameter BitAddr = $clog2(N+1);
     parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
     
+    //The signals are positioned for better understanding of the simulation, do not move them!
     reg clk, rst;
-    reg en_ins, en_init, en_read, we;
+    reg we, en_init;
+    
     reg [BitAddr:0] addr_init;
-    reg [8:0] data_init, max;
-    wire hit; //Internal wire
+    reg [8:0] data_init;
     wire [addr_lenght:0] addr_w; //Internal wire
     wire [8:0] data; //Internal wire
+    wire hit; //Internal wire
+    reg en_ins;
     reg [BitAddr:0] i, j;
+    reg [8:0] max;
+    
+    reg en_read;
     wire [1:0] count_3; //Internal wire
     wire [addr_lenght:0] addr_r; //Internal wire
     reg change_index;
     wire signal;
-    wire [8:0] diag, up, left;
     wire [8:0] score; //Internal wire
+    
+    wire [8:0] diag, up, left;
     
     Score_manager # (
         .N(N)
@@ -111,3 +118,4 @@ module TB;
         $stop;
     end
 endmodule
+
