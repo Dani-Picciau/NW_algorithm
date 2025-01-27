@@ -1,6 +1,6 @@
-`include "/c:.../Counter_1.v"
+`include "/c:.../Counter_1_sc.v"
 
-module TB_Counter_1;
+module TB_Counter_1_sc;
 
     // Signal inputs
     reg clk, rst;
@@ -10,7 +10,7 @@ module TB_Counter_1;
     wire hit;
 
     // Instantiation of the Counter_1 module
-    Counter_1 test (
+    Counter_1_sc test (
         .clk(clk),
         .rst(rst),
         .en_init(en_init),
