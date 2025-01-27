@@ -14,21 +14,19 @@ module Signal_manager #(
 )(
     input wire value,
     input wire signed [8:0] diag, up, left,
-    output wire signed [8:0] max,
-    output wire [2:0] symbol, 
-    output wire calculated,
-    
     input wire clk, rst,
     input wire en_read,
     input wire en_init,
     input wire change_index, 
     input wire hit, 
+    output wire signed [8:0] max,
+    output wire [2:0] symbol, 
+    output wire calculated,
     output wire end_filling,
     output wire [BitAddr:0] i, j,
     output wire signed [8:0] data_init,
     output wire [BitAddr:0] addr_init,
-    output wire end_init,
-    output wire signed [8:0] diag_calc, up_calc, lx_calc
+    output wire end_init
 );
 
     Insertion_counter #(
@@ -68,9 +66,6 @@ module Signal_manager #(
         .lx(left),
         .max(max),
         .symbol(symbol),
-        .calculated(calculated),
-        .diag_calc(diag_calc),
-        .up_calc(up_calc),
-        .lx_calc(lx_calc)
+        .calculated(calculated)
     );
 endmodule
