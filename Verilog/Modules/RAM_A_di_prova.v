@@ -12,7 +12,7 @@ module RAM_A #(
     input wire [Bit-1:0] addr_din, addr_dout,
     output reg [8:0] dout //data out, to be read
 );
-    reg [8:0] ram [N-1:0]; //128 cells, from 127 to 0. Every cell is 9 bits, fron 8 to 0.
+    reg [8:0] ram [N-1:0]; //128 cells, from 127 to 0. Every cell is 8 bits, from 7 to 0, for the ascii
 
     initial 
     begin
