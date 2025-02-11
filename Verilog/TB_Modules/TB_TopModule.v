@@ -10,7 +10,7 @@ module TB;
     parameter mismatch_score = -1;
     
     reg clk, rst;
-    reg value;
+    reg [2:0] a, b;
     reg change_index;
     reg en_ins, en_init, en_read, en_traceB, we; 
     reg [BitAddr:0] i_t, j_t;
@@ -31,10 +31,13 @@ module TB;
     wire [BitAddr:0] addr_init;
     wire signed [8:0] data_init, data;
     wire hit;
+    wire value;
     
     TopModule #(.N(N)) TOP (
         .clk(clk),
         .rst(rst),
+        .a(a),
+        .b(b),
         .en_ins(en_ins),
         .en_init(en_init),
         .en_read(en_read),
@@ -62,11 +65,11 @@ module TB;
         .j(j),
         .end_init(end_init),
         .hit(hit), 
-        .value(value),
         .symbol(symbol),
         .symbol_w(symbol_w),
         .symbol_out(symbol_out),
-        .calculated(calculated)
+        .calculated(calculated),
+        .value(value)
     );
     
     always #0.5 clk = ~clk;
@@ -74,12 +77,13 @@ module TB;
     initial begin
         clk = 0; 
         rst = 1; 
+        a = 0;
+        b = 0;
         en_ins = 0;
         en_init = 0; 
         en_read = 0;
         en_traceB = 0;
         we = 0;
-        value = 0;
         change_index = 0;
         i_t = 0;
         j_t = 0;
@@ -95,7 +99,10 @@ module TB;
             en_init = 0; 
             we = 0; 
             en_ins = 0;
-            value = 1; //match
+            a = 001; //G
+            b = 001; //G
+            #4
+            //value = 1; //match
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -109,8 +116,11 @@ module TB;
             we = 0; 
             en_ins = 0;
             change_index=1;
-        #1 change_index=0;
-            value = 0; //mismatch
+        #1  change_index=0;
+            a = 001; //G
+            b = 011; //T
+            #1
+            //value = 0; //mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -124,8 +134,11 @@ module TB;
             we = 0; 
             en_ins = 0;
             change_index=1; 
-        #1 change_index=0;
-            value =1; // match
+        #1  change_index=0;
+            a = 001; //G
+            b = 001; //G
+            #1
+            //value =1; // match
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -140,7 +153,10 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            value = 0; // mismatch
+             a = 100; //A
+             b = 001; //G
+             #1
+            //value = 0; // mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -155,7 +171,10 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            value = 0; // mismatch
+            a = 100; //A
+            b = 011; //T
+            #1
+            //value = 0; // mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -170,7 +189,10 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            value = 0; // mismatch
+            a = 100; //A
+            b = 001; //G
+            #1
+            //value = 0; // mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -185,7 +207,10 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            value = 0; // mismatch
+            a = 110; //C
+            b = 001; //G
+            #1
+            //value = 0; // mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -200,7 +225,10 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            value = 0; // mismatch
+            a = 110; //C
+            b = 011; //T
+            #1
+            //value = 0; // mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;
@@ -215,7 +243,10 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            value = 0; //mismatch
+            a = 110; //C
+            b = 001; //G
+            #1
+            //value = 0; //mismatch
         // Insertion phase
         #12 en_read=0;
             en_init = 0;

@@ -14,7 +14,7 @@ module Signal_manager #(
     parameter match_score = 1,
     parameter mismatch_score = -1
 )(
-    input wire value,
+    input wire [2:0] a, b,
     input wire signed [8:0] diag, up, left,
     input wire clk, rst,
     input wire en_read,
@@ -28,7 +28,10 @@ module Signal_manager #(
     output wire [BitAddr:0] i, j,
     output wire signed [8:0] data_init,
     output wire [BitAddr:0] addr_init,
-    output wire end_init
+    output wire end_init,
+    
+    //Internal wires
+    output wire value
 );
 
     Insertion_counter #(
@@ -69,5 +72,11 @@ module Signal_manager #(
         .max(max),
         .symbol(symbol),
         .calculated(calculated)
+    );
+    
+    Match_mismatch Mm(
+        .a(a),
+        .b(b),
+        .value(value)
     );
 endmodule
