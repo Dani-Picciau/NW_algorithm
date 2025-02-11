@@ -13,8 +13,8 @@ module RD_Counter#(
 
     always @(posedge clk, posedge rst) begin
         if(rst) begin
-            i_t <= N+1;
-            j_t <= N+1;
+            i_t <= N-1;
+            j_t <= N-1;
         end
         else begin
             i_t <= i_nxt;
