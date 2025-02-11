@@ -1,6 +1,6 @@
 module Al_RAM_A #(
     parameter N=128, 
-    parameter BitAddr = $clog2(N)
+    parameter BitAddr = $clog2(N*N+1)
 ) (
     input wire clk,
     input wire en_traceB,
@@ -9,7 +9,7 @@ module Al_RAM_A #(
     output wire [2:0] data_out
 );
     reg [BitAddr:0] addr_r;
-    reg [8:0] ram [N-1:0];
+    reg [8:0] ram [(N*N)-1:0];
 
     always @(posedge clk) begin
         if (en_traceB == 1'b1) ram[i] <= data_in;
