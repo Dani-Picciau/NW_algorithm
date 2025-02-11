@@ -11,7 +11,7 @@ module TopModule #(
     parameter mismatch_score = -1
 ) (
     input wire clk, rst,
-    input wire value,
+    input wire [2:0] a, b,
     input wire change_index, 
     input wire en_ins, en_init, en_read, en_traceB, we, 
     input wire [BitAddr:0] i_t, j_t,
@@ -31,7 +31,8 @@ module TopModule #(
     output wire [BitAddr:0] i, j,
     output wire [BitAddr:0] addr_init,
     output  wire signed [8:0] data_init, data,
-    output wire hit
+    output wire hit,
+    output wire value
 );
     
     Score_manager # (
@@ -88,6 +89,8 @@ module TopModule #(
     ) block3 (
         .clk(clk),
         .rst(rst),
+        .a(a),
+        .b(b),
         .en_read(en_read),
         .en_init(en_init),
         .change_index(change_index),
