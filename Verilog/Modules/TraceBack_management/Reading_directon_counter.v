@@ -75,6 +75,13 @@ module Reading_direction_counter#(
         end
     end
 
+    /* indici da mandare alle ram A e B
+    // quando l'indice chce usiamo per riga e colonna della matrice è a 0 non ci sono lettere corrispondenti
+       nelle ram A e B e quando l'indice per la matrice è a 1 bisogna leggere la prima lettera delle ram A o B 
+       quindi quella con indice 0. 
+    // Per questo i_t_ram e j_t_ram  davono valere i_t e j_t -1
+       però non se i_t e j_t sono a 0 perché assegneresti -1 agli indci per le ram.*/
+
     always @(posedge clk, posedge rst) begin
         if(rst) begin
             i_t_ram = {BitAddr{1'bz}};
