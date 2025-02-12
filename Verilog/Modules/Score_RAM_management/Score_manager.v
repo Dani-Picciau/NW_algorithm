@@ -1,4 +1,4 @@
-`include "C:\..."
+`include "c:\..."
  
 `include "Counter_1_sc.v"
 `include "Counter_3.v"

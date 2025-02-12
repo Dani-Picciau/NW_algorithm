@@ -1,4 +1,4 @@
-`include "C:\..."
+`include "c:\..."
 
 `include "Counter_1_dir.v"
 `include "Writing_index_direction.v"

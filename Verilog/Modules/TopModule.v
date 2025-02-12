@@ -14,14 +14,16 @@ module TopModule #(
     input wire [2:0] a, b,
     input wire change_index, 
     input wire en_ins, en_init, en_read, en_traceB, we, 
-    input wire [BitAddr:0] i_t, j_t,
     output wire signal,    
     output wire calculated,
     output wire end_init,
     output wire end_filling,
     output wire [2:0] symbol_out,
+    output wire end_c,
+    output wire [BitAddr:0] i_t_ram, j_t_ram,
     
     //Internal wires
+    output wire [BitAddr:0] i_t, j_t,
     output wire [2:0] symbol, symbol_w,
     output wire signed [8:0] max,      
     output wire [1:0] count_3,
@@ -108,6 +110,20 @@ module TopModule #(
         .max(max),
         .symbol(symbol),
         .calculated(calculated)
+    );
+    
+    TraceBack_manager #(
+        .N(N)
+    ) block4 (
+        .clk(clk),
+        .rst(rst),
+        .en_traceB(en_traceB),
+        .symbol(symbol_out),
+        .end_c(end_c),
+        .i_t(i_t),
+        .j_t(j_t),
+        .i_t_ram(i_t_ram),
+        .j_t_ram(j_t_ram)
     );
     
     //end

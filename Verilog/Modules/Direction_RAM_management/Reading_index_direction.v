@@ -1,5 +1,5 @@
 module Reading_index_direction #(
-    parameter N = 128,
+    parameter N=128,
     parameter BitAddr = $clog2(N+1),
     parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
 ) (
@@ -17,7 +17,7 @@ module Reading_index_direction #(
     end
 
     always @(posedge clk, en_traceB, i_t, j_t) begin
-        if (en_traceB) addr_next <= ( (j_t+1) + ((N+1) * (i_t+1)) );
+        if (en_traceB) addr_next <= ( (j_t) + ((N+1) * (i_t)) );
         else addr_next <= addr_r;
     end
 
