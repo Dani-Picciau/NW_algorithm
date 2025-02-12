@@ -34,7 +34,9 @@ module TopModule #(
     output wire [BitAddr:0] addr_init,
     output  wire signed [8:0] data_init, data,
     output wire hit,
-    output wire value
+    output wire value,
+    output wire [2:0] doutA,doutB,  
+    output wire [BitAddr-1:0] indexA ,indexB
 );
     
     Score_manager # (
@@ -124,6 +126,24 @@ module TopModule #(
         .j_t(j_t),
         .i_t_ram(i_t_ram),
         .j_t_ram(j_t_ram)
+    );
+    
+    
+    Top_Ram #(
+        .N(N)
+    ) block5 (
+        .clk(clk),
+        .rst(rst),
+        .en_traceB(en_traceB),
+        .en_read(en_read),
+        .i_t(i_t),
+        .j_t(j_t),
+        .i(i),
+        .j(j),
+        .doutA(doutA),
+        .doutB(doutB),
+        .indexA(indexA),
+        .indexB(indexB)
     );
     
     //end
