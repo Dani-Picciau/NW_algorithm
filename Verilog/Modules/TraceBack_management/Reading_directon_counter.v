@@ -16,9 +16,8 @@ module Reading_direction_counter#(
 
     always @(posedge clk, posedge rst) begin
         if(rst) begin
-            i_t <= N;
-            j_t <= N;
-            counter <= 0;
+            i_t <= N-1;
+            j_t <= N-1;
         end
         else begin
             if(counter == 3) begin  // Cambia valore ogni 4 cicli
