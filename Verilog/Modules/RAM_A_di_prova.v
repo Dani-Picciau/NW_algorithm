@@ -1,4 +1,4 @@
-//queste sono solo ram di appoggio per provare le sequenze, infatti sono riempire tramite initial
+//queste sono solo ram di appoggio per provare le sequenze, infatti sono riempite tramite initial
 
 module RAM_A #(
     parameter N=5, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
