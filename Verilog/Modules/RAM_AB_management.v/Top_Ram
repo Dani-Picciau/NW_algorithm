@@ -1,4 +1,6 @@
-module Top_Ram#(
+`include "c:\..."
+
+module Top_RAM #(
     parameter N=128,
     parameter BitAddr=$clog2(N+1)
 )(
@@ -10,7 +12,9 @@ module Top_Ram#(
     );
     
     
-    RAM_A ramA (
+    RAM_A #(
+        .N(N)
+    ) ramA (
         .clk(clk),
         .rst(rst),
         .en_dout(en_traceB||en_read),
@@ -19,7 +23,9 @@ module Top_Ram#(
     );
     
         
-    RAM_B ramb (
+    RAM_B #(
+        .N(N)
+    ) ramB (
         .clk(clk),
         .rst(rst),
         .en_dout(en_traceB||en_read),
@@ -27,9 +33,9 @@ module Top_Ram#(
         .dout(doutB)
     );
     
-    Index_out_A#(
+    Index_out_A #(
         .N(N)
-    ) ioA(
+    ) ioA (
         .en_traceB(en_traceB),
         .en_read(en_read),
         .i(i),
@@ -38,9 +44,9 @@ module Top_Ram#(
     );
     
     
-    Index_out_B#(
+    Index_out_B #(
         .N(N)
-    ) ioB(
+    ) ioB (
         .en_traceB(en_traceB),
         .en_read(en_read),
         .j(j),
@@ -48,12 +54,5 @@ module Top_Ram#(
         .index(indexB)
     );
     
-    
-    
-    
-    
-    
-    
-    
-    
+    //
 endmodule

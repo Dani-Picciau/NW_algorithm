@@ -129,7 +129,7 @@ module TopModule #(
     );
     
     
-    Top_Ram #(
+    Top_RAM #(
         .N(N)
     ) block5 (
         .clk(clk),
