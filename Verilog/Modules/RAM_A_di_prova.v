@@ -10,17 +10,19 @@ module RAM_A #(
     input wire en_dout, //en_read || en_trace_B
     // input wire we, 
     input wire [Bit-1:0] /*addr_din,*/ addr_dout,
-    output reg [8:0] dout //data out, to be read
+    output reg [2:0] dout //data out, to be read
 );
-    reg [8:0] ram [N-1:0]; //128 cells, from 127 to 0. Every cell is 8 bits, from 7 to 0, for the ascii
+    reg [2:0] ram [N-1:0]; //128 cells, from 127 to 0. Every cell is 3 bits, from 2 to 0, for our convertion
 
+    parameter G=3'b001, C=3'b110, A=3'b100, T=3'b011; 
+    
     initial 
     begin
-        ram[0]=8'h43; // C
-        ram[1]=8'h41; // A
-        ram[2]=8'h43; // C
-        ram[3]=8'h54; // T
-        ram[4]=8'h47; // G
+        ram[0]=C;
+        ram[1]=A;
+        ram[2]=C;
+        ram[3]=T;
+        ram[4]=G;
     end
 
     // always @(posedge clk) begin
