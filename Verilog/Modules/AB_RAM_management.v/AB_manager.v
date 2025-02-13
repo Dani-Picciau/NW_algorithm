@@ -1,16 +1,16 @@
 `include "c:\..."
 
-module Top_RAM #(
+module AB_manager #(
     parameter N=128,
     parameter BitAddr=$clog2(N+1)
 )(
     input wire en_traceB,en_read,clk,rst,
-    input wire [BitAddr-1:0] i,i_t,j,j_t,
+    input wire [BitAddr:0] i,i_t,j,j_t,
     output wire [2:0] doutA,doutB,  
-    output wire [BitAddr-1:0] indexA ,indexB
     
-    );
-    
+    //Internal wires
+    output wire [BitAddr:0] indexA ,indexB
+);
     
     RAM_A #(
         .N(N)
@@ -22,7 +22,6 @@ module Top_RAM #(
         .dout(doutA)
     );
     
-        
     RAM_B #(
         .N(N)
     ) ramB (
@@ -35,7 +34,7 @@ module Top_RAM #(
     
     Index_out_A #(
         .N(N)
-    ) ioA (
+    ) I_o_A (
         .en_traceB(en_traceB),
         .en_read(en_read),
         .i(i),
@@ -43,10 +42,9 @@ module Top_RAM #(
         .index(indexA)
     );
     
-    
     Index_out_B #(
         .N(N)
-    ) ioB (
+    ) I_o_B (
         .en_traceB(en_traceB),
         .en_read(en_read),
         .j(j),
@@ -54,5 +52,5 @@ module Top_RAM #(
         .index(indexB)
     );
     
-    //
+    //end
 endmodule
