@@ -14,4 +14,5 @@ module Index_out_A #(
         else index=3'b0; // cercare un indice che non faccia danno
     end
     
+    //end
 endmodule

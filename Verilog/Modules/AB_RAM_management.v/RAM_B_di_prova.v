@@ -16,8 +16,7 @@ module RAM_B #(
 
     parameter G=3'b001, C=3'b110, A=3'b100, T=3'b011; 
 
-    initial 
-    begin
+    initial begin
         ram[0]=G;
         ram[1]=A;
         ram[2]=T;
@@ -35,4 +34,6 @@ module RAM_B #(
         if(rst) dout <= 0;
         else if(en_dout) dout <= ram[addr_dout];
     end
+
+    //end
 endmodule

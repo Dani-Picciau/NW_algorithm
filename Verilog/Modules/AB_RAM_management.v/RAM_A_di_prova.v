@@ -16,8 +16,7 @@ module RAM_A #(
 
     parameter G=3'b001, C=3'b110, A=3'b100, T=3'b011; 
     
-    initial 
-    begin
+    initial begin
         ram[0]=C;
         ram[1]=A;
         ram[2]=C;

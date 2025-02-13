@@ -115,7 +115,8 @@
 
     13/02/2025:{
         Non aggiorniamo sto coso da più di un mese e poi ci dimentichiamo la metà delle cose. Ci era anche stato consigliayto di tenere traccia di tutte le nostre decisioni per rendere più facile la stesura del report. Ma vabbè ormai è fatta, ci basterà solo ricordarci le cose.
-        Ieri io e Andrea abbiamo provato ad aggiungere le RAM A e B ma ci siamo accorti che non posso essere come le abbiamo pensate inizialmente.
+        Comunque:
+        Ieri io e Andrea abbiamo provato ad aggiungere le RAM A e B ma ci siamo accorti che non possono essere come le abbiamo pensate inizialmente.
         Della parte di inizializzazione se ne occuperanno Matteo e Diego, per il momento ho messo un blocco initial. 
         Ma non è questo il problema! Il problema è che vengono lette con due indici diversi in due momenti diversi del nostro programma, e il dato in uscita in un caso deve andare verso match mismatch, nell'altro caso deve andare in Processing.
         Inizialmente le avevamo messe con due addr di lettura e due dati in uscita, ma dubito che questo sia possibile -_- 
@@ -123,7 +124,7 @@
         E se nessuno dei due è attivo? Dovrebbe tenere l'ultimo indice in ingresso?
         Come facciamo poi a mandare il dato nel blocco giusto? 
         Abbiamo pensato di far entrare gli enable nei blocchi che dovrebbero processare questi dati. Ma la cosa si complica un pochino. 
-        Ad esempio nel match_mismatch Dovremmo abilitare il confronto solo se c'è en_resd alto? e se non ci fosse? Dovremmo tenere in usita il value precedente? Allora bisognerebbe farlo diventare un blocco sequenziale? 
+        Ad esempio nel match_mismatch Dovremmo abilitare il confronto solo se c'è en_read alto? e se non ci fosse? Dovremmo tenere in usita il value precedente? Allora bisognerebbe farlo diventare un blocco sequenziale? 
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         Spero che riusciremo a risolvere in fretta.
     }

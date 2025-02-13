@@ -75,8 +75,11 @@ module Signal_manager #(
     );
     
     Match_mismatch Mm(
+        .clk(clk),
+        .rst(rst),
         .a(a),
         .b(b),
+        .en_read(en_read),
         .value(value)
     );
 endmodule
