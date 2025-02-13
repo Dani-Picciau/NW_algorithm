@@ -1,5 +1,4 @@
-`include "/c:.../Score_manager.v"
-`include "/c:.../Signal_manager.v"
+`include "/c:.../"
 
 module TopModule #(
     parameter N = 128,
@@ -11,7 +10,6 @@ module TopModule #(
     parameter mismatch_score = -1
 ) (
     input wire clk, rst,
-    input wire [2:0] a, b,
     input wire change_index, 
     input wire en_ins, en_init, en_read, en_traceB, we, 
     output wire signal,    
@@ -23,6 +21,8 @@ module TopModule #(
     output wire [BitAddr:0] i_t_ram, j_t_ram,
     
     //Internal wires
+    output wire [2:0] doutA, doutB,
+    output wire [BitAddr:0] indexA, indexB,
     output wire [BitAddr:0] i_t, j_t,
     output wire [2:0] symbol, symbol_w,
     output wire signed [8:0] max,      
@@ -34,9 +34,7 @@ module TopModule #(
     output wire [BitAddr:0] addr_init,
     output  wire signed [8:0] data_init, data,
     output wire hit,
-    output wire value,
-    output wire [2:0] doutA,doutB,  
-    output wire [BitAddr-1:0] indexA ,indexB
+    output wire value
 );
     
     Score_manager # (
@@ -93,8 +91,8 @@ module TopModule #(
     ) block3 (
         .clk(clk),
         .rst(rst),
-        .a(a),
-        .b(b),
+        .a(doutA),
+        .b(doutB),
         .en_read(en_read),
         .en_init(en_init),
         .change_index(change_index),
@@ -128,16 +126,15 @@ module TopModule #(
         .j_t_ram(j_t_ram)
     );
     
-    
-    Top_RAM #(
+    AB_manager #(
         .N(N)
     ) block5 (
         .clk(clk),
         .rst(rst),
         .en_traceB(en_traceB),
         .en_read(en_read),
-        .i_t(i_t),
-        .j_t(j_t),
+        .i_t(i_t_ram),
+        .j_t(j_t_ram),
         .i(i),
         .j(j),
         .doutA(doutA),

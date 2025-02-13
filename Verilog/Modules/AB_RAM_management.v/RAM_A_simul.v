@@ -2,14 +2,14 @@
 
 module RAM_A #(
     parameter N=5, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
-    parameter Bit = $clog2(N)
+    parameter Bit = $clog2(N+1)
 ) (
     input wire clk, rst,
     // input wire [8:0] din, // data in, to be written
     // input wire en_din, 
     input wire en_dout, //en_read || en_trace_B
     // input wire we, 
-    input wire [Bit-1:0] /*addr_din,*/ addr_dout,
+    input wire [Bit:0] /*addr_din,*/ addr_dout,
     output reg [2:0] dout //data out, to be read
 );
     reg [2:0] ram [N-1:0]; //128 cells, from 127 to 0. Every cell is 3 bits, from 2 to 0, for our convertion

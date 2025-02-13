@@ -10,7 +10,6 @@ module TB;
     parameter mismatch_score = -1;
     
     reg clk, rst;
-    reg [2:0] a, b;
     reg change_index;
     reg en_ins, en_init, en_read, en_traceB, we; 
     wire signal;    
@@ -34,12 +33,14 @@ module TB;
     wire signed [8:0] data_init, data;
     wire hit;
     wire value;
+    wire [2:0] doutA,doutB;  
+    wire [BitAddr-1:0] indexA ,indexB;
     
-    TopModule #(.N(N)) TOP (
+    TopModule #(
+        .N(N)
+    ) TOP (
         .clk(clk),
         .rst(rst),
-        .a(a),
-        .b(b),
         .en_ins(en_ins),
         .en_init(en_init),
         .en_read(en_read),
@@ -74,16 +75,20 @@ module TB;
         .symbol_out(symbol_out),
         .calculated(calculated),
         .value(value),
-        .end_c(end_c)
-    );
+        .end_c(end_c),
+        .doutA(doutA),
+        .doutB(doutB),
+        .indexA(indexA),
+        .indexB(indexB) 
+       );
     
     always #0.5 clk = ~clk;
     
     initial begin
         clk = 0; 
         rst = 1; 
-        a = 0;
-        b = 0;
+//        a = 0;
+//        b = 0;
         en_ins = 0;
         en_init = 0; 
         en_read = 0;
@@ -102,8 +107,8 @@ module TB;
             en_init = 0; 
             we = 0; 
             en_ins = 0;
-            a = 110; //C
-            b = 001; //G
+//            a = 110; //C
+//            b = 001; //G
             // cella (1,1)
             #4
             //value = 1; //match
@@ -120,8 +125,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 100; //A
+//            a = 110; //C
+//            b = 100; //A
             // cella (1,2)
             #1
             //value = 0; //mismatch
@@ -138,8 +143,8 @@ module TB;
             en_ins = 0;
             change_index=1; 
         #1  change_index=0;
-            a = 110; //C
-            b = 011; //T
+//            a = 110; //C
+//            b = 011; //T
             // cella (1,3)
             #1
             //value =1; // match
@@ -156,8 +161,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 001; //G
+//            a = 110; //C
+//            b = 001; //G
             // cella (1,4)
             #1
             //value = 0; // mismatch
@@ -174,8 +179,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 110; //C
+//            a = 110; //C
+//            b = 110; //C
             // cella (1,5)
             #1
             //value = 0; // mismatch
@@ -192,8 +197,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 100; //A
-            b = 001; //G
+//            a = 100; //A
+//            b = 001; //G
             // cella (2,1)
             #1
             //value = 0; // mismatch
@@ -210,8 +215,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 100; //A
-            b = 100; //A
+//            a = 100; //A
+//            b = 100; //A
             // cella (2,2)
             #1
             //value = 0; // mismatch
@@ -228,8 +233,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 100; //A
-            b = 011; //T
+//            a = 100; //A
+//            b = 011; //T
             // cella (2,3)
             #1
             //value = 0; // mismatch
@@ -246,8 +251,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 100; //A
-            b = 001; //G
+//            a = 100; //A
+//            b = 001; //G
             // cella (2,4)
             #1
             //value = 0; //mismatch
@@ -264,8 +269,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 100; //A
-            b = 110; //C
+//            a = 100; //A
+//            b = 110; //C
             // cella (2,5)
             #1
             //value = 0; //mismatch
@@ -282,8 +287,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 001; //G
+//            a = 110; //C
+//            b = 001; //G
             // cella (3,1)
             #1
             //value = 0; //mismatch
@@ -300,8 +305,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 100; //A
+//            a = 110; //C
+//            b = 100; //A
             // cella (3,2)
             #1
             //value = 0; //mismatch
@@ -318,8 +323,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 011; //T
+//            a = 110; //C
+//            b = 011; //T
             // cella (3,3)
             #1
             //value = 0; //mismatch
@@ -336,8 +341,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 001; //G
+//            a = 110; //C
+//            b = 001; //G
             // cella (3,4)
             #1
             //value = 0; //mismatch
@@ -354,8 +359,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 110; //C
-            b = 110; //C
+//            a = 110; //C
+//            b = 110; //C
             // cella (3,5)
             #1
             //value = 0; //mismatch
@@ -372,8 +377,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 011; //T
-            b = 001; //G
+//            a = 011; //T
+//            b = 001; //G
             // cella (4,1)
             #1
             //value = 0; //mismatch
@@ -390,8 +395,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 011; //T
-            b = 100; //A
+//            a = 011; //T
+//            b = 100; //A
             // cella (4,2)
             #1
             //value = 0; //mismatch
@@ -408,8 +413,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 011; //T
-            b = 011; //T
+//            a = 011; //T
+//            b = 011; //T
             // cella (4,3)
             #1
             //value = 0; //mismatch
@@ -426,8 +431,8 @@ module TB;
             en_ins = 0;
             change_index=1;
         #1  change_index=0;
-            a = 011; //T
-            b = 001; //G
+//            a = 011; //T
+//            b = 001; //G
             // cella (4,4)
             #1
             //value = 0; //mismatch
@@ -445,8 +450,8 @@ module TB;
             change_index=1;
         #1  change_index=0;
             // cella (4,5)
-            a = 011; //T
-            b = 110; //C
+//            a = 011; //T
+//            b = 110; //C
             #1
             //value = 0; //mismatch
         // Insertion phase
@@ -463,8 +468,8 @@ module TB;
             change_index=1;
         #1  change_index=0;
             // cella (5,1)
-            a = 001; //G
-            b = 001; //G
+//            a = 001; //G
+//            b = 001; //G
             #1
             //value = 0; //mismatch
         // Insertion phase
@@ -481,8 +486,8 @@ module TB;
             change_index=1;
         #1  change_index=0;
             // cella (5,2)
-            a = 001; //G
-            b = 100; //A
+//            a = 001; //G
+//            b = 100; //A
             #1
             //value = 0; //mismatch
         // Insertion phase
@@ -499,8 +504,8 @@ module TB;
             change_index=1;
         #1  change_index=0;
             // cella (5,3)
-            a = 001; //G
-            b = 011; //T
+//            a = 001; //G
+//            b = 011; //T
             #1
             //value = 0; //mismatch
         // Insertion phase
@@ -517,8 +522,8 @@ module TB;
             change_index=1;
         #1  change_index=0;
             // cella (5,4)
-            a = 001; //G
-            b = 001; //G
+//            a = 001; //G
+//            b = 001; //G
             #1
             //value = 0; //mismatch
         // Insertion phase
@@ -535,8 +540,8 @@ module TB;
             change_index=1;
         #1  change_index=0;
             // cella (5,5)
-            a = 001; //G
-            b = 110; //C
+//            a = 001; //G
+//            b = 110; //C
             #1
             //value = 0; //mismatch
         // Insertion phase
@@ -551,6 +556,7 @@ module TB;
             en_read = 0;
             we=0;
             en_traceB = 1;
+        #23 en_traceB = 0;
         
         #40 $stop;
     end
