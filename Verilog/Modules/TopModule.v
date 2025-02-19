@@ -142,6 +142,6 @@ module TopModule #(
         .indexA(indexA),
         .indexB(indexB)
     );
-    //Ciao qui è passato diegos
+    //Ciao qui è passato diego
     //end
 endmodule
