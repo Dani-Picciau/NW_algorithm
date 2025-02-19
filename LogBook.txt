@@ -133,4 +133,10 @@
     Divisione dei moduli di trasmissione e ricezione + prove con testbench per vedere se funziona allo stesso modo per il Readme;
     Per quanto riguarda la ricezione con due fifo si sono creati problemi e si è arrivati alla conclusione tramite prove testbench che il contatore
     che dovrebbe mandare i segnali per cambiare buffer non è collegato e non viene quindi abilitato. Perché? Prossimo obbiettivo: cercare di capirlo!
+    Sto avendo problemi con i moduli della uart separati, sono stupido(Diego)? La risposta è si, ma sono anche stanco e demotivato.
+    Non ha assolutamente senso che non funzioni niente e devo anche capire come far funzionare il contatore per separare le fifo.
+    Pensiamo tutti insieme(Diego e le altre sue 11 personalità, quella che parla tra parentesi, ovvero io, è la decima) a un metodo per risolvere i problemi:
+    - Ragionando dopo aver fatto respirare la testa, sicuramente quando sono andato a staccare i moduli di uart e fifo ho sbagliato dei collegamenti, al momento sono stanco
+      per capire cosa e dove, ho bisogno di una pausa.
+    - La macchina a stati di Matteo è stata ben pensata, per qualche motivo il contatore non viene elaborato e implementato nel sistema.
 }
