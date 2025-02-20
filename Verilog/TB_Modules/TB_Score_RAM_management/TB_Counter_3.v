@@ -28,7 +28,7 @@ module TB_Counter_3;
 
         // Start counting
         #5 rst=0; en=1;
-        #10
+        #15
         $stop;
     end
 endmodule
