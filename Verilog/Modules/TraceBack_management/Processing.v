@@ -1,25 +1,26 @@
 module Processing #(
     parameter N = 128,
-    parameter score_length = $clog2(N),
+    parameter score_length = $clog2(N+1),
     parameter gap_score = -2,
     parameter match_score = 1,
     parameter mismatch_score = -1
 ) (
     input wire clk, rst,
+    input wire en_traceB,
     input wire [2:0] SeqA_i_t,
     input wire [2:0] SeqB_j_t,
-    input wire [2:0] symbol_in,
-    output reg [score_length:0] score,
+    input wire [2:0] symbol,
+    output reg signed [score_length:0] final_score,
     output reg [2:0] datoA,
     output reg [2:0] datoB
 );
     parameter dash = 3'b111;
-    reg [score_length:0] score_next;
+    reg signed [score_length:0] score_next;
 
     //Register for the output score...
     always @(posedge clk, posedge rst) begin
-        if(rst) score <= 0;
-        else score <= score_next;
+        if(rst) final_score <= 0;
+        else final_score <= score_next;
     end
 
     always @(posedge clk, posedge rst) begin
@@ -28,27 +29,48 @@ module Processing #(
             datoB <= 0;
         end 
         else begin
-            case (symbol_in)
-                3'b001: begin // Diagonal arrow ↖
-                    datoA <= SeqA_i_t;
-                    datoB <= SeqB_j_t;
-                    if(datoA == datoB) score_next <= score + match_score;
-                end
-                3'b100: begin // Left arrow ↖
-                    datoA <= dash;
-                    datoB <= SeqB_j_t;
-                    score_next <= score + mismatch_score;
-                end
-                3'b010: begin // Up arrow ⭡
-                    datoA <= SeqA_i_t;
-                    datoB <= dash;
-                    score_next <= score + mismatch_score;
-                end
-                default: begin
-                    datoA <= 0;
-                    datoB <= 0;
-                end
-            endcase
+            if(en_traceB) begin
+                case (symbol)
+                    3'b001: begin // Diagonal arrow ↖
+                        datoA <= SeqA_i_t;
+                        datoB <= SeqB_j_t;
+                    end
+                    3'b100: begin // Left arrow ↖
+                        datoA <= dash;
+                        datoB <= SeqB_j_t;
+                    end
+                    3'b010: begin // Up arrow ⭡
+                        datoA <= SeqA_i_t;
+                        datoB <= dash;
+                    end
+                    default: begin
+                        datoA <= 0;
+                        datoB <= 0;
+                    end
+                endcase
+            end
+            else begin
+                datoA <= 0;
+                datoB <= 0;
+            end
+        end
+    end
+
+    always @(en_traceB, symbol) begin
+        if(rst) score_next = 0;
+        else begin
+            if(en_traceB) begin
+                case (symbol)
+                    3'b001: begin // Diagonal arrow ↖
+                        if(datoA == datoB) score_next = final_score + match_score;
+                        else score_next = final_score + mismatch_score;
+                    end
+                    3'b100: score_next = final_score + gap_score; // Left arrow ↖
+                    3'b010: score_next <= final_score + gap_score; // Up arrow ⭡
+                    default: score_next <= final_score;
+                endcase
+            end
+            else score_next <= 0;
         end
     end
 endmodule
