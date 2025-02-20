@@ -36,17 +36,17 @@ module Initialization_counter # (
                 end_init_next <= 1;
             end else begin
                 end_init_next <= 0;
-                count_next = count + 1;
+                count_next <= count + 1;
             end
             addr_next <= addr;
         end
         else begin
             end_init_next <= 0;
-            count_next = 0;
+            count_next <= 0;
             if(en_init) begin
                 if(!hit) begin
-                    data_next = data + gap_score;
-                    addr_next = addr + 1;
+                    data_next <= data + gap_score;
+                    addr_next <= addr + 1;
                 end 
                 else begin
                     data_next <= data;

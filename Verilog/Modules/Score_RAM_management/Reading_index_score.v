@@ -19,7 +19,7 @@ module Reading_index_score #(
         else addr <= addr_next;
     end
     
-    always @(en_read, change_index, count, i, j, addr, N) begin
+    always @(en_read, change_index, count, i, j, addr) begin
         if (en_read && !change_index) begin
             case (count)
                 2'b00: addr_next = (j+(N+1)*i);

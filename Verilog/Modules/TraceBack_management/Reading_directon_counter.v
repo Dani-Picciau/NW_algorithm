@@ -32,7 +32,7 @@ module Reading_direction_counter#(
         end
     end
 
-    always @(*) begin
+    always @(i_t, j_t, symbol) begin
         if(i_t!=0 && j_t!=0) begin
             end_c = 0;
             case (symbol)
@@ -77,24 +77,24 @@ module Reading_direction_counter#(
 
     always @(posedge clk, posedge rst) begin
         if(rst) begin
-            i_t_ram = N-1;
-            j_t_ram = N-1;
+            i_t_ram <= N-1;
+            j_t_ram <= N-1;
         end
         else if(i_t == 0 && j_t != 0) begin
-            i_t_ram = 0;
-            j_t_ram = j_t - 1;
+            i_t_ram <= 0;
+            j_t_ram <= j_t - 1;
         end 
         else if(i_t != 0 && j_t == 0) begin
-            i_t_ram = i_t - 1;
-            j_t_ram = 0;
+            i_t_ram <= i_t - 1;
+            j_t_ram <= 0;
         end 
         else if(i_t == 0 && j_t == 0) begin
-            i_t_ram = 0;
-            j_t_ram = 0;
+            i_t_ram <= 0;
+            j_t_ram <= 0;
         end
         else begin
-            i_t_ram = i_t - 1;
-            j_t_ram = j_t - 1;
+            i_t_ram <= i_t - 1;
+            j_t_ram <= j_t - 1;
         end
     end
     

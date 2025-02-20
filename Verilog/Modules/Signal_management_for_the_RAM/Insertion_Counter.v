@@ -1,4 +1,4 @@
-module Insertion_counter #(
+module Insertion_counter # (
     parameter N = 2,
     parameter BitAddr = $clog2(N+1)
 )(
