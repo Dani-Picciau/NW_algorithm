@@ -31,15 +31,15 @@ module Processing #(
         else begin
             if(en_traceB) begin
                 case (symbol)
-                    3'b001: begin // Diagonal arrow ↖
+                    3'b001: begin // Diagonal arrow ?
                         datoA <= SeqA_i_t;
                         datoB <= SeqB_j_t;
                     end
-                    3'b100: begin // Left arrow ↖
+                    3'b100: begin // Left arrow ?
                         datoA <= dash;
                         datoB <= SeqB_j_t;
                     end
-                    3'b010: begin // Up arrow ⭡
+                    3'b010: begin // Up arrow ?
                         datoA <= SeqA_i_t;
                         datoB <= dash;
                     end
@@ -56,21 +56,23 @@ module Processing #(
         end
     end
 
-    always @(en_traceB, symbol) begin
+    always @(posedge rst, datoA, datoB) begin
         if(rst) score_next = 0;
         else begin
             if(en_traceB) begin
                 case (symbol)
-                    3'b001: begin // Diagonal arrow ↖
+                    3'b001: begin // Diagonal arrow ?
                         if(datoA == datoB) score_next = final_score + match_score;
                         else score_next = final_score + mismatch_score;
                     end
-                    3'b100: score_next = final_score + gap_score; // Left arrow ↖
-                    3'b010: score_next <= final_score + gap_score; // Up arrow ⭡
-                    default: score_next <= final_score;
+                    3'b100: score_next = final_score + gap_score; // Left arrow ?
+                    3'b010: score_next = final_score + gap_score; // Up arrow ?
+                    default: score_next = final_score;
                 endcase
             end
-            else score_next <= 0;
+            else score_next = 0;
         end
     end
+    
+    //end
 endmodule

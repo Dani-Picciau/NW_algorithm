@@ -99,5 +99,6 @@ module Score_manager #(
         .up(up), 
         .signal(signal)
     );
+    
     //end
 endmodule

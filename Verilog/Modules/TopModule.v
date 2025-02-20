@@ -1,5 +1,8 @@
 `include "/c:.../"
 
+`include "FSM.v"
+`include "Datapath.v"
+
 module TopModule #(
     parameter N = 128,
     parameter BitAddr = $clog2(N+1),
@@ -10,138 +13,118 @@ module TopModule #(
     parameter mismatch_score = -1
 ) (
     input wire clk, rst,
-    input wire change_index, 
-    input wire en_ins, en_init, en_read, en_traceB, we, 
-    output wire signal,    
-    output wire calculated,
-    output wire end_init,
-    output wire end_filling,
-    output wire [2:0] symbol_out,
-    output wire end_c,
-    output wire [BitAddr:0] i_t_ram, j_t_ram,
+    input wire ready,
     
-    //Internal wires
-    output wire [2:0] doutA, doutB,
+    //Input fsm
+    output wire end_init,
+    output wire calculated,
+    output wire signal,
+    output wire end_filling,
+    output wire end_traceB,
+    output wire hit_4,
+    
+    //Output fsm
+    output wire we,
+    output wire en_init,
+    output wire en_ins,
+    output wire en_read,
+    output wire en_traceB,
+    output wire change_index,
+    output wire [2:0] state,
+    
+    // internal wires dp
     output wire [BitAddr:0] indexA, indexB,
-    output wire [BitAddr:0] i_t, j_t,
+    output wire [2:0] doutA, doutB,
+    
+    output wire value,
+    output wire [BitAddr:0] i, j,
+    output wire hit,
+    output wire [BitAddr:0] addr_init,
+    output wire signed [8:0] data_init, data,
+    output wire signed [8:0] diag, up, left, score,
+    output wire signed [8:0] max,
     output wire [2:0] symbol, symbol_w,
-    output wire signed [8:0] max,      
     output wire [1:0] count_3,
     output wire [addr_lenght:0] addr_r_sc, addr_w_sc,
     output wire [addr_lenght:0] addr_r_dir, addr_w_dir,
-    output wire signed [8:0] diag, up, left, score,
-    output wire [BitAddr:0] i, j,
-    output wire [BitAddr:0] addr_init,
-    output  wire signed [8:0] data_init, data,
-    output wire hit,
-    output wire value
-);
     
-    Score_manager # (
-        .N(N)
-    ) block1 (
+    output wire [BitAddr:0] i_t, j_t,
+    output wire [2:0] symbol_out,
+    output wire [BitAddr:0] i_t_ram, j_t_ram,
+    
+    output wire signed [BitAddr:0] final_score,
+    output wire [2:0] datoA, datoB
+    
+);
+
+    FSM fsm (
         .clk(clk),
         .rst(rst),
-        .en_ins(en_ins),
-        .en_init(en_init),
-        .en_read(en_read),
+        .ready(ready),
+        .end_init(end_init),
+        .calculated(calculated),
+        .signal(signal),
+        .end_filling(end_filling),
+        .end_traceB(end_traceB),
         .we(we),
-        .i(i),
-        .j(j),
-        .addr_init(addr_init),
+        .en_init(en_init),
+        .en_ins(en_ins),
+        .en_read(en_read),
+        .en_traceB(en_traceB),
+        .change_index(change_index),
+        .state(state),
+        .hit_4(hit_4)
+    );
+    
+    Datapath #(
+        .N(N)
+    ) DP (
+        .clk(clk),
+        .rst(rst),
+        .change_index(change_index),
+        .we(we),
+        .en_init(en_init),
+        .en_ins(en_ins),
+        .en_read(en_read),
+        .en_traceB(en_traceB),
+        .signal(signal),
+        .calculated(calculated),
+        .end_init(end_init),
+        .end_filling(end_filling),
+        .end_c(end_traceB),
+        .symbol_out(symbol_out),
+        .i_t_ram(i_t_ram),
+        .j_t_ram(j_t_ram),
+        .doutA(doutA),
+        .doutB(doutB),
+        .indexA(indexA),
+        .indexB(indexB),
+        .i_t(i_t),
+        .j_t(j_t),
+        .symbol(symbol),
+        .symbol_w(symbol_w),
         .max(max),
-        .data_init(data_init),
         .count_3(count_3),
-        .addr_r(addr_r_sc),
-        .addr_w(addr_w_sc),
+        .addr_r_sc(addr_r_sc),
+        .addr_w_sc(addr_w_sc),
+        .addr_r_dir(addr_r_dir),
+        .addr_w_dir(addr_w_dir),
         .diag(diag),
         .up(up),
         .left(left),
         .score(score),
-        .signal(signal),
-        .change_index(change_index),
-        .hit(hit),
-        .data(data)
-    );
-    
-    Direction_manager # (
-        .N(N)
-    ) block2 (
-        .clk(clk),
-        .rst(rst),
-        .we(we),
-        .en_init(en_init),
-        .en_ins(en_ins),
-        .en_traceB(en_traceB),
-        .i_t(i_t),
-        .j_t(j_t),
         .i(i),
         .j(j),
         .addr_init(addr_init),
-        .symbol_in(symbol),
-        .symbol_out(symbol_out),
-        .addr_r(addr_r_dir),
-        .addr_w(addr_w_dir),
-        .hit(hit),
-        .symbol_w(symbol_w)
-    );
-    
-    Signal_manager # (
-        .N(N)
-    ) block3 (
-        .clk(clk),
-        .rst(rst),
-        .a(doutA),
-        .b(doutB),
-        .en_read(en_read),
-        .en_init(en_init),
-        .change_index(change_index),
-        .i(i),
-        .j(j),
-        .end_filling(end_filling),
         .data_init(data_init),
-        .addr_init(addr_init),
-        .end_init(end_init),
+        .data(data),
         .hit(hit),
         .value(value),
-        .diag(diag),
-        .up(up),
-        .left(left),
-        .max(max),
-        .symbol(symbol),
-        .calculated(calculated)
+        .hit_4(hit_4),
+        .final_score(final_score),
+        .datoA(datoA),
+        .datoB(datoB)
     );
     
-    TraceBack_manager #(
-        .N(N)
-    ) block4 (
-        .clk(clk),
-        .rst(rst),
-        .en_traceB(en_traceB),
-        .symbol(symbol_out),
-        .end_c(end_c),
-        .i_t(i_t),
-        .j_t(j_t),
-        .i_t_ram(i_t_ram),
-        .j_t_ram(j_t_ram)
-    );
-    
-    AB_manager #(
-        .N(N)
-    ) block5 (
-        .clk(clk),
-        .rst(rst),
-        .en_traceB(en_traceB),
-        .en_read(en_read),
-        .i_t(i_t_ram),
-        .j_t(j_t_ram),
-        .i(i),
-        .j(j),
-        .doutA(doutA),
-        .doutB(doutB),
-        .indexA(indexA),
-        .indexB(indexB)
-    );
-    //Ciao qui è passato diego
     //end
 endmodule

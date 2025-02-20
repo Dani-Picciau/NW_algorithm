@@ -1,7 +1,7 @@
 //queste sono solo ram di appoggio per provare le sequenze, infatti sono riempite tramite initial
 
 module RAM_A #(
-    parameter N=5, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
+    parameter N=7, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
     parameter Bit = $clog2(N+1)
 ) (
     input wire clk, rst,
@@ -22,6 +22,8 @@ module RAM_A #(
         ram[2]=C;
         ram[3]=T;
         ram[4]=G;
+        ram[5]=C;
+        ram[6]=A;
     end
 
     // always @(posedge clk) begin

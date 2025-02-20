@@ -6,7 +6,7 @@ module Max #(
     input wire value, clk, rst,
     input wire signed [8:0] diag, up, lx, //9 bits to include values ??from +128 to -128
     output reg signed [8:0] max, //9 bits to include values ??from +128 to -128
-    output reg [2:0] symbol, // <-, ?, ?
+    output reg [2:0] symbol, // <-, ^, ↖
     output reg calculated
 );
     parameter arrow_lx = 3'b100, arrow_up = 3'b010, arrow_diag = 3'b001;
@@ -15,21 +15,21 @@ module Max #(
     always @(posedge clk, posedge rst, value, diag, up, lx) begin
         
         if(rst) begin
-            max = 255;
-            symbol = 0;
-            calculated = 1'b0;
-            diag_calc = 255;
-            up_calc = 255;
-            lx_calc = 255;
+            max <= 255;
+            symbol <= 0;
+            calculated <= 1'b0;
+            diag_calc <= 255;
+            up_calc <= 255;
+            lx_calc <= 255;
         end
         else begin
-            if(value) diag_calc = diag + match_score;
-            else diag_calc = diag + mismatch_score;
+            if(value) diag_calc <= diag + match_score;
+            else diag_calc <= diag + mismatch_score;
 
-            up_calc = up + gap_score;
-            lx_calc = lx + gap_score;
+            up_calc <= up + gap_score;
+            lx_calc <= lx + gap_score;
 
-            if(diag == 255 || up == 255 || lx == 255)  calculated = 1'b0;
+            if(diag == 255 || up == 255 || lx == 255)  calculated <= 1'b0;
             else begin
                 if (diag_calc > up_calc && diag_calc > lx_calc) begin //if the diagonal is the greatest
                     symbol <= arrow_diag; 

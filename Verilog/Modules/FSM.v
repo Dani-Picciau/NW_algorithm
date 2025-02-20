@@ -6,6 +6,7 @@ module FSM(
     input wire signal,
     input wire end_filling,
     input wire end_traceB,
+    input wire hit_4,
     
     output reg we,
     output reg en_init,
@@ -16,68 +17,41 @@ module FSM(
     output reg [2:0] state
 );
     reg [2:0] state_next;
-    parameter IDLE=3'b000, INIT=3'b001, READ=3'b010, FILLING=3'b011, TRACE_B=3'b100;
+    parameter IDLE=3'b000, INIT=3'b001, READ=3'b010, CHANGE=3'b011, FILLING=3'b100, TRACE_B=3'b101;
     always@(posedge clk, posedge rst)begin
         if(rst) state <= IDLE;
         else state <= state_next;
     end
     
-    always@(state, ready, end_init, calculated, signal, end_filling, end_traceB) begin
+    always@(state, ready, end_init, calculated, hit_4, end_filling, end_traceB) begin
         case (state)
             IDLE: begin
-                if(ready) begin
-                    state_next <= INIT;
-                    change_index <= 0;
-                end
-                else begin
-                    state_next <= IDLE;
-                    change_index <= 0;
-                end
+                if(ready) state_next <= INIT;
+                else state_next <= IDLE;
             end
             INIT: begin
-                if(end_init) begin
-                    state_next <= READ;
-                    change_index <= 0;
-                end
-                else begin
-                    state_next <= INIT;
-                    change_index <= 0;
-                end
+                if(end_init) state_next <= READ;
+                else state_next <= INIT;
             end
             READ: begin
-                if(calculated && signal) begin 
-                    state_next <= FILLING;
-                    change_index <= 0;
-                end
-                else begin
-                    state_next <= READ;
-                    change_index <= 0;
-                end
+                if(calculated) state_next <= FILLING;
+                else state_next <= READ;
+            end
+            CHANGE: begin
+                state_next <= READ;
             end
             FILLING: begin
-                if(end_filling) begin
-                    state_next <= TRACE_B;
-                    change_index <= 0;
-                end
+                if(!hit_4)state_next <= FILLING;
                 else begin
-                    state_next <= READ;
-                    change_index <= 1;
+                    if(end_filling && !signal) state_next <= TRACE_B;
+                    else state_next <= CHANGE;
                 end
             end
             TRACE_B: begin
-                if(end_filling) begin
-                    state_next <= IDLE;
-                    change_index <= 0;
-                end
-                else begin 
-                    state_next <= TRACE_B;
-                    change_index <= 0;
-                end
+                if(end_traceB) state_next <= IDLE;
+                else state_next <= TRACE_B;
             end
-            default: begin
-                state_next <= IDLE;
-                change_index <= 0;
-            end
+            default: state_next <= IDLE;
         endcase
     end
 
@@ -89,6 +63,7 @@ module FSM(
                 en_ins <= 0;
                 en_read <= 0;
                 en_traceB <= 0;
+                change_index <= 0;
             end
             INIT: begin
                 we <= 1;
@@ -96,6 +71,7 @@ module FSM(
                 en_ins <= 0;
                 en_read <= 0;
                 en_traceB <= 0;
+                change_index <= 0;
             end
             READ: begin
                 we <= 0;
@@ -103,13 +79,23 @@ module FSM(
                 en_ins <= 0;
                 en_read <= 1;
                 en_traceB <= 0;
+                change_index <= 0;
+            end
+            CHANGE: begin
+                we <= 0;
+                en_init <= 0;
+                en_ins <= 0;
+                en_read <= 1;
+                en_traceB <= 0;
+                change_index <= 1;
             end
             FILLING: begin
-                we <= 0;
+                we <= 1;
                 en_init <= 0;
                 en_ins <= 1;
                 en_read <= 0;
                 en_traceB <= 0;
+                change_index <= 0;
             end
             TRACE_B: begin
                 we <= 0;
@@ -117,6 +103,7 @@ module FSM(
                 en_ins <= 0;
                 en_read <= 0;
                 en_traceB <= 1;
+                change_index <= 0;
             end
             default: begin
                 we <= 0;
@@ -124,6 +111,7 @@ module FSM(
                 en_ins <= 0;
                 en_read <= 0;
                 en_traceB <= 0;
+                change_index <= 0;
             end
         endcase
     end

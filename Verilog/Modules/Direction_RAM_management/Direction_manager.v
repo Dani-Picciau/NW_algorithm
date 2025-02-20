@@ -71,6 +71,6 @@ module Direction_manager # (
         .en_init(en_init),
         .hit(hit)
     );
-
+    
     //end
 endmodule
