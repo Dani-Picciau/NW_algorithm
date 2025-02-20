@@ -65,39 +65,4 @@ module TB_Output_manager;
         #4 $stop;
     end
 endmodule
-        .up(up), 
-        .count(count)
-    );
-
-    // Clock generation
-    always #1 clk = ~clk;
-
-    initial begin
-
-        // Initializzation of signals
-        clk = 0; rst = 1; en_read = 0; ram_data = 0;
-
-        // Sending signals ram_data
-        #5  rst = 0; en_read = 1; 
-            count = 0;
-            ram_data = 9;
-        #5  count = 1;
-            ram_data = 8;
-        #5  count = 2;
-            ram_data = 7; //Here the value of diag, up and left are sent to the output
-        #5  count = 0;
-            ram_data = 6;
-        #5  count = 1;
-            ram_data = 5; 
-        #5  count = 2;
-            ram_data = 4; //Here the value of diag, up and left are sent to the output
-        #5  count = 0;
-            ram_data = 3;
-        #5  count = 1;
-            ram_data = 2;
-        #5  count = 2;
-            ram_data = 1; //Here the value of diag, up and left are sent to the output
-        #10
-        $stop;
-    end
-endmodule
+       
