@@ -2,9 +2,9 @@
 
 module TB_Writing_index_score();
 
-    parameter N = 5;
+  parameter N = 5;
     parameter BitAddr = $clog2(N);
-    parameter addr_lenght = (((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
     
     reg clk, rst;
     reg en_ins, en_init,hit;
