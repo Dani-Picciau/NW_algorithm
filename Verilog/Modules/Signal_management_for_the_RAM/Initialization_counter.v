@@ -1,7 +1,7 @@
 module Initialization_counter # (
-    parameter gap_score = -2,
     parameter N = 128,
-    parameter BitAddr = $clog2(N+1)
+    parameter BitAddr = $clog2(N+1),
+    parameter gap_score = -2
 ) (
     input wire clk, rst,
     input wire en_init,
@@ -30,32 +30,32 @@ module Initialization_counter # (
         end
     end
 
-    always@(posedge clk, posedge hit) begin
+    always@(posedge clk) begin
         if(addr == N) begin
             if(count == 2) begin
-                end_init_next <= 1;
+                end_init_next = 1;
             end else begin
-                end_init_next <= 0;
-                count_next <= count + 1;
+                end_init_next = 0;
+                count_next = count + 1;
             end
-            addr_next <= addr;
+            addr_next = addr;
         end
         else begin
-            end_init_next <= 0;
-            count_next <= 0;
+            end_init_next = 0;
+            count_next = 0;
             if(en_init) begin
                 if(!hit) begin
-                    data_next <= data + gap_score;
-                    addr_next <= addr + 1;
+                    data_next = data + gap_score;
+                    addr_next = addr + 1;
                 end 
                 else begin
-                    data_next <= data;
-                    addr_next <= addr;
+                    data_next = data;
+                    addr_next = addr;
                 end
             end
             else begin
-                data_next <= data;
-                addr_next <= addr;
+                data_next = data;
+                addr_next = addr;
             end
         end
     end

@@ -10,23 +10,24 @@
 module Score_manager #(
     parameter N = 128,
     parameter BitAddr = $clog2(N+1),
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
+    parameter addr_lenght = $clog2(((N+1)*(N+1)))
 ) (
     input wire clk, rst,
     input wire en_ins, en_init, en_read, we,
-    input wire  change_index,
+    input wire change_index,
     input wire signed [8:0] max, 
     input wire signed [8:0]data_init,
     input wire [BitAddr:0] i, j, addr_init,
     output wire signed[8:0] diag, up, left,
     output wire signal,
-    output wire hit, //It's also an internal wire
+    output wire hit //It's also an internal wire
     
-    //Internal wires
-    output wire [1:0] count_3,
-    output wire [addr_lenght:0] addr_r, addr_w,
-    output wire signed [8:0] score, data
+   
 );
+     //Internal wires
+    wire [1:0] count_3;
+    wire [addr_lenght-1:0] addr_r, addr_w;
+    wire signed [8:0] score, data;
     wire en_din = en_ins | en_init;
   
     Counter_3 C_3 (

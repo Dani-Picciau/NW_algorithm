@@ -10,13 +10,11 @@ module AB_manager #(
     parameter BitAddr=$clog2(N+1)
 )(
     input wire change_index,
-    input wire en_traceB,en_read,clk,rst,
-    input wire [BitAddr:0] i,i_t,j,j_t,
-    output wire [2:0] doutA,doutB,  
-    
-    //Internal wires
-    output wire [BitAddr:0] indexA ,indexB
+    input wire en_traceB, en_read, clk, rst,
+    input wire [BitAddr:0] i, i_t, j, j_t,
+    output wire [2:0] doutA,doutB
 );
+    wire [BitAddr:0] indexA ,indexB;
     
     RAM_A #(
         .N(N)

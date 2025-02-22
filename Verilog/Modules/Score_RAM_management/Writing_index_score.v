@@ -1,13 +1,13 @@
 module Writing_index_score #(
     parameter N = 128,
     parameter BitAddr = $clog2(N+1),
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
+    parameter addr_lenght = $clog2(((N+1)*(N+1)))
 ) (
     input wire clk, rst,
     input wire en_ins, en_init, hit,
     input wire [BitAddr:0] i, j, addr_init,
     input wire signed [8:0] max, data_init,
-    output reg [addr_lenght:0] addr_out,
+    output reg [addr_lenght-1:0] addr_out,
     output reg signed [8:0] data_out
 );
     always @(posedge clk, posedge rst) begin
@@ -17,7 +17,7 @@ module Writing_index_score #(
         end
         else if(en_init) begin
                 if(!hit) addr_out <= addr_init ;
-                else addr_out<= addr_init*(N+1);
+                else addr_out<=addr_init*(N+1);
             data_out <= data_init;
         end
         else if(en_ins) begin

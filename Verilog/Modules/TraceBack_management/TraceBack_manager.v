@@ -23,7 +23,6 @@ module TraceBack_manager #(
     ) R_d_c(
         .clk(clk),
         .rst(rst),
-        .en_traceB(en_traceB),
         .symbol(symbol),
         .end_c(end_c),
         .i_t(i_t),

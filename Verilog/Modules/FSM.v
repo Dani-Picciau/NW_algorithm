@@ -3,7 +3,6 @@ module FSM(
     input wire ready,
     input wire end_init,
     input wire calculated,
-    input wire signal,
     input wire end_filling,
     input wire end_traceB,
     input wire hit_4,
@@ -13,11 +12,13 @@ module FSM(
     output reg en_ins,
     output reg en_read,
     output reg en_traceB,
-    output reg change_index,
-    output reg [2:0] state
+    output reg change_index
 );
+    reg [2:0] state;
     reg [2:0] state_next;
+    
     parameter IDLE=3'b000, INIT=3'b001, READ=3'b010, CHANGE=3'b011, FILLING=3'b100, TRACE_B=3'b101;
+    
     always@(posedge clk, posedge rst)begin
         if(rst) state <= IDLE;
         else state <= state_next;
@@ -43,7 +44,7 @@ module FSM(
             FILLING: begin
                 if(!hit_4)state_next <= FILLING;
                 else begin
-                    if(end_filling && !signal) state_next <= TRACE_B;
+                    if(end_filling) state_next <= TRACE_B;
                     else state_next <= CHANGE;
                 end
             end

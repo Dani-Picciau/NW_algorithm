@@ -8,20 +8,20 @@
 module Direction_manager # (
     parameter N=128,
     parameter BitAddr = $clog2(N+1),
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1)
+    parameter addr_lenght = $clog2(((N+1)*(N+1)))
 ) (
     input wire clk, rst, 
     input wire we, en_init, en_ins, en_traceB,
     input wire [BitAddr:0] i_t, j_t, i, j, addr_init, 
     input wire [2:0] symbol_in, 
-    output wire [2:0] symbol_out,
+    output wire [2:0] symbol_out
     
-    //Internal wire
-    output wire [addr_lenght:0] addr_r,
-    output wire [addr_lenght:0] addr_w,
-    output wire hit,
-    output wire [2:0] symbol_w
 );
+    //Internal wire
+    wire [addr_lenght-1:0] addr_r;
+    wire [addr_lenght-1:0] addr_w;
+    wire hit;
+    wire [2:0] symbol_w;
     wire en_din = (en_ins | en_init);
     
     Direction_RAM #(

@@ -3,7 +3,6 @@
 module Datapath #(
     parameter N = 128,
     parameter BitAddr = $clog2(N+1),
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1),
     //-----------------------
     parameter gap_score = -2,
     parameter match_score = 1,
@@ -11,34 +10,28 @@ module Datapath #(
 ) (
     input wire clk, rst,
     input wire change_index, 
-    input wire en_ins, en_init, en_read, en_traceB, we, 
-    output wire signal,    
+    input wire en_ins, en_init, en_read, en_traceB, we,     
     output wire calculated,
     output wire end_init,
     output wire end_filling,
-    output wire [2:0] symbol_out,
     output wire end_c,
-    output wire [BitAddr:0] i_t_ram, j_t_ram,
     output wire signed [BitAddr:0] final_score,
     output wire [2:0] datoA, datoB,
-    
-    //Internal wires
-    output wire [2:0] doutA, doutB, //SeqA_i_t, SeqB_j_t
-    output wire [BitAddr:0] indexA, indexB,
-    output wire [BitAddr:0] i_t, j_t,
-    output wire [2:0] symbol, symbol_w,
-    output wire signed [8:0] max,      
-    output wire [1:0] count_3,
-    output wire [addr_lenght:0] addr_r_sc, addr_w_sc,
-    output wire [addr_lenght:0] addr_r_dir, addr_w_dir,
-    output wire signed [8:0] diag, up, left, score,
-    output wire [BitAddr:0] i, j,
-    output wire [BitAddr:0] addr_init,
-    output  wire signed [8:0] data_init, data,
-    output wire hit,
-    output wire value,
     output wire hit_4
 );
+    //Internal wires
+    wire [2:0] doutA, doutB; //SeqA_i_t, SeqB_j_t
+    wire [BitAddr:0] i_t, j_t;
+    wire [2:0] symbol;
+    wire signed [8:0] max;
+    wire signed [8:0] diag, up, left;
+    wire [BitAddr:0] i, j;
+    wire [BitAddr:0] addr_init;
+    wire signed [8:0] data_init;
+    wire [BitAddr:0] i_t_ram, j_t_ram;
+    wire [2:0] symbol_out;
+    wire hit;
+    wire signal;
     
     Score_manager # (
         .N(N)
@@ -54,17 +47,12 @@ module Datapath #(
         .addr_init(addr_init),
         .max(max),
         .data_init(data_init),
-        .count_3(count_3),
-        .addr_r(addr_r_sc),
-        .addr_w(addr_w_sc),
         .diag(diag),
         .up(up),
         .left(left),
-        .score(score),
         .signal(signal),
         .change_index(change_index),
-        .hit(hit),
-        .data(data)
+        .hit(hit)
     );
     
     Direction_manager # (
@@ -82,11 +70,7 @@ module Datapath #(
         .j(j),
         .addr_init(addr_init),
         .symbol_in(symbol),
-        .symbol_out(symbol_out),
-        .addr_r(addr_r_dir),
-        .addr_w(addr_w_dir),
-        .hit(hit),
-        .symbol_w(symbol_w)
+        .symbol_out(symbol_out)
     );
     
     Signal_manager # (
@@ -107,7 +91,6 @@ module Datapath #(
         .addr_init(addr_init),
         .end_init(end_init),
         .hit(hit),
-        .value(value),
         .diag(diag),
         .up(up),
         .left(left),
@@ -149,9 +132,7 @@ module Datapath #(
         .i(i),
         .j(j),
         .doutA(doutA),
-        .doutB(doutB),
-        .indexA(indexA),
-        .indexB(indexB)
+        .doutB(doutB)
     );
     
     //end

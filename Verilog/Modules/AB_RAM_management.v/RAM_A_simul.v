@@ -1,8 +1,12 @@
 //queste sono solo ram di appoggio per provare le sequenze, infatti sono riempite tramite initial
 
 module RAM_A #(
-    parameter N=7, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
-    parameter Bit = $clog2(N+1)
+    parameter N=5, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
+    parameter Bit = $clog2(N+1),
+    parameter G=3'b001, 
+    parameter C=3'b110, 
+    parameter A=3'b100, 
+    parameter T=3'b011
 ) (
     input wire clk, rst,
     // input wire [8:0] din, // data in, to be written
@@ -13,8 +17,6 @@ module RAM_A #(
     output reg [2:0] dout //data out, to be read
 );
     reg [2:0] ram [N-1:0]; //128 cells, from 127 to 0. Every cell is 3 bits, from 2 to 0, for our convertion
-
-    parameter G=3'b001, C=3'b110, A=3'b100, T=3'b011; 
     
     initial begin
         ram[0]=C;
@@ -22,8 +24,6 @@ module RAM_A #(
         ram[2]=C;
         ram[3]=T;
         ram[4]=G;
-        ram[5]=C;
-        ram[6]=A;
     end
 
     // always @(posedge clk) begin

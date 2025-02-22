@@ -9,7 +9,6 @@
 module Signal_manager #(
     parameter N = 128,
     parameter BitAddr = $clog2(N+1),
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1),
     //-----------------------
     parameter gap_score = -2,
     parameter match_score = 1,
@@ -31,12 +30,11 @@ module Signal_manager #(
     output wire signed [8:0] data_init,
     output wire [BitAddr:0] addr_init,
     output wire end_init,
-    output wire hit_4,
-    
-    //Internal wires
-    output wire value
+    output wire hit_4 
 );
-
+    //Internal wires
+    wire value;
+    
     Insertion_counter #(
         .N(N)
     ) block1 (
