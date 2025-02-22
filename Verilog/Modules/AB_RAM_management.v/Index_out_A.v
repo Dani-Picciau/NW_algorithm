@@ -12,7 +12,7 @@ module Index_out_A #(
     always @(en_traceB, en_read, i, i_t, change_index) begin
         if(en_read && !change_index) index=i;
         else if(en_traceB) index=i_t;
-        else index={BitAddr+1{1'b0}}; // cercare un indice che non faccia danno
+        else index={(BitAddr+1){1'b0}}; // cercare un indice che non faccia danno
     end
     
     //end
