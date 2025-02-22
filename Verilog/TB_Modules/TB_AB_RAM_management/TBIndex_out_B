@@ -1,0 +1,40 @@
+module TB;
+  //Parameters
+    parameter N = 5;
+    parameter BitAddr = $clog2(N);
+    parameter addr_lenght = $clog2(((N+1)*(N+1)));
+    
+    reg en_read, en_traceB,change_index;
+    reg [BitAddr:0] j, j_t;
+    wire [BitAddr:0] index;
+    
+
+    Index_out_B #(
+        .N(N)
+    ) I_o_B  (
+
+        .en_read(en_read),
+        .en_traceB(en_traceB),
+        .change_index(change_index),
+        .j(j),
+        .j_t(j_t),
+        .index(index)
+    );
+
+    initial begin 
+        // Initialization of signals
+         en_read = 0; en_traceB = 0; change_index=1; j=0; j_t=0;
+
+        #3 en_read=1; 
+        #5 change_index=0;
+        #2 j=1;
+        #5 change_index=1; en_traceB=1; en_read=0;
+        #2 j_t=1;
+        #5 change_index=0; en_traceB=0;
+        
+        
+
+        #20
+        $stop;
+    end
+endmodule
