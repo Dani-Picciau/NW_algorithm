@@ -63,6 +63,7 @@ module TB;
     clk=0; rst=1;  en_traceB=0; SeqA_i_t=0; SeqB_j_t=0; symbol=0;
     
     #3.5 rst=0;
+    #5
          en_traceB=1;
          symbol=100;
          SeqA_i_t= 3'b100; 
