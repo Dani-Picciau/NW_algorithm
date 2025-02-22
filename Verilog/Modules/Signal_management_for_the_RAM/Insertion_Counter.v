@@ -25,6 +25,7 @@ module Insertion_counter # (
 
     // Combinational logic for next state
     always @(i, j, en_read, change_index) begin
+
         count_nxtI = i;
         count_nxtJ = j;
         

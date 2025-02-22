@@ -1,80 +1,47 @@
 `include "/c:.../Insertion_counter.v"
 
 module TB_Insertion_counter;
+    integer index;
+    parameter N=5;
+    parameter BitAddr = $clog2(N+1);
 
-    // Parameters
-    parameter N = 5; // Size parameter for the Insertion_Counter module
+    reg clk, rst;
+    reg en_read;
+    reg change_index;
+    wire end_filling;
+    wire [BitAddr:0] i, j;
     
-    // Input signals
-    reg clk;           // Clock signal
-    reg rst;           // Reset signal
-    reg en_read;       // Enable read signal
-    reg change_index;  // Signal to trigger index change
-    
-    // Output signals
-    wire end_filling;  // Signal indicating end of filling operation
-    wire [($clog2(N)):0] i; // Current index i (logarithmic width based on N)
-    wire [($clog2(N)):0] j; // Current index j (logarithmic width based on N)
-    
-    // Instantiate the Insertion_Counter module
-    Insertion_Counter #(
-        .N(N) // Pass parameter N to the instantiated module
-    ) test (
+    Insertion_counter # (
+        .N(N)
+    ) Ins_c (
         .clk(clk),
         .rst(rst),
         .en_read(en_read),
+        .change_index(change_index),
         .end_filling(end_filling),
         .i(i),
-        .j(j),
-        .change_index(change_index)
+        .j(j)
     );
-    
+
     // Generate the clock signal
-    always #0.5 clk = ~clk; // Toggle the clock every 0.5ns
-    
+    always #0.5 clk = ~clk;
+
     initial begin
-        // Initialize signals
-        clk = 0; rst = 1; en_read = 0; change_index = 0;
-        
-        // Release reset
-        #10 rst = 0; // De-assert reset after 10ns
-        
-        // Enable read operation
-        #12 en_read = 1; // Assert en_read after 12ns
-        change_index = 1; // Trigger index change
-
-        #1 change_index = 0; // De-assert change_index after 1ns
-        #12 change_index = 1; // Re-assert change_index after 12ns
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        #1 change_index = 0;
-        #12 change_index = 1;
-
-        // Disable read operation
-        #50 en_read = 0; // De-assert en_read after 50ns
-        
-        // End the simulation
-        #10;
-        $stop; // Stop the simulation
+       index=0;
+       clk=0;
+       rst=1;
+       en_read=0;
+       change_index=0;
+       
+       #5.5 rst=0;
+       en_read=1;
+       for(index = 0; index < 25; index = index + 1) begin
+            #1 change_index = 0;
+            #12 change_index = 1;
+       end
+       en_read=0;
+       change_index = 0;
+       #10 
+       $stop;
     end
 endmodule
