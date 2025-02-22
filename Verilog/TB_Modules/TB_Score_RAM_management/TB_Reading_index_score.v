@@ -5,7 +5,7 @@ module TB_Reading_index;
   //Parameters
     parameter N = 5;
     parameter BitAddr = $clog2(N+1);
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1)));
 
     //Signal input 
     reg clk, rst, en_read;
@@ -14,7 +14,7 @@ module TB_Reading_index;
     reg [BitAddr:0] i, j;
 
     //Signal output
-    wire [addr_lenght:0] addr;
+    wire [addr_lenght-1:0] addr;
 
     //Instantiation of the Reading_index module
     Reading_index_score #(

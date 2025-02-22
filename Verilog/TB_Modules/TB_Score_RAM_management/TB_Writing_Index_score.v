@@ -4,13 +4,13 @@ module TB_Writing_index_score();
 
   parameter N = 5;
     parameter BitAddr = $clog2(N);
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1)));
     
     reg clk, rst;
     reg en_ins, en_init,hit;
     reg [BitAddr:0] i, j, addr_init;
     reg [8:0] max, data_init;
-    wire [addr_lenght:0] addr_out;
+    wire [addr_lenght-1:0] addr_out;
     wire [8:0] data_out;
 
     Writing_index_score #(

@@ -1,16 +1,15 @@
 `include "/c:.../Score_RAM.v"
 
 module TB_Score_RAM;
-    
     //parameter
     parameter N=5; 
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1)));
     //inputs
     reg clk, rst;
     reg signed [8:0] din;
     reg en_din, en_dout, we; //en_din is an OR between en_ins and en_init
-    reg [addr_lenght:0] addr_din; 
-    reg [addr_lenght:0] addr_dout;
+    reg [addr_lenght-1:0] addr_din; 
+    reg [addr_lenght-1:0] addr_dout;
     //output
     wire signed [8:0] dout;
 

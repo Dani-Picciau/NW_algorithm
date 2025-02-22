@@ -1,15 +1,17 @@
+`include "/c:.../Reading_index_direction.v"
+
 module TB;
   //Parameters
     parameter N = 5;
     parameter BitAddr = $clog2(N+1);
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1)));
 
     //Signal input 
     reg clk, rst, en_traceB;
     reg [BitAddr:0] i_t, j_t;
 
     //Signal output
-    wire [addr_lenght:0] addr_r;
+    wire [addr_lenght-1:0] addr_r;
 
     //Instantiation of the Reading_index module
     Reading_index_direction #(

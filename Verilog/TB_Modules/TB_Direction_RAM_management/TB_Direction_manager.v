@@ -3,7 +3,7 @@
 module TB;
     parameter N=5;
     parameter BitAddr = $clog2(N+1);
-    parameter addr_lenght = $clog2(((N+1)*(N+1))-1);
+    parameter addr_lenght = $clog2(((N+1)*(N+1)));
     
     //The signals are positioned for better understanding of the simulation, do not move them!
     reg clk, rst;
@@ -13,14 +13,14 @@ module TB;
     reg [BitAddr:0] addr_init;
     reg [2:0] symbol_in;
     wire [2:0] symbol_w; //Internal wire
-    wire [addr_lenght:0] addr_w; //Internal wire
+    wire [addr_lenght-1:0] addr_w; //Internal wire
     
     reg en_ins;
     reg [BitAddr:0] i, j;
     
     reg en_traceB;
     reg [BitAddr:0] i_t, j_t;
-    wire [addr_lenght:0] addr_r; //Internal wire
+    wire [addr_lenght-1:0] addr_r; //Internal wire
     wire [2:0] symbol_out;
        
     Direction_manager #(

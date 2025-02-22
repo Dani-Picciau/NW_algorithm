@@ -1,5 +1,6 @@
-module TB;
+`include "/c:.../Counter_1.v"
 
+module TB;
     // Signal inputs
     reg clk, rst;
     reg en_init;
