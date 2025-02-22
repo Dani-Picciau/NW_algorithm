@@ -1,3 +1,4 @@
+
 module Processing #(
     parameter N = 128,
     parameter score_length = $clog2(N+1),
@@ -27,11 +28,12 @@ module Processing #(
         if(rst) begin
             datoA <= 0;
             datoB <= 0;
+            score_next = 0;
         end 
         else begin
             if(en_traceB) begin
                 case (symbol)
-                    3'b001: begin // Diagonal arrow ?
+                    3'b001: begin // Diagonal arrow \
                         datoA <= SeqA_i_t;
                         datoB <= SeqB_j_t;
                     end
@@ -56,9 +58,8 @@ module Processing #(
         end
     end
 
-    always @(rst, datoA, datoB) begin
-        if(rst) score_next = 0;
-        else begin
+    always @(posedge rst, datoA, datoB) begin
+    
             if(en_traceB) begin
                 case (symbol)
                     3'b001: begin // Diagonal arrow ?
@@ -71,7 +72,6 @@ module Processing #(
                 endcase
             end
             else score_next = 0;
-        end
     end
     
     //end
