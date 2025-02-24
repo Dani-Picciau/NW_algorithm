@@ -23,7 +23,7 @@ module top_tx #(parameter
 	output wire txA, txB
 	);
 
-	wire tick, tx_done_A, tx_done_B;
+	wire tick, tx_done_A, tx_done_B, rdA, rdB;
 	wire not_emptyA, not_emptyB;
 	wire txgo_A, txgo_B;
 	wire [DATA_BITS-1:0] data_A_tot, data_B_tot, data_A_out, data_B_out;
@@ -33,23 +33,27 @@ module top_tx #(parameter
 
 	cod_out #(.N(DATA_BITS)) cod_out_B (.clk(clk), .rst(rst), .char(data_B), .Txdata_in(data_B_tot));
 
-	fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifo_A (.clk(clk), .rst(rst), .rd_from_fifo(tx_done_A), .wr_to_fifo(wrA),
+	fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifo_A (.clk(clk), .rst(rst), .rd_from_fifo(/*tx_done_A*/), .wr_to_fifo(wrA),
 		.wr_data_in(data_A_tot), .rd_data_out(data_A_out), .empty(A_empty), .full(A_full));
 
 	assign not_emptyA=~A_empty;
 	
-	fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifo_B (.clk(clk), .rst(rst), .rd_from_fifo(tx_done_B), .wr_to_fifo(wrB),
+	fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifo_B (.clk(clk), .rst(rst), .rd_from_fifo(/*tx_done_B*/), .wr_to_fifo(wrB),
 		.wr_data_in(data_B_tot), .rd_data_out(data_B_out), .empty(B_empty), .full(B_full));
 
 	assign not_emptyB=~B_empty;
 
+	/*
 	assign txgo_A= not_emptyA & btnA;
 	assign txgo_B= not_emptyB & btnB;
+	*/
 
-	uart_transmitter #(.DATA_BITS(DATA_BITS), .STOP_TICK(STOP_TICK)) tx_A (.clk(clk), .rst(rst), .tx_start(txgo_A), .sample_tick(tick),
+	assign rdA = btnA and tx_done_A;
+	assign rdB = btnB and tx_done_B;
+
+	uart_transmitter #(.DATA_BITS(DATA_BITS), .STOP_TICK(STOP_TICK)) tx_A (.clk(clk), .rst(rst), .tx_start(/*txgo_A*/not_emptyA), .sample_tick(tick),
 		.data_in(data_A_out), .tx_done(tx_done_A), .tx_data(tx_A));
 
-	uart_transmitter #(.DATA_BITS(DATA_BITS), .STOP_TICK(STOP_TICK)) tx_A (.clk(clk), .rst(rst), .tx_start(txgo_B), .sample_tick(tick),
+	uart_transmitter #(.DATA_BITS(DATA_BITS), .STOP_TICK(STOP_TICK)) tx_B (.clk(clk), .rst(rst), .tx_start(/*txgo_B*/not_emptyB), .sample_tick(tick),
 		.data_in(data_B_out), .tx_done(tx_done_B), .tx_data(tx_B));
-		
 endmodule
