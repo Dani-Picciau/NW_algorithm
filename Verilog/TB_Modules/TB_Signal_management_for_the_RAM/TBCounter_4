@@ -1,0 +1,56 @@
+
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 20.02.2025 11:22:06
+// Design Name: 
+// Module Name: TB
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module TB;
+
+
+
+     reg clk, rst;
+     reg en_ins;
+     wire hit_4;
+    
+    
+    Counter_4_ins  c4 (
+    
+    .clk(clk),
+    .rst(rst),
+    .en_ins(en_ins),
+    .hit_4(hit_4)
+    );
+    
+    always #0.5 clk=~clk; 
+    
+    initial begin
+    
+    clk=0; rst=1;  en_ins=0; 
+    
+    #5.5 rst=0; en_ins=1;
+    #5 en_ins=0;
+    
+    
+    
+        // Fine del test
+
+        $stop;
+    end
+
+endmodule
