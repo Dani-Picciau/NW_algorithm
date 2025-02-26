@@ -63,7 +63,7 @@ module fifo #(parameter DATA_SIZE = 8, ADDR_SIZE_EXP = 4)(
             fifo_empty   <= empty_buff;
         end
     
-    always @ (*) begin
+    always @ (curr_wr_addr, curr_rd_addr, fifo_full, fifo_empty, wr_to_fifo, rd_from_fifo) begin
         next_wr_addr = curr_wr_addr + 1;
         next_rd_addr = curr_rd_addr + 1;
         

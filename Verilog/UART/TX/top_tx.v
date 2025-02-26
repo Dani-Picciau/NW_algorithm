@@ -8,52 +8,66 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top_tx #(parameter
-	DATA_BITS = 8, 
-	STOP_TICK = 16,
-	N=10,
-	COUNT=651,
-	DATA_SIZE = 8,
-	ADDR_SIZE_EXP = 4
-	)(
-	input wire clk, rst,
-	input wire wrA, wrB, btnA, btnB,
-	input wire [3-1:0] data_A, data_B,
-	output wire A_full, B_full, A_empty, B_empty
-	output wire txA, txB
-	);
+module top_tx #(
+    parameter
+    N=14,
+    DATA_TO_FIFO=3,
+    DATA_SIZE = 8,
+    ADDR_SIZE_EXP = 4,
+    STOP_TICK = 16,
+    BAUD_CNT=10416
+    )(
+    input wire clk, rst,
+    //output wire s_tick, //controllo del baud rate
+    input wire [DATA_TO_FIFO-1:0] dataA, dataB,
+    input wire wrA, wrB, 
+    //output wire empty_A, empty_B, //empty di controllo
+    //output wire [DATA_SIZE-1:0] dataA_in, dataAf, dataB_in, dataBf, dataout, //dati di controllo
+    //output wire txdone, read_A, read_B, //txdone di controllo
+    output wire tx, A_full, B_full
+);
+    wire [DATA_SIZE-1:0] data_A_tot, data_B_tot, data_A_out, data_B_out, data_out;
+    wire A_full, B_full, hit, tick;
+    wire emptyA, emptyB, not_emptyA, not_emptyB, not_empty;
+    wire readA, readB;
+    wire tx_done;
+    
+    //segnali per il testbench
+//    assign s_tick=tick;
+//    assign read_A=readA;
+//    assign read_B=readB;
+//    assign txdone=tx_done;
+//    assign dataout=data_out;
+//    assign empty_A=emptyA;
+//    assign empty_B=emptyB;
+//    assign dataA_in=data_A_tot;
+//    assign dataAf=data_A_out;
+//    assign dataB_in=data_B_tot;
+//    assign dataBf=data_B_out;
+    
 
-	wire tick, tx_done_A, tx_done_B, rdA, rdB;
-	wire not_emptyA, not_emptyB;
-	wire txgo_A, txgo_B;
-	wire [DATA_BITS-1:0] data_A_tot, data_B_tot, data_A_out, data_B_out;
-	baud_rate_generator #(.N(N), .COUNT(COUNT)) br_g (.clk(clk), rst(rst), .tick(tick));
 
-	cod_out #(.N(DATA_BITS)) cod_out_A (.clk(clk), .rst(rst), .char(data_A), .Txdata_in(data_A_tot));
 
-	cod_out #(.N(DATA_BITS)) cod_out_B (.clk(clk), .rst(rst), .char(data_B), .Txdata_in(data_B_tot));
+    baud_rate_clk_gen #(.BAUD_CNT(BAUD_CNT), .BAUD_BIT(N)) br_g (.clk(clk), .rst(rst), .baud_clk(tick));
 
-	fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifo_A (.clk(clk), .rst(rst), .rd_from_fifo(/*tx_done_A*/), .wr_to_fifo(wrA),
-		.wr_data_in(data_A_tot), .rd_data_out(data_A_out), .empty(A_empty), .full(A_full));
+    cod_out #(.N(DATA_SIZE), .DATA_TO_FIFO(DATA_TO_FIFO)) codA (.clk(clk), .rst(rst), .char(dataA), .Txdata_in(data_A_tot));
+    cod_out #(.N(DATA_SIZE), .DATA_TO_FIFO(DATA_TO_FIFO)) codB (.clk(clk), .rst(rst), .char(dataB), .Txdata_in(data_B_tot));
 
-	assign not_emptyA=~A_empty;
-	
-	fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifo_B (.clk(clk), .rst(rst), .rd_from_fifo(/*tx_done_B*/), .wr_to_fifo(wrB),
-		.wr_data_in(data_B_tot), .rd_data_out(data_B_out), .empty(B_empty), .full(B_full));
 
-	assign not_emptyB=~B_empty;
+    fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifoA (.clk(clk), .rst(rst), .rd_from_fifo(readA), .wr_to_fifo(wrA),
+        .wr_data_in(data_A_tot), .rd_data_out(data_A_out), .empty(emptyA), .full(A_full));
 
-	/*
-	assign txgo_A= not_emptyA & btnA;
-	assign txgo_B= not_emptyB & btnB;
-	*/
+    fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifoB (.clk(clk), .rst(rst), .rd_from_fifo(readB), .wr_to_fifo(wrB),
+        .wr_data_in(data_B_tot), .rd_data_out(data_B_out), .empty(emptyB), .full(B_full));
 
-	assign rdA = btnA and tx_done_A;
-	assign rdB = btnB and tx_done_B;
+    assign not_emptyA=~emptyA;
+    assign not_emptyB=~emptyB;
 
-	uart_transmitter #(.DATA_BITS(DATA_BITS), .STOP_TICK(STOP_TICK)) tx_A (.clk(clk), .rst(rst), .tx_start(/*txgo_A*/not_emptyA), .sample_tick(tick),
-		.data_in(data_A_out), .tx_done(tx_done_A), .tx_data(tx_A));
+    selector_fifo #(.DATA_BITS(DATA_SIZE)) sel (.clk(clk), .rst(rst), .tx_done(tx_done), .data_A(data_A_out), .data_B(data_B_out), .not_emptyA(not_emptyA), 
+        .not_emptyB(not_emptyB), .hit(emptyA), .data(data_out), .not_empty(not_empty), .readA(readA), .readB(readB));
 
-	uart_transmitter #(.DATA_BITS(DATA_BITS), .STOP_TICK(STOP_TICK)) tx_B (.clk(clk), .rst(rst), .tx_start(/*txgo_B*/not_emptyB), .sample_tick(tick),
-		.data_in(data_B_out), .tx_done(tx_done_B), .tx_data(tx_B));
+    uart_transmitter #(.DATA_BITS(DATA_SIZE), .STOP_TICK(STOP_TICK)) tx_out (.clk(clk), .rst(rst), .tx_start(not_empty),
+        .sample_tick(tick), .data_in(data_out), .tx_done(tx_done), .tx_data(tx));
+    
+    
 endmodule

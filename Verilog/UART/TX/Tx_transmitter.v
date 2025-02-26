@@ -66,7 +66,7 @@ module uart_transmitter #(parameter DATA_BITS = 8, STOP_TICK = 16) //stop_tick=1
         end
     end
     
-    always @ (*) begin
+    always @ (state, tick_reg, nbits_reg, data_reg, tx_reg, tx_start, sample_tick, data_in) begin
         //Initialize 
         state_next  = state;
         tick_next   = tick_reg;

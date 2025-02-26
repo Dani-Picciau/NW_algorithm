@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 08.04.2023 09:37:23
+// Create Date: 25.02.2025 12:22:36
 // Design Name: 
-// Module Name: baud_rate_generator
+// Module Name: counter
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,21 +20,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module baud_rate_clk_gen 
+module counter 
 #(
-	parameter BAUD_CNT=10416,
-    parameter BAUD_BIT=14
-)(
+	parameter MAX=10,
+    parameter N_BIT=4)
+(
 	input wire clk, rst,
-	output reg baud_clk
+	input wire en,
+	output reg [N_BIT-1:0] count
 );
-	wire [BAUD_BIT-1:0] count;
-		
-	counter #(.MAX(BAUD_CNT), .N_BIT(BAUD_BIT)) CNT_BAUD(.clk(clk), .rst(rst), .en(1'b1), .count(count));
+    
+	reg [N_BIT-1:0] count_nxt;
 
 	always@(posedge clk, posedge rst)
-		if(rst==1'b1) baud_clk <=1'b0;
-		else if(count<BAUD_CNT/2) baud_clk <=1'b1; 
-			else baud_clk <=1'b0; 
+		if(rst==1'b1) count<={N_BIT{1'b0}};
+		else count<=count_nxt;  
 
+	always@(en,count)
+		if(en==1'b0) count_nxt=count;
+		else if(count==MAX-1) count_nxt={N_BIT{1'b0}};
+			else count_nxt=count+1;
+	 
 endmodule
