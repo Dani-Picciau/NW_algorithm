@@ -16,8 +16,7 @@ module Display_7_seg #(
     parameter PERC1=7'b0100011, //% 
     parameter PERC2=7'b0011100, //%
     parameter DASH=7'b0111111, //-
-    parameter N = 5,
-    parameter score_lenght= $clog2(N+1)
+    parameter N = 5
 )(
     input wire clk, // Basys3 clock (100MHz)
     input wire rst,

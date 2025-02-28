@@ -6,48 +6,55 @@
 `include "Display_7_seg.v"
 
 module Display_7_seg_manager #(
-    parameter N = 5,
-    parameter score_lenght= $clog2(N+1)
+    parameter N = 5
 ) (
     input wire clk, rst,
-    input wire signed [score_lenght:0] final_score, // Score value
-    output reg [6:0] seg, // Cathodes for each anode
-    output reg [3:0] an //  Anodes for each digit// Score value
+    input wire signed [8:0] submit_value,
+    output wire [6:0] seg, // Cathodes for each anode
+    output wire [3:0] an   // Anodes for each digit
 );
-    wire [6:0] percentage;
-    wire [3:0] Tens, Units;
+    //wire signed [8:0] submit_value;
+    wire [8:0] percentage;
+    wire [4:0] Tens;
+    wire [3:0] Units;
     wire [6:0] digit1, digit2;
-
+    
+    /*submit #(
+        .N(N)
+    ) s (
+        .clk(clk),
+        .rst(rst),
+        .score(submit_value)
+    );*/
+    
     Percentage_calculation #(
         .N(N)
     ) P_c (
-        .final_score(final_score),
+        .final_score(submit_value),
         .percentage(percentage)
     );
-
+    
     Splitter split (
         .Percentage(percentage),
         .Tens(Tens),
         .Units(Units)
     );
-
+    
     Converter conv (
         .Tens(Tens),
         .Units(Units),
         .digit1(digit1),
         .digit2(digit2)
     );
-
+    
     Display_7_seg #(
         .N(N)
     ) D_7_s (
         .clk(clk),
-        .rst(rts),
+        .rst(rst),
         .digit1(digit1),
         .digit2(digit2),
         .seg(seg),
         .an(an)
     );
-
-    //end
 endmodule

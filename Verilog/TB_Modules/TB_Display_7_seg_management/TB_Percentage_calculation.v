@@ -2,10 +2,9 @@
 
 module TB_Percentage_calculation;
     parameter N = 128;
-    parameter score_lenght = $clog2(N+1);
     
-    reg signed [score_lenght:0] final_score;
-    wire [6:0] percentage;
+    reg signed [8:0] final_score;
+    wire [8:0] percentage;
     
     Percentage_calculation #(
         .N(N)

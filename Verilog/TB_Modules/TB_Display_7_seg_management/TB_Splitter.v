@@ -1,8 +1,8 @@
 `include "/c:.../Splitter.v"
 
 module TB_Splitter;
-    reg [7:0] Percentage;  
-    wire [3:0] Tens;
+    reg [8:0] Percentage;  
+    wire [4:0] Tens;
     wire [3:0] Units;    
     
     Splitter split (

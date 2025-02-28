@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module fifo #(parameter DATA_SIZE = 8, ADDR_SIZE_EXP = 8 )(
+module fifo_rx #(parameter DATA_SIZE = 8, ADDR_SIZE_EXP = 8 )(
     input  clk, rst,
     input  rd_from_fifo, wr_to_fifo,
     input  [DATA_SIZE-1:0] wr_data_in,

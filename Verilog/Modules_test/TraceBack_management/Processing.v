@@ -1,25 +1,26 @@
 module Processing #(
     parameter N = 128,
-    parameter score_length = $clog2(N+1),
     parameter gap_score = -2,
     parameter match_score = 1,
     parameter mismatch_score = -1,
     parameter dash = 3'b111
 ) (
     input wire clk, rst,
-    input wire en_traceB,
+    input wire en_traceB, end_traceB,
     input wire [2:0] SeqA_i_t,
     input wire [2:0] SeqB_j_t,
     input wire [2:0] symbol,
-    output reg signed [score_length:0] final_score,
+    output reg signed [8:0] final_score,
     output reg [2:0] datoA,
     output reg [2:0] datoB
 );
-    reg signed [score_length:0] score_next, score_next_comb;
-
+    reg signed [8:0] score_next, score_next_comb;
+    
     // Register for the output score
     always @(posedge clk, posedge rst) begin
-        if (rst) final_score <= 0;
+        if (rst) begin
+            final_score <= 0;
+        end
         else final_score <= score_next;
     end
 
@@ -64,7 +65,7 @@ module Processing #(
     always @(datoA, datoB) begin
         if (en_traceB) begin
             case (symbol)
-                3'b001: begin // Diagonal arrow ?
+                3'b001: begin // Diagonal arrow \
                     if (datoA == datoB) score_next_comb = final_score + match_score;
                     else score_next_comb = final_score + mismatch_score;
                 end
@@ -73,7 +74,9 @@ module Processing #(
                 default: score_next_comb = final_score;
             endcase
         end
-        else score_next_comb = 0;
+        else begin
+            score_next_comb = score_next;
+        end
     end
     
     //end
