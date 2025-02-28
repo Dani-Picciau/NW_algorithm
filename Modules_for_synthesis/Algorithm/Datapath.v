@@ -19,7 +19,7 @@ module Datapath #(
     output wire end_init,
     output wire end_filling,
     output wire end_c,
-    output wire signed [BitAddr:0] final_score, 
+    output wire signed [8:0] final_score, 
     output wire [2:0] datoA, datoB,
     output wire hit_4,
     output wire [6:0] seg, 

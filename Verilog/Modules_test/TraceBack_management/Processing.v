@@ -6,7 +6,7 @@ module Processing #(
     parameter dash = 3'b111
 ) (
     input wire clk, rst,
-    input wire en_traceB, end_traceB,
+    input wire en_traceB,
     input wire [2:0] SeqA_i_t,
     input wire [2:0] SeqB_j_t,
     input wire [2:0] symbol,

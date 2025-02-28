@@ -1,23 +1,24 @@
 `include "C:\..."
 
 module Total_TOP #(
-    parameter N = 3,
+    parameter N = 2,
     parameter BitAddr = $clog2(N+1)
 )(
     input wire clk, rst, 
     input wire rx,
     input wire ready,
     
-    output wire signed [BitAddr:0] final_score, 
-    output wire [2:0] datoA, datoB,
+    output wire signed [8:0] final_score, 
     output wire [6:0] seg, 
-    output wire [3:0] an 
+    output wire [3:0] an,
+    output wire tx, A_full, B_full,
+    output wire [2:0] datoA, datoB
 );
-
     wire [2:0] din_ram; // data to be written in the RAMs
     wire en_ram; 
     wire weA, weB;
     wire [BitAddr:0] addr_dinA, addr_dinB;
+    wire en_traceB;
     
     
     uart_top #(
@@ -50,7 +51,22 @@ module Total_TOP #(
         .weA(weA),
         .weB(weB),
         .addr_dinA(addr_dinA),
-        .addr_dinB(addr_dinB)
+        .addr_dinB(addr_dinB),
+        .en_traceB(en_traceB)
+    );
+    
+    top_tx #(
+        .N(N)
+    ) UART_TX (
+        .clk(clk),
+        .rst(rst),
+        .dataA(datoA),
+        .dataB(datoB),
+        .wrA(en_traceB),
+        .wrB(en_traceB),
+        .tx(tx),
+        .A_full(A_full),
+        .B_full(B_full)
     );
     
 endmodule

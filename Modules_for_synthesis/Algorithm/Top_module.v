@@ -14,7 +14,7 @@ module TopModule #(
     input wire en_ram, 
     input wire weA, weB, 
     input wire [BitAddr:0] addr_dinA, addr_dinB,
-    output wire signed [BitAddr:0] final_score, 
+    output wire signed [8:0] final_score, 
     output wire [2:0] datoA, datoB,
     output wire [6:0] seg, 
     output wire [3:0] an 
