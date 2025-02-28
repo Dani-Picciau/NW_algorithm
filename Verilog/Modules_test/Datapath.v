@@ -17,17 +17,17 @@ module Datapath #(
     output wire calculated,
     output wire end_init,
     output wire end_filling,
-    output wire [2:0] symbol_out,
     output wire end_c,
-    output wire [BitAddr:0] i_t_ram, j_t_ram,
     output wire signed [BitAddr:0] final_score,
     output wire [2:0] datoA, datoB,
+    output wire hit_4,
     
     //Internal wires
     output wire [2:0] doutA, doutB, //SeqA_i_t, SeqB_j_t
     output wire [BitAddr:0] indexA, indexB,
     output wire [BitAddr:0] i_t, j_t,
-    output wire [2:0] symbol, symbol_w,
+    output wire [BitAddr:0] i_t_ram, j_t_ram,
+    output wire [2:0] symbol, symbol_w, symbol_out,
     output wire signed [8:0] max,      
     output wire [1:0] count_3,
     output wire [addr_lenght-1:0] addr_r_sc, addr_w_sc,
@@ -37,8 +37,7 @@ module Datapath #(
     output wire [BitAddr:0] addr_init,
     output  wire signed [8:0] data_init, data,
     output wire hit,
-    output wire value,
-    output wire hit_4, 
+    output wire value, 
     output wire signal
 );
     AB_manager #(

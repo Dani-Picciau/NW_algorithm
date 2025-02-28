@@ -12,11 +12,10 @@ module FSM(
     output reg en_ins,
     output reg en_read,
     output reg en_traceB,
-    output reg change_index
+    output reg change_index,
+    output reg [2:0] state
 );
-    reg [2:0] state;
     reg [2:0] state_next;
-    
     parameter IDLE=3'b000, INIT=3'b001, READ=3'b010, CHANGE=3'b011, FILLING=3'b100, TRACE_B=3'b101;
     
     always@(posedge clk, posedge rst)begin
@@ -34,7 +33,7 @@ module FSM(
                 if(end_init) state_next <= READ;
                 else state_next <= INIT;
             end
-            READ: begin
+           READ: begin
                 if(calculated) state_next <= FILLING;
                 else state_next <= READ;
             end
