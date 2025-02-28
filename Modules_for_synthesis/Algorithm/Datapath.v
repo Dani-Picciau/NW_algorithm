@@ -154,7 +154,7 @@ module Datapath #(
         .rst(rst),
         //.en_traceB(en_traceB),
         //.end_traceB(end_c),
-        .final_score(final_score),
+        .submit_value(final_score),
         .seg(seg),
         .an(an)
     );
