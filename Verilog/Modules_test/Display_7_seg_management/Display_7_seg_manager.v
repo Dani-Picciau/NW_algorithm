@@ -13,19 +13,10 @@ module Display_7_seg_manager #(
     output wire [6:0] seg, // Cathodes for each anode
     output wire [3:0] an   // Anodes for each digit
 );
-    //wire signed [8:0] submit_value;
     wire [8:0] percentage;
     wire [4:0] Tens;
     wire [3:0] Units;
     wire [6:0] digit1, digit2;
-    
-    /*submit #(
-        .N(N)
-    ) s (
-        .clk(clk),
-        .rst(rst),
-        .score(submit_value)
-    );*/
     
     Percentage_calculation #(
         .N(N)

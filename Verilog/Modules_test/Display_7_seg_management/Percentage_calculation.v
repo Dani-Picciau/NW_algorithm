@@ -5,7 +5,8 @@ module Percentage_calculation #(
     output reg [8:0] percentage
 );
     always @(final_score) begin
-        percentage = ((final_score + N)*100) / (2 * N);
+        if(percentage == 255) percentage = 255;
+        else percentage = ((final_score + N)*100) / (2 * N);
     end
 
     //end

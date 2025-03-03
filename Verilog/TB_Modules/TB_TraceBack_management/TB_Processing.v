@@ -1,27 +1,6 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 20.02.2025 11:22:06
-// Design Name: 
-// Module Name: TB
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+`include "/c:.../Processing.v"
 
 module TB;
-
-
    // Parametri
     parameter N = 128;
     parameter score_length = $clog2(N+1);
