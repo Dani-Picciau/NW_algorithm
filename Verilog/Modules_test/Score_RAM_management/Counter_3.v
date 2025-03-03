@@ -25,7 +25,8 @@ module Counter_3 (
             signal <= signal_next;
         end
     end
-    
+
+    // continue module Counter_3
     always @(en, count, cnt_clk) begin
         if(en) begin
             if(cnt_clk == 2'b11) begin
