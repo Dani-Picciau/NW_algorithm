@@ -36,7 +36,7 @@ module Processing #(
         else begin
             if (en_traceB) begin
                 case (symbol)
-                    3'b001: begin // Diagonal arrow ?
+                    3'b001: begin // Diagonal arrow \
                         datoA <= SeqA_i_t;
                         datoB <= SeqB_j_t;
                     end
