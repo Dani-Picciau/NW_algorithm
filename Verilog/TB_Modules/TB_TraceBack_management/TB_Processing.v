@@ -45,7 +45,7 @@ module Processing_TB;
         #10 SeqA_i_t = 3'b110; SeqB_j_t = 3'b001; symbol = 3'b001; // C vs G 
         
         #10 en_traceB=0;
-        $stop;
+        #10 $stop;
     end
     
     //end
