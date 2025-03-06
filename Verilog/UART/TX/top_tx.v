@@ -54,10 +54,10 @@ module top_tx #(
     cod_out #(.N(DATA_SIZE), .DATA_TO_FIFO(DATA_TO_FIFO)) codB (.clk(clk), .rst(rst), .char(dataB), .Txdata_in(data_B_tot));
 
 
-    fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifoA (.clk(clk), .rst(rst), .rd_from_fifo(readA), .wr_to_fifo(wrA),
+    fifo_tx #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifoA (.clk(clk), .rst(rst), .rd_from_fifo(readA), .wr_to_fifo(wrA),
         .wr_data_in(data_A_tot), .rd_data_out(data_A_out), .empty(emptyA), .full(A_full));
 
-    fifo #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifoB (.clk(clk), .rst(rst), .rd_from_fifo(readB), .wr_to_fifo(wrB),
+    fifo_tx #(.DATA_SIZE(DATA_SIZE), .ADDR_SIZE_EXP(ADDR_SIZE_EXP)) fifoB (.clk(clk), .rst(rst), .rd_from_fifo(readB), .wr_to_fifo(wrB),
         .wr_data_in(data_B_tot), .rd_data_out(data_B_out), .empty(emptyB), .full(B_full));
 
     assign not_emptyA=~emptyA;

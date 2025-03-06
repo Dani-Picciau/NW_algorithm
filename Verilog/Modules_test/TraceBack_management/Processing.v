@@ -1,6 +1,5 @@
 module Processing #(
     parameter N = 128,
-    parameter score_length = $clog2(N+1),
     parameter gap_score = -2,
     parameter match_score = 1,
     parameter mismatch_score = -1,
@@ -11,28 +10,33 @@ module Processing #(
     input wire [2:0] SeqA_i_t,
     input wire [2:0] SeqB_j_t,
     input wire [2:0] symbol,
-    output reg signed [score_length:0] final_score,
+    output reg signed [8:0] final_score,
     output reg [2:0] datoA,
     output reg [2:0] datoB
 );
-    reg signed [score_length:0] score_next, score_next_comb;
-
-    // Register for the output score
-    always @(posedge clk, posedge rst) begin
-        if (rst) final_score <= 0;
-        else final_score <= score_next;
+    reg signed [8:0] score_next, score_next_comb;
+    
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            score_next <= 0;
+            final_score <= 255;
+        end 
+        else if (en_traceB) begin
+            score_next <= 0;
+            final_score <= score_next_comb;
+        end
+        else score_next <= score_next_comb;
     end
 
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             datoA <= 0;
             datoB <= 0;
-            score_next <= 0;
         end 
         else begin
             if (en_traceB) begin
                 case (symbol)
-                    3'b001: begin // Diagonal arrow ?
+                    3'b001: begin // Diagonal arrow \
                         datoA <= SeqA_i_t;
                         datoB <= SeqB_j_t;
                     end
@@ -54,17 +58,13 @@ module Processing #(
                 datoA <= 0;
                 datoB <= 0;
             end
-
-            // synchronized update of the score
-            score_next <= score_next_comb;
         end
     end
 
-    // Logica combinatoria per il calcolo del punteggio
     always @(datoA, datoB) begin
         if (en_traceB) begin
             case (symbol)
-                3'b001: begin // Diagonal arrow ?
+                3'b001: begin // Diagonal arrow \
                     if (datoA == datoB) score_next_comb = final_score + match_score;
                     else score_next_comb = final_score + mismatch_score;
                 end
@@ -73,7 +73,7 @@ module Processing #(
                 default: score_next_comb = final_score;
             endcase
         end
-        else score_next_comb = 0;
+        else score_next_comb = score_next;
     end
     
     //end

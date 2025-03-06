@@ -1,7 +1,5 @@
-//queste sono solo ram di appoggio per provare le sequenze, infatti sono riempite tramite initial
-
 module RAM_A #(
-    parameter N=5, // è a 5 solo per provare visto che non ho voglia di inserire 128 valori a mano
+    parameter N=5, 
     parameter Bit = $clog2(N+1),
     parameter G=3'b001, 
     parameter C=3'b110, 

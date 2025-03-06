@@ -3,7 +3,7 @@ import time
 
 # Configurazione della porta seriale
 ser = serial.Serial(
-    port='COM11',       # Cambia con la porta corretta (es: 'COM3' su Windows o '/dev/ttyUSB0' su Linux)
+    port='COM4',       # Cambia con la porta corretta (es: 'COM3' su Windows o '/dev/ttyUSB0' su Linux)
     baudrate=9600,     # Baud rate configurato sulla tua scheda FPGA
     bytesize=serial.EIGHTBITS,
     parity=serial.PARITY_NONE,
@@ -12,7 +12,7 @@ ser = serial.Serial(
 )
 
 # Percorso del file da cui leggere
-file_path = r"C:\\Users\\crist\\Desktop\\ESD\\Progetto\\UART\\Script\\dati.txt"  # Modifica con il percorso corretto
+file_path = r"C:\\Esercizi verilog laboratorio\\Progetto_Esame\\dati.txt"  # Modifica con il percorso corretto
 
 try:
     # Apri il file in modalità lettura

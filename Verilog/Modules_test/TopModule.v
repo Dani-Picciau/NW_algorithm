@@ -3,7 +3,7 @@
 `include "FSM.v"
 `include "Datapath.v"
 
-//molule with every signal 
+//molule with every internal wire in output
 
 module TopModule #(
     parameter N = 128,

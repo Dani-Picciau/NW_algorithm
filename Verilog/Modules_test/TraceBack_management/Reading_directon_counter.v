@@ -1,7 +1,7 @@
 module Reading_direction_counter#(
     parameter N=128, 
     parameter BitAddr = $clog2(N+1),
-    parameter [2:0] UP=3'b010,
+    parameter UP=3'b010,
     parameter LEFT=3'b100, 
     parameter DIAG=3'b001
 ) (
@@ -13,7 +13,7 @@ module Reading_direction_counter#(
 );
     reg [BitAddr:0] i_nxt, j_nxt;
 
-    reg [1:0] counter;  // Contatore da 0 a 3 (2 bit sono sufficienti)
+    reg [1:0] counter;  //Counter from 0 to 3 
 
     always @(posedge clk, posedge rst) begin
         if(rst) begin
@@ -22,16 +22,18 @@ module Reading_direction_counter#(
             counter <= 0;
         end
         else begin
-            if(counter == 3) begin  // Cambia valore ogni 4 cicli
+            if(counter == 3) begin  // Change value every 4 cycles
                 i_t <= i_nxt;
                 j_t <= j_nxt;
-                counter <= 0;  // Reset del contatore
+                counter <= 0;  // Counter reset
             end
             else begin
-                counter <= counter + 1;  // Incrementa contatore
+                counter <= counter + 1;  // Counter increment
             end
         end
     end
+
+    //pt.2
 
     always @(i_t, j_t, symbol) begin
     
@@ -76,6 +78,8 @@ module Reading_direction_counter#(
         end
     end
 
+    //pt.3
+
     always @(posedge clk, posedge rst) begin
         if(rst) begin
             i_t_ram <= N-1;
@@ -101,3 +105,4 @@ module Reading_direction_counter#(
     
     //end
 endmodule
+

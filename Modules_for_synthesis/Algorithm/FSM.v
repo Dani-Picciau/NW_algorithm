@@ -1,3 +1,5 @@
+`include "C:\..."
+
 module FSM(
     input wire clk, rst,
     input wire ready,
