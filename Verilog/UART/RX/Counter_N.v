@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-module Counter_data17 (
+module Counter_data_N #(parameter N = 9 )(
     input wire clk, rst, 
     input wire data_ready,
     output reg hit
@@ -35,11 +35,11 @@ module Counter_data17 (
     end
 
     always @(data_ready, counter) begin
-        if (data_ready && counter < 9) begin
+        if (data_ready && counter < N) begin
             counter_next = counter + 1;
             hit = 0;
         end
-        else if (counter >= 9) begin
+        else if (counter >= N) begin
             counter_next = counter;
             hit = 1;
         end 
