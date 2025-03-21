@@ -16,24 +16,27 @@ module Processing #(
 );
     reg signed [8:0] score_next, score_next_comb;
     
-    // Register for the output score
-    always @(posedge clk, posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if (rst) begin
-            final_score <= 0;
+            score_next <= 0;
+            final_score <= 255;
+        end 
+        else if (en_traceB) begin
+            score_next <= 0;
+            final_score <= score_next_comb;
         end
-        else final_score <= score_next;
+        else score_next <= score_next_comb;
     end
 
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             datoA <= 0;
             datoB <= 0;
-            score_next <= 0;
         end 
         else begin
             if (en_traceB) begin
                 case (symbol)
-                    3'b001: begin // Diagonal arrow ?
+                    3'b001: begin // Diagonal arrow \
                         datoA <= SeqA_i_t;
                         datoB <= SeqB_j_t;
                     end
@@ -55,13 +58,9 @@ module Processing #(
                 datoA <= 0;
                 datoB <= 0;
             end
-
-            // synchronized update of the score
-            score_next <= score_next_comb;
         end
     end
 
-    // Logica combinatoria per il calcolo del punteggio
     always @(datoA, datoB) begin
         if (en_traceB) begin
             case (symbol)
@@ -74,9 +73,7 @@ module Processing #(
                 default: score_next_comb = final_score;
             endcase
         end
-        else begin
-            score_next_comb = score_next;
-        end
+        else score_next_comb = score_next;
     end
     
     //end

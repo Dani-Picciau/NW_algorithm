@@ -40,11 +40,10 @@
 //endmodule
 module gest_add #(
     parameter N=8,
-    ADDR= 2//$clog2(N+1)
+    ADDR= $clog2(N+1)
 )(
     input wire clk, rst,
     input wire weA, weB,
-    input wire [N-1:0] fifo_out,
     input wire [2:0] Seq,
     output reg [ADDR-1:0] addr_rA, addr_rB
 );
@@ -62,14 +61,14 @@ module gest_add #(
     end
     
     always @(Seq) begin
-        if (weA) 
+        if (Seq && weA) 
             addr_rA_next = addr_rA + 1;
         else 
             addr_rA_next = addr_rA;
     end
 
     always @(Seq,weB) begin
-        if (weB) 
+        if ( Seq && weB) 
             addr_rB_next = addr_rB + 1;
         else 
             addr_rB_next = addr_rB;

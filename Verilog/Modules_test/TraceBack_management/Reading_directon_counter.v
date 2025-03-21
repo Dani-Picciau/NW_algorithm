@@ -1,7 +1,7 @@
 module Reading_direction_counter#(
     parameter N=128, 
     parameter BitAddr = $clog2(N+1),
-    parameter [2:0] UP=3'b010,
+    parameter UP=3'b010,
     parameter LEFT=3'b100, 
     parameter DIAG=3'b001
 ) (
