@@ -13,15 +13,15 @@ module Max #(
     output reg calculated
 );
     
-    // Registri per i calcoli intermedi
+    // Registers for intermediate calculations
     reg signed [8:0] diag_calc, up_calc, lx_calc;
     
-    // Wire per i risultati della logica combinatoria
+    // Wires for combinational logic results
     reg signed [8:0] next_max;
     reg [2:0] next_symbol;
     reg next_calculated;
     
-    // Logica sequenziale per l'aggiornamento dei registri
+    // Sequential logic for register updates
     always @(posedge clk, posedge rst) begin
         if(rst) begin
             max <= 255;
@@ -35,9 +35,9 @@ module Max #(
         end
     end
     
-    // Logica combinatoria per i calcoli
+    // Combinational logic for calculations
     always @(value, diag, up, lx, max, symbol) begin
-        // Calcolo dei valori
+        // Compute values
         if(value) diag_calc = diag + match_score;
         else diag_calc = diag + mismatch_score;
             
@@ -50,7 +50,7 @@ module Max #(
         next_calculated = 1'b0;
         
         if(diag == 255 || up == 255 || lx == 255) begin
-            next_calculated = 1'b0;
+            next_calculated = 1'b0; // Avoid calculation if any input is invalid
         end
         else begin
             next_calculated = 1'b1;
